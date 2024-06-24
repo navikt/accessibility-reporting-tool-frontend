@@ -1,18 +1,12 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: tms-utkast-frontend
-  namespace: min-side
+  name: accessibility-reporting-tool-frontend
+  namespace: a11y-statement
   labels:
-    team: min-side
+    team: a11y-statement
+
 spec:
-  idporten:
-    enabled: true
-    sidecar:
-      enabled: true
-      level: Level3
-  tokenx:
-    enabled: true
   image: {{ image }}
   port: 3000
   liveness:
@@ -24,13 +18,8 @@ spec:
   replicas:
     min: 2
     max: 4
-  accessPolicy:
-    outbound:
-      rules:
-        - application: nav-dekoratoren
-          namespace: personbruker
   ingresses:
-    - "https://www.nav.no/minside/utkast"
+    - "https://a11y-statement.ansatt.nav.no"
   resources:
     limits:
       memory: 768Mi
