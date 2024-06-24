@@ -10,10 +10,10 @@ spec:
   image: {{ image }}
   port: 3000
   liveness:
-    path: /minside/utkast/api/internal/isAlive
+    path: /api/internal/isAlive
     initialDelay: 10
   readiness:
-    path: /minside/utkast/api/internal/isReady
+    path: /api/internal/isReady
     initialDelay: 10
   replicas:
     min: 2
