@@ -1,0 +1,11 @@
+@import "@navikt/ds-tokens";
+
+.utkast {
+  color: var(--a-text-subtle);
+  max-width: 632px !important;
+}
+
+.loadingDiv {
+  margin-top: 30px;
+  text-align: center;
+}

@@ -1,0 +1,81 @@
+.utkastList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  list-style: none;
+  padding: 16px 0;
+  margin: 0;
+  max-width: 632px;
+  width: 100%;
+}
+
+.container {
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--a-shadow-xsmall);
+  width: 100%;
+  background-color: var(--a-bg-default);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.ikon {
+  display: flex;
+  background-color: var(--a-border-alt-3);
+  color: var(--a-bg-default);
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+  border-radius: 0.125rem;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.75rem 1rem;
+  border-bottom: solid 1px var(--a-border-subtle);
+}
+
+.utkastNavn {
+  color: var(--a-text-default);
+}
+
+.endretTekst {
+  color: var(--a-text-subtle);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem 1rem 1rem;
+}
+
+.utkastTittel {
+  color: var(--a-text-default);
+}
+
+.opprettetTekst {
+  color: var(--a-text-subtle);
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.container:hover {
+  box-shadow: var(--a-shadow-small);
+}
+
+.container:hover .utkastTittel {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.container:hover .chevron {
+  transition: 0.2s;
+  transform: translate(3px, 0);
+}

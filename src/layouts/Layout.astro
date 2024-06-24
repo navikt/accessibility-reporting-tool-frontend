@@ -1,0 +1,64 @@
+---
+import { getLanguage } from "@language/language";
+import { fetchDecoratorReact } from "@navikt/nav-dekoratoren-moduler/ssr";
+import { getEnvironment } from "../utils/environment";
+import styles from "./Layout.module.css";
+
+export interface Props {
+  title: string;
+  breadcrumbs: [{
+    title: string,
+    url: string,
+  }] | [];
+}
+
+const language = getLanguage(Astro.url);
+const { breadcrumbs } = Astro.props;
+
+const Decorator = await fetchDecoratorReact({
+  env: getEnvironment(),
+  params: {
+    context: "privatperson",
+    breadcrumbs: breadcrumbs,
+    availableLanguages : [
+      {
+        locale: "nb",
+        url: "https://www.nav.no/minside/nb",
+        handleInApp: true,
+      },
+      {
+        locale: "en",
+        url: "https://www.nav.no/minside/en",
+        handleInApp: true,
+      },
+      {
+        locale: "nn",
+        url: "https://www.nav.no/minside/nn",
+        handleInApp: true,
+      }
+    ]
+  },
+});
+---
+
+<!doctype html>
+<html lang={language}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Utkast</title>
+    <link rel="preload" href="https://cdn.nav.no/aksel/@navikt/ds-css/5.7.3/index.min.css" as="style" />
+    <link rel="stylesheet" href="https://cdn.nav.no/aksel/@navikt/ds-css/5.7.3/index.min.css" />
+    <Decorator.Styles />
+  </head>
+  <body class="main">
+    <Decorator.Header />
+      <div class={styles.container}>
+        <slot />
+      </div>
+    <Decorator.Footer />
+    <Decorator.Scripts />
+  </body>
+</html>

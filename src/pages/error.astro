@@ -1,0 +1,26 @@
+---
+import KattIBoks from "@img/KattIBoks";
+import LanguageRedirecter from "@language-redirecter/LanguageRedirecter";
+import { text } from "@language/text";
+import Layout from "@layouts/Layout.astro";
+import { BodyLong, Heading } from "@navikt/ds-react";
+import { baseUrl } from "@src/urls";
+import { getLanguage } from "../language/language";
+import styles from "./_error.module.css";
+
+const language = getLanguage(Astro.url)
+---
+
+<Layout title="Utkast" breadcrumbs={[]}>
+    <div class={styles.container}>
+      <Heading size={"xlarge"}>{text.errorHeading["nb"]}</Heading>
+      <KattIBoks alt={text.errorKitten["nb"]} />
+      <BodyLong>
+        <strong>{text.errorText["nb"]}</strong>
+      </BodyLong>
+      <BodyLong>
+        {text.errorHelp["nb"]} <a href={baseUrl}>{text.minSide["nb"]}</a>
+      </BodyLong>
+    </div>
+</Layout>
+<LanguageRedirecter client:only="react" language={language}/>

@@ -1,0 +1,22 @@
+---
+import Utkast from "@components/Utkast";
+import type { Language } from "@language/language";
+import { text } from "@language/text";
+import Layout from "@layouts/Layout.astro";
+import { BodyLong, Heading } from "@navikt/ds-react";
+import styles from "../_index.module.css";
+---
+
+<Layout title="Utkast" breadcrumbs={[]}>
+  <div class={styles.headingWrapper}>
+    <div>
+      <Heading size={"large"}> {text.hovedoverskrift["en"]} </Heading>
+      <BodyLong className={styles.ingress} size={"large"}>
+        {text.description["en"]}
+      </BodyLong>
+    </div>
+  </div>
+  <div class={styles.utkastWrapper}>
+    <Utkast client:only="react" language={"en" as Language}/>
+  </div>  
+</Layout>

@@ -1,0 +1,47 @@
+.ingenUtkast {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: var(--a-bg-default);
+  border-radius: 0.5rem;
+  padding: 1.5rem 2rem;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  max-width: 632px;
+}
+
+.ingenUtkastTekst a {
+  color: var(--a-text-subtle);
+  font-size: 18px;
+}
+
+.ingenUtkastTekst {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--a-text-default);
+  font-size: 20px;
+}
+
+.lenke {
+  color: var(--a-surface-action) !important;
+  text-decoration: underline;
+}
+
+.lenke:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 648px) {
+  .ingenUtkast {
+    flex-direction: column-reverse;
+  }
+
+  .ingenUtkastTekst {
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+}
