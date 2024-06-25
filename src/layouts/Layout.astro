@@ -1,5 +1,6 @@
 ---
-
+import Navbar from '../components/Navbar'
+import styles from './Layout.module.css'
 ---
 <!doctype html>
 <html lang="no">
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.nav.no/aksel/@navikt/ds-css/6.10.0/index.min.css" />
 </head>
 <body class="main">
+<Navbar userMail = "eksempel.profil@nav.no"/>
 <div>
     <slot />
 </div>
