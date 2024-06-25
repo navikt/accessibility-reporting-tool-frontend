@@ -1,0 +1,44 @@
+
+.navBarContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border: 1px solid lightgray;
+    padding-left: 20px;
+    padding-right: 20px;
+    grid-gap: 40vw;
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    top: 0;
+    margin: 0;
+}
+
+
+li{
+    list-style-type: none;
+    align-self: center;
+    font-size: 25px;
+
+}
+
+
+.utlogging {
+    cursor: pointer;
+}
+
+
+.navBarP2{
+
+
+}
+
+Button{
+    cursor: pointer;
+}
