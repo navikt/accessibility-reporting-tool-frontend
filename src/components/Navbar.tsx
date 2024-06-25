@@ -1,4 +1,4 @@
-import {Button, Link} from "@navikt/ds-react";
+import {Link} from "@navikt/ds-react";
 import styles from "./Navbar.module.css"
 import {LeaveIcon} from "@navikt/aksel-icons";
 
@@ -16,7 +16,7 @@ function Navbar(props: { userMail: String; }){
             </ul>
             <ul className={styles.navBarP2}>
                 <li><p>Innlogget som <strong>{userMail}</strong></p></li>
-                <li className={styles.utlogging}><Link underline = {false}><LeaveIcon></LeaveIcon>Logg Ut</Link></li>
+                <li className={styles.utlogging}><Link underline = {false} href="#"><LeaveIcon></LeaveIcon>Logg Ut</Link></li>
             </ul>
         </div>
     )
