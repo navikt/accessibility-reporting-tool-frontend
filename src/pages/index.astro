@@ -1,7 +1,19 @@
 ---
+
 import Layout from "../layouts/Layout.astro";
+import RapportListe from "../components/rapportListe"
+import SamletListe from "../components/samlerapporter";
+import { Link } from "@navikt/ds-react";
+
+
 ---
 
 <Layout>
-<h1>Hello World</h1>
+    <h1>a11y</h1>
+    <h2>Rapporteringsverktøy for NAV</h2>
+    <h3>Rapporter for enkeltsider</h3>
+    <Link href="#">Lag ny erklæring</Link>
+    <RapportListe client:only="react" />
+    <h3>Samlerapporter</h3>
+    <SamletListe client:only="react" />
 </Layout>
