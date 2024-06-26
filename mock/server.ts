@@ -17,17 +17,56 @@ api.get('/teams', (c) => {
   return c.json([
     {
       navn: "Team Nav.no",
-      url: "https://www.nav.no/test-rapport"
+      url: "/team"
     },
     {
       navn: "Min side",
-      url: "https://www.nav.no/test-rapport"
+      url: "/team"
     },
     {
       navn: "Team test",
-      url: "https://www.nav.no/test-rapport"
+      url: "/team"
     },
+    {
+      navn: "Team ikkefins",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull",
+      url: "/team"
+    },
+    {
+      navn: "Team tull, men med lenger navn...",
+      url: "/team"
+    }
   ]);
 });
 
-serve(api);
+serve( {
+  fetch: api.fetch,
+  port: 8787
+});
