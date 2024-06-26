@@ -9,10 +9,10 @@ function Navbar(props: { userMail: String; }){
     return(
         <div className={styles.navBarContainer}>
             <ul className={styles.navBarP1}>
-                <li><Link underline = {false} variant = "neutral" href="">Forside</Link></li>
-                <li><Link underline = {false} variant = "neutral" href="">Organisasjonsenhet</Link></li>
-                <li><Link underline = {false} variant = "neutral" href="">Dine erklæringer</Link></li>
-                <li><Link underline = {false} variant = "neutral" href="">FAQ</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/">Forside</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">Organisasjonsenhet</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/dineerklaeringer">Dine erklæringer</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">FAQ</Link></li>
             </ul>
             <ul className={styles.navBarP2}>
                 <li><p>Innlogget som <strong>{userMail}</strong></p></li>
