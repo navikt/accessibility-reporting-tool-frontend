@@ -12,7 +12,7 @@ function Navbar(props: { userMail: String; }){
                 <li><Link underline = {false} variant = "neutral" href="/">Forside</Link></li>
                 <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">Organisasjonsenhet</Link></li>
                 <li><Link underline = {false} variant = "neutral" href="/dineerklaeringer">Dine erklæringer</Link></li>
-                <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">FAQ</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/faq">FAQ</Link></li>
             </ul>
             <ul className={styles.navBarP2}>
                 <li><p>Innlogget som <strong>{userMail}</strong></p></li>
