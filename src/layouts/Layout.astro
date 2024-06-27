@@ -13,11 +13,10 @@ import styles from "./Layout.module.css"
     <title>a11y rapportering</title>
     <link rel="preload" href="https://cdn.nav.no/aksel/@navikt/ds-css/6.10.0/index.min.css" as="style" />
     <link rel="stylesheet" href="https://cdn.nav.no/aksel/@navikt/ds-css/6.10.0/index.min.css" />
-    <link rel="stylesheet" href="/styles/global.css">
 </head>
 <body class="main">
 <Navbar userMail = "eksempel.profil@nav.no"/>
-<div className={styles.content}>
+<div>
     <slot />
 </div>
 <Footer/>
