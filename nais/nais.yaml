@@ -19,7 +19,7 @@ spec:
     min: 2
     max: 4
   ingresses:
-    - "https://a11y-statement-ny.ansatt.nav.no"
+    - "https://a11y-statement-ny.ansatt.dev.nav.no"
   resources:
     limits:
       memory: 768Mi
