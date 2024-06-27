@@ -2,6 +2,7 @@ import {Link } from "@navikt/ds-react";
 import useSWRImmutable from "swr/immutable";
 import {fetcher} from "../../utils/api.client.ts";
 import styles from "./Rapportliste.module.css";
+import {apiUrl} from "@src/urls.ts";
 
 
 
@@ -11,7 +12,7 @@ interface Rapport {
 }
 
 const RapportListe = () => {
-    const { data ,isLoading } = useSWRImmutable({ url: "http://localhost:8787/api",  }, fetcher);
+    const { data ,isLoading } = useSWRImmutable({ url: apiUrl,  }, fetcher);
     console.log(data);
 
     if (isLoading){return  null}
