@@ -1,17 +1,22 @@
-.header {
-    text-align: center;
-    font-family: Arial;
-    font-size: 20px;
-}
+
 
 .headings {
+    display:flex;
+    flex-direction: column;
     text-align: center;
-    font-family: Serif;
+    align-items: center;
+    gap: 15px;
+
 }
 
+.content {
 
+    text-align: center;
+}
 
-
+.btn {
+    margin: auto;
+}
 
 
 

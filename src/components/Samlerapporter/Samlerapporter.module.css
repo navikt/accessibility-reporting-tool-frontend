@@ -1,12 +1,16 @@
 .styledList {
     list-style-type: disc;
-    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0;
-    width: 200px;
     background-color: transparent;
     /* border: 1px solid #ccc;   */
     /* border-radius: 5px;  */
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    grid-column-gap: 20px;
+    width: 80%;
+
 }
 
 
