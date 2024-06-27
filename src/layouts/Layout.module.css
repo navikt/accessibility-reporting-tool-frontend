@@ -14,3 +14,8 @@ html, body {
     height: 200vh;
 }
 
+.page {
+    width: 100%;
+    height: auto;
+    min-height: 70%;
+}

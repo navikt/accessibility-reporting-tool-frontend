@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
+import styles from "./Layout.module.css"
 ---
 <!doctype html>
 <html lang="no">
@@ -15,7 +16,7 @@ import Footer from '../components/footer/Footer';
 </head>
 <body class="main">
 <Navbar userMail = "eksempel.profil@nav.no"/>
-<div>
+<div class={styles.page}>
     <slot />
 </div>
 <Footer/>
