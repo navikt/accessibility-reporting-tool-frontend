@@ -9,7 +9,7 @@ api.use("/*", cors({
   credentials: true,
 }));
 
-api.get('/api', (c) => {
+api.get('/api/reports/list', (c) => {
   return c.json([
       {
         navn: "TestNavn",
@@ -82,7 +82,7 @@ api.get('/teams', (c) => {
         }
     ]);})
 
-api.get('/samlerapporter', (c) => {
+api.get('/api/reports/summary', (c) => {
       return c.json([
           {
               navn: "Nav",

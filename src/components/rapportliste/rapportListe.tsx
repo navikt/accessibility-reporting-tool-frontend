@@ -12,7 +12,7 @@ interface Rapport {
 }
 
 const RapportListe = () => {
-    const { data ,isLoading } = useSWRImmutable({ url: apiUrl,  }, fetcher);
+    const { data ,isLoading } = useSWRImmutable({ url: `${apiUrl}/reports/list`,  }, fetcher);
     console.log(data);
 
     if (isLoading){return  null}
