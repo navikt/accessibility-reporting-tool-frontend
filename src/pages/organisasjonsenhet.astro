@@ -2,8 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import TeamListe from "../components/teamliste/TeamListe";
 import styles from "./_organisasjonsenhet.module.css"
+import { Button } from "@navikt/ds-react";
+import { PersonPlusIcon } from '@navikt/aksel-icons';
+import AddOrgBtn from "../components/AddOrgBtn";
 ---
 <Layout>
-    <h1 className={styles.orgHeader}>Organisasjonsenhet</h1>
+    <header className={styles.orgHeader}>
+        <h1 className={styles.h}>Organisasjonsenhet</h1>
+        <AddOrgBtn/>
+    </header>
     <TeamListe client:only="react"/>
 </Layout>

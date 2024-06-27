@@ -7,7 +7,7 @@ function Navbar(props: { userMail: String; }){
 
 
     return(
-        <div className={styles.navBarContainer}>
+        <header className={styles.navBarContainer}>
             <ul className={styles.navBarP1}>
                 <li><Link underline = {false} variant = "neutral" href="/">Forside</Link></li>
                 <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">Organisasjonsenhet</Link></li>
@@ -18,7 +18,7 @@ function Navbar(props: { userMail: String; }){
                 <li><p>Innlogget som <strong>{userMail}</strong></p></li>
                 <li className={styles.utlogging}><Link underline = {false} href="#"><LeaveIcon></LeaveIcon>Logg Ut</Link></li>
             </ul>
-        </div>
+        </header>
     )
 }
 
