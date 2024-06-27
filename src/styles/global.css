@@ -9,7 +9,3 @@ html, body {
     padding: 20px;
     height: 200vh;
 }
-
-.content {
-    overflow: scroll;
-}

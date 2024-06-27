@@ -1,6 +1,9 @@
-import { Link, VStack } from "@navikt/ds-react";
+import {Link } from "@navikt/ds-react";
 import useSWRImmutable from "swr/immutable";
-import {fetcher} from "@src/utils/api.client.ts";
+import {fetcher} from "../../utils/api.client.ts";
+import styles from "./Rapportliste.module.css";
+
+
 
 interface Rapport {
     navn: string;
@@ -12,13 +15,12 @@ const RapportListe = () => {
     console.log(data);
 
     if (isLoading){return  null}
-
     return (
-        <VStack gap="3" align="start">
-            <ul>
+        <div>
+             <ul className={styles.styledList}>
                 {data.map((rapport: Rapport) => {
                     return (
-                        <li key={rapport.navn}>
+                        <li key={rapport.navn} className={styles.styledlistItem}>
                             <Link href={rapport.url} variant="action">
                                 {rapport.navn}
                             </Link>
@@ -26,8 +28,8 @@ const RapportListe = () => {
                     )
                 })}
             </ul>
-        </VStack>
+        </div>
+
 );
 };
-
 export default RapportListe;
