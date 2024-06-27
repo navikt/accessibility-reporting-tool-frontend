@@ -1,7 +1,3 @@
-html{
-    background-color: var(--a-gray-100);
-}
-
 html, body {
     height: 100%;
     overflow: auto;
@@ -12,8 +8,4 @@ html, body {
 .main {
     padding: 20px;
     height: 200vh;
-}
-
-.content {
-    overflow: scroll;
 }
