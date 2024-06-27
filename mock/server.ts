@@ -30,22 +30,74 @@ api.get('/api', (c) => {
   ]);
 });
 
-api.get('/samlerapporter', (c) => {
+api.get('/teams', (c) => {
     return c.json([
         {
-            navn: "Nav",
-            url: "https://www.nav.no/test-rapport"
+            navn: "Team Nav.no",
+            url: "/team"
         },
         {
-            navn: "nav.no",
-            url: "https://www.nav.no/test-rapport"
+            navn: "Min side",
+            url: "/team"
         },
         {
-            navn: "Samlet rapport for nav.no",
-            url: "https://www.nav.no/test-rapport"
+            navn: "Team test",
+            url: "/team"
         },
-    ]);
-});
+        {
+            navn: "Team ikkefins",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull",
+            url: "/team"
+        },
+        {
+            navn: "Team tull, men med lenger navn...",
+            url: "/team"
+        }
+    ]);})
+
+api.get('/samlerapporter', (c) => {
+      return c.json([
+          {
+              navn: "Nav",
+              url: "https://www.nav.no/test-rapport"
+          },
+          {
+              navn: "nav.no",
+              url: "https://www.nav.no/test-rapport"
+          },
+          {
+              navn: "Samlet rapport for nav.no",
+              url: "https://www.nav.no/test-rapport"
+          },
+      ]);
+  });
 
 serve( {
   fetch: api.fetch,
