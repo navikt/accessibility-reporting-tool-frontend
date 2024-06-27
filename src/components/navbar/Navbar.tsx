@@ -2,8 +2,10 @@ import {Link} from "@navikt/ds-react";
 import styles from "./Navbar.module.css"
 import {LeaveIcon} from "@navikt/aksel-icons";
 
-function Navbar(props: { userMail: String; }){
-    let userMail = props.userMail;
+type NavBarProps ={
+    userMail: String
+}
+function Navbar( { userMail }:NavBarProps){
 
 
     return(
