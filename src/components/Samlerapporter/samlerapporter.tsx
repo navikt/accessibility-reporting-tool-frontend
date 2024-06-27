@@ -1,4 +1,4 @@
-import { Link, VStack } from "@navikt/ds-react";
+import { Link } from "@navikt/ds-react";
 import useSWRImmutable from "swr/immutable";
 import {fetcher} from "@src/utils/api.client.ts";
 import styles from "./Samlerapporter.module.css";
