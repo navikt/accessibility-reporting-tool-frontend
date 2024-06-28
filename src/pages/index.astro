@@ -1,18 +1,37 @@
 ---
-import styles from "./_rapportlisteSide.module.css";
-import {Heading} from "@navikt/ds-react";
+import styles from "./_index.module.css";
+import {Heading, Link} from "@navikt/ds-react";
 import Layout from "../layouts/Layout.astro";
 import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
+import { WrenchIcon, ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
 ---
 <Layout>
+    <section class={styles.section1}>
+        <section class={styles.innerSection1}>
+            <Heading size="xlarge">a11y rapporteringsverktøy for NAV</Heading>
+            <p class={styles.text}>
+                Dette rapporteringsverktøyet er designet for å styrke NAVs innsats for å sikre universell
+                tilgjengelighet på sine digitale plattformer.
+            </p>
+            <AddErklaeringBtn/>
+        </section>
+    </section>
+    <section class={styles.section2}>
 
-    <header class={styles.headings}>
-        <Heading size="xlarge">a11y</Heading>
-        <Heading size="large">Rapporteringsverktøy for NAV</Heading>
-        <AddErklaeringBtn/>
-    </header>
+        <article class={styles.article}>
+            <WrenchIcon title="wrench icon" fontSize="3rem"/>
+            <Heading size="medium">Verktøy</Heading>
+            <p class={styles.verktoyTekst}>Dette er noen av verktøyene vi anbefaler for rapportering</p>
+        </article> <!-- Lage ny side her? -->
 
-    <section class={styles.content}>
+        <article class={styles.article}>
+            <ComponentIcon title="code icon" fontSize="3rem"/>
+            <Heading size="medium">Les mer på <Link href="https://aksel.nav.no/">Aksel.no</Link></Heading>
+        </article>
 
+        <article class={styles.article}>
+            <FigureIcon title="accessibility figure icon" fontSize="3rem"/>
+            <Heading size="medium">Les mer på <Link href="https://www.uutilsynet.no/">uutilsynet.no</Link></Heading>
+        </article>
     </section>
 </Layout>

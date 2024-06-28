@@ -3,7 +3,7 @@ import {Button} from "@navikt/ds-react";
 function AddOrgBtn(){
     return(
 
-    <Button variant="secondary">
+    <Button>
         Lag ny erklæring </Button>
 )}
 
