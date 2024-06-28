@@ -1,0 +1,23 @@
+
+
+.headings {
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.content {
+
+    text-align: center;
+}
+
+.btn {
+    margin: auto;
+}
+
+
+
+

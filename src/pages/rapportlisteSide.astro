@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import RapportListe from "../components/rapportliste/rapportListe"
+import SamletListe from "../components/Samlerapporter/samlerapporter";
+import styles from "./_rapportlisteSide.module.css"
+import {Heading} from "@navikt/ds-react"
+import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
+---
+
+
+<Layout>
+
+    <header class={styles.headings}>
+        <Heading size="xlarge">a11y</Heading>
+        <Heading size="large">Rapporteringsverktøy for NAV</Heading>
+        <AddErklaeringBtn/>
+    </header>
+
+    <section class={styles.content}>
+        <h3>Rapporter for enkeltsider</h3>
+        <RapportListe client:only="react"/>
+        <h3>Samlerapporter</h3>
+        <SamletListe client:only="react"/>
+    </section>
+</Layout>

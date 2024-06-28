@@ -1,23 +1,39 @@
-
-
-.headings {
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    gap: 15px;
-
-}
-
-.content {
-
+.section1{
+    width: 100%;
+    background-color: white;
+    height: auto;
+    min-height: 50vh;
+    padding-top: 10vh;
     text-align: center;
 }
 
-.btn {
-    margin: auto;
+.innerSection1{
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+.text{
+    text-align: justify;
+    font-size: 20px;
+}
 
+.section2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-height: 30vh;
+}
 
+.article{
+    padding: 1rem 0 0 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    width: 30%;
+    align-self: center;
+    min-height: 10rem;
+}
 
+.verktoyTekst{
+    font-size: 20px;
+}
