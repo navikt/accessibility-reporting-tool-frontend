@@ -4,6 +4,7 @@ import useSWRImmutable from "swr/immutable";
 import {apiUrl} from "@src/urls.ts";
 import {fetcher} from "@src/utils/api.client.ts";
 import {useState} from "react";
+import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 
 
 interface Rapport{
@@ -17,7 +18,7 @@ const Searchbar = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Rapport[]>([]);
 
-    const handleSearch = (event: React.ChangeEvent<HTMLFormElement>) => {
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setQuery(value);
 
@@ -33,9 +34,15 @@ const Searchbar = () => {
     if (!data) return <div>Loading...</div>;
     return (
         <div>
-            <form role="search" onChange={handleSearch}  className={styles.searchContainer}>
-                <Search label="Søk på siden" variant="secondary"/>
-            </form>
+            <MagnifyingGlassIcon className={styles.searchIcon}/>
+            <input
+                type="text"
+                value={query}
+                onChange={handleSearch}
+                className={styles.searchInput}
+                placeholder="Søk"
+            />
+
             <ul>
                 {results.map((item) => (
                     <li key={item.navn}>
