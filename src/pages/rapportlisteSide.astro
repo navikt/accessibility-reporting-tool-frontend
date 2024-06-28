@@ -3,7 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import RapportListe from "../components/rapportliste/rapportListe"
 import SamletListe from "../components/Samlerapporter/samlerapporter";
 import styles from "./_rapportlisteSide.module.css"
-import {Button, Heading} from "@navikt/ds-react"
+import {Heading} from "@navikt/ds-react"
+import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
 ---
 
 
@@ -12,7 +13,7 @@ import {Button, Heading} from "@navikt/ds-react"
     <header class={styles.headings}>
         <Heading size="xlarge">a11y</Heading>
         <Heading size="large">Rapporteringsverktøy for NAV</Heading>
-        <Button class={styles.btn} variant="secondary">Lag ny erklæring</Button>
+        <AddErklaeringBtn/>
     </header>
 
     <section class={styles.content}>
