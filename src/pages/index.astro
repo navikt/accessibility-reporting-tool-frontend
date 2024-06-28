@@ -4,15 +4,25 @@ import RapportListe from "../components/rapportliste/rapportListe"
 import SamletListe from "../components/Samlerapporter/samlerapporter";
 import styles from "./_index.module.css"
 import {Button, Heading} from "@navikt/ds-react"
----
+import Searchbar from "../components/Searchbar/searchbar";
 
+
+
+---
 
 <Layout>
 
-    <header class={styles.headings}>
+    <header class={styles.header}>
+        <div class={styles.headings}>
     <Heading size="xlarge">a11y</Heading>
-    <Heading size="large">Rapporteringsverktøy for NAV</Heading>
-    <Button class={styles.btn} variant="secondary">Lag ny erklæring</Button>
+            <Heading size="large">Rapporteringsverktøy for NAV</Heading>
+            <Button class={styles.btn} variant="secondary">Lag ny erklæring</Button>
+        </div>
+        <div class={styles.rightAligned}>
+    <Searchbar client:only="react"/>
+
+        </div>
+
     </header>
 
     <section class={styles.content}>
