@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import RapportListe from "../components/rapportliste/rapportListe"
+import SamletListe from "../components/Samlerapporter/samlerapporter";
+import styles from "./_rapportlisteSide.module.css"
+import {Button, Heading} from "@navikt/ds-react"
+---
+
+
+<Layout>
+
+    <header class={styles.headings}>
+        <Heading size="xlarge">a11y</Heading>
+        <Heading size="large">Rapporteringsverktøy for NAV</Heading>
+        <Button class={styles.btn} variant="secondary">Lag ny erklæring</Button>
+    </header>
+
+    <section class={styles.content}>
+        <h3>Rapporter for enkeltsider</h3>
+        <RapportListe client:only="react"/>
+        <h3>Samlerapporter</h3>
+        <SamletListe client:only="react"/>
+    </section>
+</Layout>
