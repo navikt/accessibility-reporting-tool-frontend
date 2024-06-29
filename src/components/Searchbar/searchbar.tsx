@@ -45,7 +45,7 @@ const Searchbar = () => {
             </form>
             <ul>
                     {results.map((item) => (
-                        <li key={item.navn}>
+                        <li key={item.navn} className={styles.SearchResults}>
                             <a href={item.url}>{item.navn}</a>
                         </li>
 
