@@ -1,3 +1,5 @@
+
+
 .searchContainer {
     display: flex;
     justify-content: flex-end;
@@ -10,12 +12,26 @@
     padding: 8px;
     font-size: 16px;
     width: 200px;
+
+
 }
 
-.searchIcon {
+/*.SearchResults {
+    border: 1px solid #ccc;
+    borderRadius: 8px;
+    padding: 16px;
+    backgroundColor: #f9f9f9
+}*/
+
+/*.SearchBulletRemoval {
+    list-style-type: none;
+    padding: 0;
+}*/
+
+/*.searchIcon {
     width: 32px;
     height:20px;
-}
+}*/
 
 
 

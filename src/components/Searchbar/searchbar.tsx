@@ -18,40 +18,43 @@ const Searchbar = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<Rapport[]>([]);
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearch = (event: React.ChangeEvent<HTMLFormElement>) => {
         const value = event.target.value;
         setQuery(value);
 
         if (value.trim() === '') {
             setResults([]);
+
         } else {
             const filteredData = data?.filter((item: Rapport) =>
                 item.navn.toLowerCase().includes(value.toLowerCase())
             );
             setResults(filteredData || []);
         }
+
+    };
+    const handleClear = () => {
+        setQuery('');
+        setResults([]);
     };
     if (!data) return <div>Loading...</div>;
     return (
         <div>
-            <MagnifyingGlassIcon className={styles.searchIcon}/>
-            <input
-                type="text"
-                value={query}
-                onChange={handleSearch}
-                className={styles.searchInput}
-                placeholder="Søk"
-            />
-
+            <form role="search"  onChange={handleSearch}   >
+                <Search label="Søk" variant="simple" onClear={handleClear} placeholder="Søk"/>
+            </form>
             <ul>
-                {results.map((item) => (
-                    <li key={item.navn}>
-                        <a href={item.url}>{item.navn}</a>
-                    </li>
-                ))}
-            </ul>
+                    {results.map((item) => (
+                        <li key={item.navn}>
+                            <a href={item.url}>{item.navn}</a>
+                        </li>
+
+                    ))}
+
+                </ul>
+
         </div>
-    );
+);
 };
 
 export default Searchbar;
