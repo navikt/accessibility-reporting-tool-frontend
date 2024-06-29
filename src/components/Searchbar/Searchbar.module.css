@@ -23,10 +23,10 @@
     backgroundColor: #f9f9f9
 }
 
-/*.SearchBulletRemoval {
+.SearchBulletRemoval {
     list-style-type: none;
     padding: 0;
-}*/
+}
 
 /*.searchIcon {
     width: 32px;

@@ -43,7 +43,7 @@ const Searchbar = () => {
             <form role="search"  onChange={handleSearch}   >
                 <Search label="Søk" variant="simple" onClear={handleClear} placeholder="Søk"/>
             </form>
-            <ul>
+            <ul className={styles.SearchBulletRemoval}>
                     {results.map((item) => (
                         <li key={item.navn} className={styles.SearchResults}>
                             <a href={item.url}>{item.navn}</a>
