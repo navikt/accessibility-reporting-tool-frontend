@@ -27,6 +27,11 @@
     list-style-type: none;
     padding: 0;
 }
+.FormattingResults {
+    text-decoration: none;
+    color: black;
+
+}
 
 /*.searchIcon {
     width: 32px;

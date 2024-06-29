@@ -4,7 +4,7 @@ import useSWRImmutable from "swr/immutable";
 import {apiUrl} from "@src/urls.ts";
 import {fetcher} from "@src/utils/api.client.ts";
 import {useState} from "react";
-import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
+
 
 
 interface Rapport{
@@ -46,7 +46,7 @@ const Searchbar = () => {
             <ul className={styles.SearchBulletRemoval}>
                     {results.map((item) => (
                         <li key={item.navn} className={styles.SearchResults}>
-                            <a href={item.url}>{item.navn}</a>
+                            <a href={item.url} className={styles.FormattingResults}>{item.navn}</a>
                         </li>
 
                     ))}
