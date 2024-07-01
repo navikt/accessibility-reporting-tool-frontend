@@ -12,6 +12,5 @@ html, body {
 
 .page {
     width: 100%;
-    height: auto;
-    min-height: 80%;
+    min-height: 80vh;
 }

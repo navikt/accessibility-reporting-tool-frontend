@@ -45,27 +45,27 @@ api.get('/teams', (c) => {
             url: "/team"
         },
         {
-            navn: "Team ikkefins",
+            navn: "Team Imaginary",
             url: "/team"
         },
         {
-            navn: "Team tull",
+            navn: "Team Super",
             url: "/team"
         },
         {
-            navn: "Team tull",
+            navn: "Team Loftet",
             url: "/team"
         },
         {
-            navn: "Team tull",
+            navn: "Team Ensom",
             url: "/team"
         },
         {
-            navn: "Team tull",
+            navn: "Team Messi",
             url: "/team"
         },
         {
-            navn: "Team tull",
+            navn: "Team Ronaldo",
             url: "/team"
         },
         {

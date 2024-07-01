@@ -12,6 +12,12 @@
     text-align: left;
     grid-row-gap: 30px;
     list-style: none;
+    box-shadow: var(--a-shadow-small);
 }
+
+.listItem{
+    font-size: 20px;
+}
+
 
 
