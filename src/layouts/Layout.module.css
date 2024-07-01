@@ -9,13 +9,8 @@ html, body {
     padding: 0;
 }
 
-.main {
-    padding: 20px;
-    height: 200vh;
-}
 
 .page {
     width: 100%;
-    height: auto;
-    min-height: 70%;
+    min-height: 80vh;
 }

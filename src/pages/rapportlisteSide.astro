@@ -5,9 +5,9 @@ import SamletListe from "../components/Samlerapporter/samlerapporter";
 import styles from "./_index.module.css"
 import {Button, Heading} from "@navikt/ds-react"
 import Searchbar from "../components/Searchbar/searchbar";
-
-
-
+import styles from "./_rapportlisteSide.module.css"
+import {Heading} from "@navikt/ds-react"
+import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
 ---
 
 <Layout>
@@ -16,7 +16,7 @@ import Searchbar from "../components/Searchbar/searchbar";
         <div class={styles.headings}>
             <Heading size="xlarge">a11y</Heading>
             <Heading size="large">Rapporteringsverktøy for NAV</Heading>
-            <Button class={styles.btn} variant="secondary">Lag ny erklæring</Button>
+            <AddErklaeringBtn/>
         </div>
         <div class={styles.rightAligned}>
             <Searchbar client:only="react"/>
