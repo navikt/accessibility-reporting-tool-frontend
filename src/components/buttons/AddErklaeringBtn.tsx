@@ -1,10 +1,7 @@
-import {Button} from "@navikt/ds-react";
+import { Button } from '@navikt/ds-react';
 
-function AddOrgBtn(){
-    return(
-
-    <Button>
-        Lag ny erklæring </Button>
-)}
+function AddOrgBtn() {
+  return <Button>Lag ny erklæring </Button>;
+}
 
 export default AddOrgBtn;

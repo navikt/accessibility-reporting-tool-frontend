@@ -1,45 +1,39 @@
-
-
 .searchContainer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px;
-    background-color: #f1f1f1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1;
 }
 
 .searchInput {
-    padding: 8px;
-    font-size: 16px;
-    width: 200px;
+  padding: 8px;
+  font-size: 16px;
+  width: 200px;
 }
 
 .SearchResults {
-    border: 1px solid #ccc;
-    borderRadius: 8px;
-    padding: 16px;
-    backgroundColor: #f9f9f9
+  border: 1px solid #ccc;
+  borderradius: 8px;
+  padding: 16px;
+  backgroundcolor: #f9f9f9;
 }
 
 .SearchBulletRemoval {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 .FormattingResults {
-    text-decoration: none;
-    color: black;
-    transition: all 0.3s ease;
-
+  text-decoration: none;
+  color: black;
+  transition: all 0.3s ease;
 }
 
 .FormattingResults:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /*.searchIcon {
     width: 32px;
     height:20px;
 }*/
-
-
-
