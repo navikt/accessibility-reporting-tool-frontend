@@ -15,20 +15,24 @@ api.use(
 api.get('/api/reports/list', (c) => {
   return c.json([
     {
-      navn: 'TestNavn',
+      name: 'TestNavn',
       url: 'https://www.nav.no/test-rapport',
+      date:"20.06.2024"
     },
     {
-      navn: 'Min Side',
+      name: 'Min Side',
       url: 'https://www.nav.no/test-rapport',
+      date:"20.06.2024"
     },
     {
-      navn: 'Aktivitetsplan',
+      name: 'Aktivitetsplan',
       url: 'https://www.nav.no/test-rapport',
+      date:"20.06.2024"
     },
     {
-      navn: 'Barnebidrag',
+      name: 'Barnebidrag',
       url: 'https://www.nav.no/test-rapport',
+      date:"20.06.2024"
     },
   ]);
 });
@@ -89,15 +93,15 @@ api.get('/teams', (c) => {
 api.get('/api/reports/summary', (c) => {
   return c.json([
     {
-      navn: 'Nav',
+      name: 'Nav',
       url: 'https://www.nav.no/test-rapport',
     },
     {
-      navn: 'nav.no',
+      name: 'nav.no',
       url: 'https://www.nav.no/test-rapport',
     },
     {
-      navn: 'Samlet rapport for nav.no',
+      name: 'Samlet rapport for nav.no',
       url: 'https://www.nav.no/test-rapport',
     },
   ]);

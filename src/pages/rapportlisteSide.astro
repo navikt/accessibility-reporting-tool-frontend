@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import RapportListe from "../components/rapportliste/rapportListe"
+import ReportTable from "../components/rapportliste/ReportTable"
 import SamletListe from "../components/Samlerapporter/samlerapporter";
 import {Heading} from "@navikt/ds-react"
 import Searchbar from "../components/Searchbar/searchbar";
@@ -24,7 +24,7 @@ import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
 
     <section class={styles.content}>
         <h3>Rapporter for enkeltsider</h3>
-        <RapportListe client:only="react"/>
+        <ReportTable client:only="react"/>
         <h3>Samlerapporter</h3>
         <SamletListe client:only="react"/>
     </section>
