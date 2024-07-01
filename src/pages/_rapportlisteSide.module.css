@@ -1,4 +1,13 @@
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+
 
 .headings {
     display:flex;
@@ -6,6 +15,8 @@
     text-align: center;
     align-items: center;
     gap: 15px;
+    flex-grow: 1;
+    padding-left: 50px;
 
 }
 
@@ -17,7 +28,7 @@
 .btn {
     margin: auto;
 }
-
-
-
-
+.rightAligned {
+    display: block;
+    align-items: center;
+}

@@ -15,6 +15,7 @@ function Navbar( { userMail }:NavBarProps){
                 <li><Link underline = {false} variant = "neutral" href="/organisasjonsenhet">Organisasjonsenhet</Link></li>
                 <li><Link underline = {false} variant = "neutral" href="/dineerklaeringer">Dine erklæringer</Link></li>
                 <li><Link underline = {false} variant = "neutral" href="/faq">FAQ</Link></li>
+                <li><Link underline = {false} variant = "neutral" href="/rapportlisteSide">Alle rapporter</Link></li>
             </ul>
             <ul className={styles.navBarP2}>
                 <li><p>Innlogget som <strong>{userMail}</strong></p></li>
