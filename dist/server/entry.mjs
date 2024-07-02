@@ -1,5 +1,5 @@
 import { renderers } from './renderers.mjs';
-import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_DI6UGGMb.mjs';
+import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_DczyuGbJ.mjs';
 import { appendForwardSlash as appendForwardSlash$1, joinPaths, trimSlashes, slash, prependForwardSlash, removeTrailingForwardSlash, collapseDuplicateSlashes } from '@astrojs/internal-helpers/path';
 import { R as ROUTE_DATA_SYMBOL, A as AstroError, l as ResponseSentError, n as MiddlewareNoDataOrNextCalled, o as MiddlewareNotAResponse, G as GetStaticPathsRequired, p as InvalidGetStaticPathsReturn, q as InvalidGetStaticPathsEntry, t as GetStaticPathsExpectedParams, u as GetStaticPathsInvalidRouteParam, P as PageNumberParamNotFound, N as NoMatchingStaticPathFound, v as PrerenderDynamicEndpointPathCollide, w as LocalsNotAnObject, x as ASTRO_VERSION, C as ClientAddressNotAvailable, S as StaticClientAddressNotAvailable, y as renderEndpoint, z as ReservedSlotName, B as renderSlotToString, D as renderJSX, F as chunkToString, H as CantRenderPage, J as renderPage$1, K as REROUTE_DIRECTIVE_HEADER } from './chunks/astro_GZDYimvH.mjs';
 import { serialize, parse } from 'cookie';
@@ -2475,14 +2475,14 @@ const serverEntrypointModule = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.de
   start
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const _page0 = () => import('./chunks/node_Bkqjt62p.mjs');
+const _page0 = () => import('./chunks/node_CoYmQ6QR.mjs');
 const _page1 = () => import('./chunks/isAlive_iDlt98mt.mjs');
 const _page2 = () => import('./chunks/isReady_DNSbKsNd.mjs');
-const _page3 = () => import('./chunks/index_BB1EZnhB.mjs');
-const _page4 = () => import('./chunks/dineerklaeringer_CXdJV9jF.mjs');
-const _page5 = () => import('./chunks/organisasjonsenhet_B4W5zk0e.mjs');
-const _page6 = () => import('./chunks/rapportlisteSide_BGb0z-DQ.mjs');
-const _page7 = () => import('./chunks/team_CzVykKzZ.mjs');
+const _page3 = () => import('./chunks/index_9mUTDT_Z.mjs');
+const _page4 = () => import('./chunks/dineerklaeringer_DGRB0iDN.mjs');
+const _page5 = () => import('./chunks/organisasjonsenhet_Be287voR.mjs');
+const _page6 = () => import('./chunks/rapportlisteSide_Dm7QJQol.mjs');
+const _page7 = () => import('./chunks/team_CGlXJvZ4.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/node.js", _page0],
     ["src/pages/api/internal/isAlive.ts", _page1],
@@ -2501,8 +2501,8 @@ const _manifest = Object.assign(manifest, {
 });
 const _args = {
     "mode": "standalone",
-    "client": "file:///Users/nimahakimi/projects/accessibility-reporting-tool-frontend/dist/client/",
-    "server": "file:///Users/nimahakimi/projects/accessibility-reporting-tool-frontend/dist/server/",
+    "client": "file:///Users/Jaspreet.Kaur/IdeaProjects/accessibility-reporting-tool-frontend/dist/client/",
+    "server": "file:///Users/Jaspreet.Kaur/IdeaProjects/accessibility-reporting-tool-frontend/dist/server/",
     "host": false,
     "port": 4321,
     "assets": "_astro"
