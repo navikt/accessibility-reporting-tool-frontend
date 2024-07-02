@@ -1,36 +1,102 @@
-import {Link } from "@navikt/ds-react";
+import { Link, Table } from "@navikt/ds-react";
 import useSWRImmutable from "swr/immutable";
-import {fetcher} from "../../utils/api.client.ts";
+
 import styles from "./Rapportliste.module.css";
-import {apiUrl} from "@src/urls.ts";
-
-
+import { apiUrl } from "@src/urls";
+import { useState } from "react";
+import type { SortState } from "@navikt/ds-react";
 
 interface Rapport {
     navn: string;
     url: string;
+    dato: string;
 }
 
+const fetcher = (url: string): Promise<Rapport[]> =>
+    fetch(url).then((res) => res.json());
+
 const RapportListe = () => {
-    const { data ,isLoading } = useSWRImmutable({ url: `${apiUrl}/reports/list`,  }, fetcher);
+    const { data, isLoading } = useSWRImmutable(`${apiUrl}/reports/list`, fetcher);
+    const [sort, setSort] = useState<SortState | undefined>();
     console.log(data);
 
-    if (isLoading){return  null}
+    const handleSort = (sortKey: string) => {
+        setSort(
+            sort && sortKey === sort.orderBy && sort.direction === "descending"
+                ? undefined
+                : {
+                    orderBy: sortKey,
+                    direction:
+                        sort && sortKey === sort.orderBy && sort.direction === "ascending"
+                            ? "descending"
+                            : "ascending",
+                },
+        );
+    };
+
+    const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
+        if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
+            return -1;
+        }
+        if (a[orderBy] > b[orderBy]) {
+            return 1;
+        }
+        return 0;
+    };
+
+    const sortedData = data?.slice().sort((a: Rapport, b: Rapport) => {
+        if (sort) {
+            return sort.direction === "ascending"
+                ? comparator(a, b, sort.orderBy as keyof Rapport)
+                : comparator(b, a, sort.orderBy as keyof Rapport);
+        }
+        return 0;
+    });
+
+    const format = (date: string) => {
+        const d = new Date(date);
+        const y = d.getFullYear();
+        const m = (d.getMonth() + 1).toString().padStart(2, "0");
+        const day = d.getDate().toString().padStart(2, "0");
+        return `${day}.${m}.${y}`;
+    };
+
+    if (isLoading) return <div>Loading...</div>;
+
     return (
         <div>
-             <ul className={styles.styledList}>
-                {data.map((rapport: Rapport) => {
-                    return (
-                        <li key={rapport.navn} className={styles.styledlistItem}>
-                            <Link href={rapport.url} variant="action">
-                                {rapport.navn}
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
+            <Table sort={sort} onSortChange={(sortKey) => handleSort(sortKey as string)}>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.ColumnHeader sortKey="navn" sortable>
+                            Navn
+                        </Table.ColumnHeader>
+                        <Table.ColumnHeader>
+                            URL
+                        </Table.ColumnHeader>
+                        <Table.ColumnHeader sortKey="dato" sortable>
+                            Dato
+                        </Table.ColumnHeader>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {sortedData?.map((rapport: Rapport) => {
+                        return (
+                            <Table.Row key={rapport.navn}>
+                                <Table.HeaderCell>
+                                    <Link href={rapport.url} variant="action">
+                                        {rapport.navn}
+                                    </Link>
+                                </Table.HeaderCell>
+                                <Table.DataCell>{rapport.url}</Table.DataCell>
+                                <Table.DataCell>{format(rapport.dato)}</Table.DataCell>
+                            </Table.Row>
+                        );
+                    })}
+                </Table.Body>
+            </Table>
         </div>
-
-);
+    );
 };
+
 export default RapportListe;
