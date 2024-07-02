@@ -16,6 +16,7 @@ const fetcher = (url: string): Promise<Rapport[]> =>
     fetch(url).then((res) => res.json());
 
 const RapportListe = () => {
+
     const { data, isLoading } = useSWRImmutable(`${apiUrl}/reports/list`, fetcher);
     const [sort, setSort] = useState<SortState | undefined>();
     console.log(data);
@@ -108,5 +109,7 @@ const RapportListe = () => {
         </div>
     );
 };
+
+
 
 export default RapportListe;

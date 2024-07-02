@@ -12,5 +12,5 @@
       "@src/*": ["src/*"],
       "@language-redirecter/*": ["src/components/language-redirecter/*"]
     }
-  },
+  }
 }

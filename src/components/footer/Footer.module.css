@@ -1,16 +1,14 @@
-.footerContainer{
-    background-color: #003453;
-    bottom: 0;
-    width: 100%;
-    height: 200px;
-    color: white;
-    padding: 32px;
-    font-family: "Source Sans Pro", Arial, sans-serif;
+.footerContainer {
+  background-color: #003453;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  color: white;
+  padding: 32px;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 
-.footer_a{
-    color: white;
-    text-decoration: underline;
+.footer_a {
+  color: white;
+  text-decoration: underline;
 }
-
-
