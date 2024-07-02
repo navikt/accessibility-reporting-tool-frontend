@@ -53,12 +53,22 @@ const RapportListe = () => {
         return 0;
     });
 
-    const format = (date: string) => {
-        const d = new Date(date);
-        const y = d.getFullYear();
-        const m = (d.getMonth() + 1).toString().padStart(2, "0");
-        const day = d.getDate().toString().padStart(2, "0");
-        return `${day}.${m}.${y}`;
+    const format = (dateStr?: string) => {
+        if (!dateStr) {
+            return "No Date Provided"; // Handle undefined or null date
+        }
+
+        console.log("Date String:", dateStr); // Log the date string to see its format
+        const [year, month, day] = dateStr.split('-').map(Number);
+        if (!year || !month || !day) {
+            console.error("Invalid date:", dateStr); // Log the error
+            return "Invalid Date";
+        }
+        const date = new Date(year, month - 1, day);
+        const y = date.getFullYear();
+        const m = (date.getMonth() + 1).toString().padStart(2, "0");
+        const d = date.getDate().toString().padStart(2, "0");
+        return `${d}.${m}.${y}`;
     };
 
     if (isLoading) return <div>Loading...</div>;

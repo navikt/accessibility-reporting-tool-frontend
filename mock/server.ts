@@ -13,19 +13,24 @@ api.get('/api/reports/list', (c) => {
   return c.json([
       {
         navn: "TestNavn",
-        url: "https://www.nav.no/test-rapport"
+        url: "https://www.nav.no/test-rapport",
+          dato: "2024-05-10"
+
       },
       {
           navn: "Min Side",
-          url: "https://www.nav.no/test-rapport"
+          url: "https://www.nav.no/test-rapport",
+          dato: "2024-06-15"
       },
       {
           navn: "Aktivitetsplan",
-          url: "https://www.nav.no/test-rapport"
+          url: "https://www.nav.no/test-rapport",
+          dato: "2024-05-10"
       },
       {
           navn: "Barnebidrag",
-          url: "https://www.nav.no/test-rapport"
+          url: "https://www.nav.no/test-rapport",
+          dato: "2024-04-20"
       },
   ]);
 });
