@@ -1,1 +1,0 @@
-const t=()=>window.location.href.includes("dev.nav.no")?"development":"local",e={local:"http://localhost:8787/api",development:"https://a11y-statement.ekstern.dev.nav.no/api",production:"https://a11y-statement.ekstern.dev.nav.no/api"},n=e[t()];export{n as a};
