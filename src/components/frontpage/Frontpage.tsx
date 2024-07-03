@@ -1,10 +1,11 @@
-import { BodyLong, Button, Heading, Link } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, Link, VStack } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import { Tabs, Select } from '@navikt/ds-react';
 import { useState } from 'react';
 import RapportListe from '@components/rapportliste/rapportListe';
 import { FilePlusIcon } from '@navikt/aksel-icons';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 const userInTeam = true;
 
@@ -18,7 +19,7 @@ function FrontpageWithoutTeam() {
             Dette rapporteringsverktøyet er designet for å styrke NAVs innsats
             for å sikre universell tilgjengelighet på sine digitale plattformer.
           </p>
-          <Button>Lag ny erklæring </Button>
+          <Button>Finn ditt team</Button>
         </section>
       </section>
       <section className={styles.section2}>
@@ -83,6 +84,34 @@ function FrontpageWithTeam({ userName }: UserProps) {
             </section>
             <article className={styles.accessibilityStatusContainer}>
               <Heading size="large">Tilgjengelighetsstatus</Heading>
+              <section className={styles.accessibilityStatusInner}>
+                <aside className={styles.selectStatementContainer}>
+                  <Heading size="medium">Erklæringer</Heading>
+                </aside>
+
+                <PieChart
+                  colors={['red', 'gray', 'green']}
+                  series={[
+                    {
+                      data: [
+                        { value: 70, color: 'green' },
+                        { value: 20, color: 'red' },
+                        { value: 10, color: 'gray' },
+                      ],
+                      innerRadius: 30,
+                      outerRadius: 150,
+                      paddingAngle: 5,
+                      cornerRadius: 5,
+                      startAngle: 0,
+                      endAngle: 360,
+                      cx: 150,
+                      cy: 150,
+                    },
+                  ]}
+                  width={400}
+                  height={400}
+                />
+              </section>
             </article>
             <article className={styles.membersContainer}>
               <Heading size="medium">Medlemmer</Heading>
