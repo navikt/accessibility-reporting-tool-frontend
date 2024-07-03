@@ -14,27 +14,26 @@ api.use(
 
 api.get('/api/reports/list', (c) => {
   return c.json([
-      {
-        navn: "TestNavn",
-        url: "https://www.nav.no/test-rapport",
-          dato: "2024-05-10"
-
-      },
-      {
-          navn: "Min Side",
-          url: "https://www.nav.no/test-rapport",
-          dato: "2024-06-15"
-      },
-      {
-          navn: "Aktivitetsplan",
-          url: "https://www.nav.no/test-rapport",
-          dato: "2024-05-10"
-      },
-      {
-          navn: "Barnebidrag",
-          url: "https://www.nav.no/test-rapport",
-          dato: "2024-04-20"
-      },
+    {
+      navn: 'TestNavn',
+      url: 'https://www.nav.no/test-rapport',
+      dato: '2024-05-10',
+    },
+    {
+      navn: 'Min Side',
+      url: 'https://www.nav.no/test-rapport',
+      dato: '2024-06-15',
+    },
+    {
+      navn: 'Aktivitetsplan',
+      url: 'https://www.nav.no/test-rapport',
+      dato: '2024-05-10',
+    },
+    {
+      navn: 'Barnebidrag',
+      url: 'https://www.nav.no/test-rapport',
+      dato: '2024-04-20',
+    },
   ]);
 });
 
@@ -106,6 +105,14 @@ api.get('/api/reports/summary', (c) => {
       url: 'https://www.nav.no/test-rapport',
     },
   ]);
+});
+
+api.post(`/api/reports/${reportId}`, (c) => {
+  const reportData = c.req.body;
+
+  console.log('Received report data:', reportData);
+
+  return c.json({ message: 'Report received successfully' });
 });
 
 serve({

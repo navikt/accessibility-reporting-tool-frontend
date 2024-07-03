@@ -1,19 +1,41 @@
-import { Radio, RadioGroup } from '@navikt/ds-react';
+import { Textarea, Radio, RadioGroup } from '@navikt/ds-react';
+import { useState } from 'react';
 
-const Criterion = (title: string, description: string) => {
-  const handleChange = (val: string) => console.log(val);
+type CriterionProps = {
+  title: string;
+  description: string;
+  WCAGId: string;
+  state: string;
+};
+
+const Criterion = (criterion: CriterionProps) => {
+  const [currentState, setCurrentState] = useState<string>('');
+  const handleChange = (val: string) => {
+    setCurrentState(val);
+    console.log(val);
+  };
 
   return (
     <div>
       <RadioGroup
-        legend={title}
+        legend={criterion.title}
         onChange={handleChange}
-        description={description}
+        description={criterion.description}
       >
-        <Radio value="10">10-20 år</Radio>
-        <Radio value="20">21-45 år</Radio>
-        <Radio value="40">46-80 år</Radio>
+        <Radio value="yes">Ja</Radio>
+        <Radio value="no">Nei</Radio>
+        <Radio value="notApplicable">Ikke aktuelt</Radio>
       </RadioGroup>
+      {currentState === 'no' ? (
+        <div>
+          <Textarea
+            label="Hva er grunnen til at du mener kriteriet ikke er oppfylt?"
+            description="Her skal du beskrive promblemene dette kriteriet medfører, og inforfomere brukeren om eventuelle workarounds."
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
+
+export default Criterion;
