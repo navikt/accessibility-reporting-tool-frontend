@@ -27,12 +27,10 @@ const Criterion = (criterion: CriterionProps) => {
         <Radio value="notApplicable">Ikke aktuelt</Radio>
       </RadioGroup>
       {currentState === 'no' ? (
-        <div>
-          <Textarea
-            label="Hva er grunnen til at du mener kriteriet ikke er oppfylt?"
-            description="Her skal du beskrive promblemene dette kriteriet medfører, og inforfomere brukeren om eventuelle workarounds."
-          />
-        </div>
+        <Textarea
+          label="Hva er grunnen til at du mener kriteriet ikke er oppfylt?"
+          description="Her skal du beskrive promblemene dette kriteriet medfører, og inforfomere brukeren om eventuelle workarounds."
+        />
       ) : null}
     </div>
   );
