@@ -86,8 +86,7 @@ function FrontpageWithTeam({ userName }: UserProps) {
               <Heading size="large">Tilgjengelighetsstatus</Heading>
               <section className={styles.accessibilityStatusInner}>
                 <aside className={styles.selectStatementContainer}>
-                  <Heading size='medium'>Erklæringer</Heading>
-
+                  <Heading size="medium">Erklæringer</Heading>
                 </aside>
 
                 <PieChart
@@ -95,10 +94,9 @@ function FrontpageWithTeam({ userName }: UserProps) {
                   series={[
                     {
                       data: [
-                        {value: 70, color: 'green'},
-                        {value: 20, color: 'red'},
-                        {value: 10, color: 'gray'}
-                      
+                        { value: 70, color: 'green' },
+                        { value: 20, color: 'red' },
+                        { value: 10, color: 'gray' },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
@@ -108,14 +106,12 @@ function FrontpageWithTeam({ userName }: UserProps) {
                       endAngle: 360,
                       cx: 150,
                       cy: 150,
-                    }
+                    },
                   ]}
                   width={400}
                   height={400}
                 />
-
               </section>
-
             </article>
             <article className={styles.membersContainer}>
               <Heading size="medium">Medlemmer</Heading>
