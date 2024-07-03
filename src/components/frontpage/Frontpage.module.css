@@ -58,9 +58,27 @@
 }
 
 
-.selector{
+.selector, .selector2{
     width: 20%;
-    margin-top: 40px;
+}
+
+.selector{margin-top: 20px;}
+
+.myTeamHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.myReportsHeader{
+    display: flex;
+    justify-content: right;
+}
+
+.addStatementBtn{
+    margin-top: 52px;
+    margin-bottom: 20px;
 }
 
 .gridWrapper{
@@ -106,4 +124,10 @@
     background-color: white;
     padding: 16px;
     border-radius: 10px;
+}
+
+.myReportsContainer>section{
+    display: flex;
+    justify-content: space-between;
+
 }
