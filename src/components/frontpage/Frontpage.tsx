@@ -75,7 +75,7 @@ function FrontpageWithTeam({ userName }: UserProps) {
               <option value="teamInkludering">Team Inkludering</option>
               <option value="teamMats">Team Mats</option>
             </Select>
-            <Button icon={<FilePlusIcon/>}>Lag ny erklæring</Button>
+            <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
           <section className={styles.gridWrapper}>
             <section className={styles.lastChanges}>
@@ -102,17 +102,19 @@ function FrontpageWithTeam({ userName }: UserProps) {
           value="mineRapporter"
           className="h-24 w-full bg-gray-50 p-4"
         >
-            <header className={styles.myReportsHeader}>
-          <Button icon={<FilePlusIcon/>} className={styles.addStatementBtn}>Lag ny erklæring</Button>
+          <header className={styles.myReportsHeader}>
+            <Button icon={<FilePlusIcon />} className={styles.addStatementBtn}>
+              Lag ny erklæring
+            </Button>
           </header>
           <section className={styles.myReportsContainer}>
             <section>
-            <Heading size="large">Mine rapporter</Heading>
-            <Select className={styles.selector2} label="">
-              <option value="">Velg team</option>
-              <option value="teamInkludering">Team Inkludering</option>
-              <option value="teamMats">Team Mats</option>
-            </Select>
+              <Heading size="large">Mine rapporter</Heading>
+              <Select className={styles.selector2} label="">
+                <option value="">Velg team</option>
+                <option value="teamInkludering">Team Inkludering</option>
+                <option value="teamMats">Team Mats</option>
+              </Select>
             </section>
 
             <RapportListe />
