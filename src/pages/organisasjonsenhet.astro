@@ -2,12 +2,17 @@
 import Layout from "../layouts/Layout.astro";
 import TeamListe from "../components/teamliste/TeamListe";
 import styles from "./_organisasjonsenhet.module.css"
-import AddOrgBtn from "../components/buttons/AddOrgBtn";
+
+import ModalElement from "../components/Modal/Modal";
+
 ---
 <Layout>
     <header class={styles.orgHeader}>
         <h1 class={styles.h}>Organisasjonsenhet</h1>
-        <AddOrgBtn/>
+        <ModalElement client:only="react" />
+        <!--<AddOrgBtn onclick="ModalElement" />-->
     </header>
     <TeamListe client:only="react"/>
+
+
 </Layout>
