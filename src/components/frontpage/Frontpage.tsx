@@ -54,6 +54,10 @@ type UserProps = {
   userName: String;
 };
 
+{
+  //    ******  KODEN UNDER HER BESTEMMER HVA SOM VISES HVIS BRUKEREN ER MEDLEM AV MINST ETT TEAM  ******
+}
+
 function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
 
@@ -94,9 +98,9 @@ function FrontpageWithTeam({ userName }: UserProps) {
                   series={[
                     {
                       data: [
-                        { value: 70, color: 'green', label: 'Oppfylt' },
-                        { value: 20, color: 'red', label: 'Ikke oppfylt' },
-                        { value: 10, color: 'gray', label: 'Ikke aktuelt' },
+                        { value: 70, color: 'green', label: 'Oppfylt (%)' },
+                        { value: 20, color: 'red', label: 'Ikke oppfylt (%)' },
+                        { value: 10, color: 'gray', label: 'Ikke aktuelt (%)' },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
@@ -106,7 +110,7 @@ function FrontpageWithTeam({ userName }: UserProps) {
                       endAngle: 360,
                     },
                   ]}
-                  width={500}
+                  width={550}
                   height={300}
                 />
               </section>

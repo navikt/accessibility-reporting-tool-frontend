@@ -78,6 +78,7 @@ const RapportListe = () => {
   return (
     <div>
       <Table
+        size="large"
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as string)}
       >
