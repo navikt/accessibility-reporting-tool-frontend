@@ -1,0 +1,109 @@
+/*  Styling under er det som vises hvis en bruker ikke er med i noe team   */
+
+.section1 {
+    width: 100%;
+    background-color: white;
+    height: auto;
+    min-height: 50vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.innerSection1 {
+    width: 20vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text {
+    text-align: justify;
+    font-size: 20px;
+}
+
+.section2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-height: 30vh;
+    height: auto;
+    align-items: center;
+}
+
+.article {
+    padding: 1rem 0 0 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    width: 30%;
+    min-height: 10rem;
+    box-shadow: var(--a-shadow-small);
+}
+
+.verktoyTekst {
+    font-size: 20px;
+}
+
+
+/*  Styling under er for det som vises til brukere som er med i et team   */
+
+.teamContent{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.h1 {
+    color: var(--a-blue-800);
+}
+
+
+.selector{
+    width: 20%;
+    margin-top: 40px;
+}
+
+.gridWrapper{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 1000px;
+    display: grid;
+    gap: 16px;
+    grid-template-areas: 
+    'top top top top top'
+    'mid mid mid mid mid2'
+    'bot bot bot bot bot'
+    ;
+}
+
+.gridWrapper > section, article{
+    background-color: white;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.lastChanges{
+    min-height: 80px;
+    grid-area: top;
+}
+
+.accessibilityStatusContainer{
+    min-height: 160px;
+    grid-area: mid;
+}
+
+.membersContainer{
+    min-height: 160px;
+    grid-area: mid2;
+}
+
+.reportsContainer{
+    min-height: 120px;
+    grid-area: bot;
+}
+
+.myReportsContainer{
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+}
