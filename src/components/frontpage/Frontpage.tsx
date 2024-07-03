@@ -94,26 +94,25 @@ function FrontpageWithTeam({ userName }: UserProps) {
                   series={[
                     {
                       data: [
-                        { value: 70, color: 'green' },
-                        { value: 20, color: 'red' },
-                        { value: 10, color: 'gray' },
+                        { value: 70, color: 'green', label: 'Oppfylt' },
+                        { value: 20, color: 'red', label: 'Ikke oppfylt' },
+                        { value: 10, color: 'gray', label: 'Ikke aktuelt' },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
-                      paddingAngle: 5,
+                      paddingAngle: 3,
                       cornerRadius: 5,
                       startAngle: 0,
                       endAngle: 360,
-                      cx: 150,
-                      cy: 150,
                     },
                   ]}
-                  width={400}
-                  height={400}
+                  width={500}
+                  height={300}
                 />
               </section>
             </article>
             <article className={styles.membersContainer}>
+              <Heading size="medium">Admin</Heading>
               <Heading size="medium">Medlemmer</Heading>
             </article>
             <section className={styles.reportsContainer}>
