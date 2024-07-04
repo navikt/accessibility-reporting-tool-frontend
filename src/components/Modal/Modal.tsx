@@ -3,7 +3,7 @@ import { Button, Modal, TextField } from "@navikt/ds-react";
 import AddOrgBtn from "@components/buttons/AddOrgBtn.tsx";
 
 interface ModalElementProps {
-    onAddTeam: (newTeam: Team) => void;
+    onAddTeam?: (newTeam: Team) => void;
 }
 
 interface Team {
@@ -47,9 +47,11 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
             const responseData = await response.json();
             console.log('Created Team:', responseData.team);
-            onAddTeam(responseData.team);
+            if (onAddTeam) {
+                onAddTeam(responseData.team);
+            }
 
-            // Reset form fields and close modal
+
             setTeamName("");
             setTeamEmail("");
             setMembers([""]);
@@ -103,7 +105,13 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button type="submit" form="teamForm">Send</Button>
+                    <Button
+                        type="submit"
+                        form="teamForm"
+                        /*onClick={() => {
+                            ref.current?.close();
+                        }}*/
+                    >Send</Button>
                     <Button
                         type="button"
                         variant="secondary"

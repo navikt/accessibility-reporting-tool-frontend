@@ -82,7 +82,7 @@ const teams = [
     },
 ];
 
-// Route to get the list of teams
+
 api.get('/teams', (c) => {
     return c.json(teams);
 });
@@ -112,17 +112,10 @@ api.get('/api/reports/list', (c) => {
     ]);
 });
 
-api.post('/teams/new', async (c) => {
-    try {
-        const newTeam = await c.req.json();
-        console.log('New Team:', newTeam);
-        teams.push(newTeam); // Push the new team to the teams array
-        return c.json({ message: 'Team created successfully', team: newTeam });
-    } catch (error) {
-        console.error('Error parsing JSON:', error);
-        return c.json({ error: 'Error parsing JSON' }, 400);
-    }
-});
+
+
+api.post('/teams/new', (c) => {
+    return c.text("oppretter")})
 
 api.get('/api/reports/summary', (c) => {
     return c.json([

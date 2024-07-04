@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/api.client.ts';
@@ -17,37 +17,42 @@ const TeamListe = () => {
       { url: 'http://localhost:8787/teams' },
       fetcher,
   );
-  const [newTeams, setNewTeams] = useState<Team[]>([]);
+    console.log(data);
+    const handleAddTeam = async (newTeam: Team) => {
+        try {
 
-  const handleAddTeam = (newTeam: Team) => {
-    setNewTeams([...newTeams, newTeam]);
-    mutate([...data, newTeam], false);
-  };
+            mutate((currentData: Team[] | undefined) => {
+                if (!currentData) return [newTeam];
+                return [...currentData, newTeam];
+            }, false);
+        } catch (error) {
+            console.error('Error adding team:', error);
+        }
+    };
 
-  if (isLoading) {
+
+
+    if (isLoading) {
     return null;
   }
+
 
   return (
       <div>
           <div className={styles.TeamListeContainer}>
-        <ModalElement onAddTeam={handleAddTeam} />
+        <ModalElement onAddTeam={handleAddTeam}/>
           </div>
         <ul className={styles.list}>
-          {data.map((team: Team) => (
-              <li key={team.navn} className={styles.listItem}>
+            {data.map((team: Team) => {
+                return (
+                <li key={team.navn} className={styles.listItem}>
                 <Link href={team.url} variant="neutral">
                   {team.navn}
                 </Link>
               </li>
-          ))}
-          {newTeams.map((team: Team) => (
-              <li key={team.navn} className={styles.listItem}>
-                <Link href={team.url} variant="neutral">
-                  {team.navn}
-                </Link>
-              </li>
-          ))}
+          );
+            })}
+
         </ul>
       </div>
   );
