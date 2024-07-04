@@ -18,3 +18,12 @@
 .listItem {
   font-size: 20px;
 }
+
+.TeamListeContainer {
+
+  position: absolute;
+  top: 120px;
+  right: 0;
+}
+
+
