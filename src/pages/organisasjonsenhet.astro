@@ -2,9 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import TeamListe from "../components/teamliste/TeamListe";
 import styles from "./_organisasjonsenhet.module.css"
-
-
-
 ---
 <Layout>
     <header class={styles.orgHeader}>
@@ -12,6 +9,5 @@ import styles from "./_organisasjonsenhet.module.css"
 
     </header>
     <TeamListe client:only="react"/>
-
 
 </Layout>

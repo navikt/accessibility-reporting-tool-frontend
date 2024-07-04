@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Button, Modal, TextField } from "@navikt/ds-react";
+import {useRef, useState} from "react";
+import {Button, Modal, TextField} from "@navikt/ds-react";
 import AddOrgBtn from "@components/buttons/AddOrgBtn.tsx";
 
 interface ModalElementProps {
@@ -13,7 +13,7 @@ interface Team {
     members?: string[];
 }
 
-const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+const ModalElement: React.FC<ModalElementProps> = ({onAddTeam}) => {
     const ref = useRef<HTMLDialogElement>(null);
     const [teamName, setTeamName] = useState("");
     const [teamEmail, setTeamEmail] = useState("");
@@ -30,7 +30,12 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
         console.log("Members:", members);
 
         const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
-        const newTeam: Team = { navn: teamName, url: `/team/${urlFriendlyName}`, email: teamEmail, members: members.filter(member => member) };
+        const newTeam: Team = {
+            navn: teamName,
+            url: `/team/${urlFriendlyName}`,
+            email: teamEmail,
+            members: members.filter(member => member)
+        };
 
         try {
             const response = await fetch('http://localhost:8787/teams/new', {
@@ -63,9 +68,9 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
     return (
         <div className="py-12">
-            <AddOrgBtn onClick={() => ref.current?.showModal()} />
+            <AddOrgBtn onClick={() => ref.current?.showModal()}/>
 
-            <Modal ref={ref} header={{ heading: "Legg Til Organisasjonsenhet" }} width={400}>
+            <Modal ref={ref} header={{heading: "Legg Til Organisasjonsenhet"}} width={400}>
                 <Modal.Body>
                     <form id="teamForm" onSubmit={handleSubmit}>
                         <TextField
@@ -98,7 +103,7 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
                                 e.preventDefault();
                                 addMemberField();
                             }}
-                            style={{ display: 'block', marginTop: '1rem' }}
+                            style={{display: 'block', marginTop: '1rem'}}
                         >
                             Legg til medlem
                         </a>
