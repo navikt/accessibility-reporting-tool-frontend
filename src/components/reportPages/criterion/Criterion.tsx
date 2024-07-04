@@ -4,7 +4,7 @@ import type { CriterionProps } from '@src/types';
 import styles from './Criterion.module.css';
 
 const Criterion = (criterion: CriterionProps) => {
-  const [currentState, setCurrentState] = useState<string>('');
+  const [currentState, setCurrentState] = useState<string>(criterion.state);
   const handleChange = (val: string) => {
     setCurrentState(val);
     console.log(val);
