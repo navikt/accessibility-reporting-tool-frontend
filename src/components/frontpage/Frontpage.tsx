@@ -70,13 +70,14 @@ function FrontpageWithTeam({ userName }: UserProps) {
   console.log(data);
   console.log(data?.author);
 
-  let successCriteriaCount = 48;
+  let successCriteriaCount = 0;
+  successCriteriaCount = data?.successCriteria.length-1; 
 
   let red = 0;
   let green = 0;
   let gray = 0;
 
-  for (let i = 0; i < successCriteriaCount; i++) {
+  for (let i = 0; i <= successCriteriaCount; i++) {
     if (data?.successCriteria[i]['status'] == 'NOT_TESTED') {
       red++;
     } else if (data?.successCriteria[i]['status'] == '') {
