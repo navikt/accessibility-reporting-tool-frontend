@@ -71,7 +71,7 @@ function FrontpageWithTeam({ userName }: UserProps) {
   console.log(data?.author);
 
   let successCriteriaCount = 0;
-  successCriteriaCount = data?.successCriteria.length-1; 
+  successCriteriaCount = data?.successCriteria.length - 1;
 
   let red = 0;
   let green = 0;
