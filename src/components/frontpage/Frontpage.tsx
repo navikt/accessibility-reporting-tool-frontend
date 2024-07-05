@@ -70,31 +70,26 @@ function FrontpageWithTeam({ userName }: UserProps) {
   console.log(data);
   console.log(data?.author);
 
- 
   let successCriteriaCount = 48;
 
   let red = 0;
   let green = 0;
   let gray = 0;
 
-  for(let i=0; i < successCriteriaCount; i++){
-    if(data?.successCriteria[i]["status"] == "NOT_TESTED"){
-        red++;
-    }
-    else if(data?.successCriteria[i]["status"] == ""){
-        green++;
-    }
-    else{
+  for (let i = 0; i < successCriteriaCount; i++) {
+    if (data?.successCriteria[i]['status'] == 'NOT_TESTED') {
+      red++;
+    } else if (data?.successCriteria[i]['status'] == '') {
+      green++;
+    } else {
       gray++;
     }
+  }
+  console.log(red);
 
-}
-console.log(red);
-
-  if(isLoading){
+  if (isLoading) {
     return null;
   }
-
 
   return (
     <main className={styles.teamContent}>
@@ -135,7 +130,11 @@ console.log(red);
                       data: [
                         { value: gray, color: 'green', label: 'Oppfylt (%)' },
                         { value: red, color: 'red', label: 'Ikke oppfylt (%)' },
-                        { value: green, color: 'gray', label: 'Ikke aktuelt (%)' },
+                        {
+                          value: green,
+                          color: 'gray',
+                          label: 'Ikke aktuelt (%)',
+                        },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
