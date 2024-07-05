@@ -2,27 +2,16 @@ import { BodyLong, Button, Heading, Link, VStack } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import { Tabs, Select } from '@navikt/ds-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RapportListe from '@components/rapportliste/rapportListe';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts/PieChart';
 import useSWRImmutable from 'swr/immutable';
-import { fetcher } from '@src/utils/api.client.ts';
+import { apiUrl } from '@src/urls';
 
 const userInTeam = true;
 
 function FrontpageWithoutTeam() {
-  const { data, isLoading } = useSWRImmutable(
-    { url: 'http://localhost:8787/testRapport' },
-    fetcher,
-  );
-
-  console.log(data);
-
-  if (isLoading) {
-    return null;
-  }
-
   return (
     <main>
       <section className={styles.section1}>
@@ -71,8 +60,37 @@ type UserProps = {
   //    ******  KODEN UNDER HER BESTEMMER HVA SOM VISES HVIS BRUKEREN ER MEDLEM AV MINST ETT TEAM  ******
 }
 
+const fetcher = (url: string): Promise<any> =>
+  fetch(url).then((res) => res.json());
+
 function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
+  const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
+
+  console.log(data);
+  console.log(data?.author);
+
+  let successCriteriaCount = 0;
+  successCriteriaCount = data?.successCriteria.length - 1;
+
+  let red = 0;
+  let green = 0;
+  let gray = 0;
+
+  for (let i = 0; i <= successCriteriaCount; i++) {
+    if (data?.successCriteria[i]['status'] == 'NOT_TESTED') {
+      red++;
+    } else if (data?.successCriteria[i]['status'] == '') {
+      green++;
+    } else {
+      gray++;
+    }
+  }
+  console.log(red);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <main className={styles.teamContent}>
@@ -111,9 +129,13 @@ function FrontpageWithTeam({ userName }: UserProps) {
                   series={[
                     {
                       data: [
-                        { value: 70, color: 'green', label: 'Oppfylt (%)' },
-                        { value: 20, color: 'red', label: 'Ikke oppfylt (%)' },
-                        { value: 10, color: 'gray', label: 'Ikke aktuelt (%)' },
+                        { value: gray, color: 'green', label: 'Oppfylt (%)' },
+                        { value: red, color: 'red', label: 'Ikke oppfylt (%)' },
+                        {
+                          value: green,
+                          color: 'gray',
+                          label: 'Ikke aktuelt (%)',
+                        },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
