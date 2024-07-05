@@ -9,22 +9,19 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/api.client.ts';
 
-const userInTeam = false;
+const userInTeam = true;
 
 function FrontpageWithoutTeam() {
-
-  
   const { data, isLoading } = useSWRImmutable(
     { url: 'http://localhost:8787/testRapport' },
     fetcher,
   );
-  
+
   console.log(data);
 
   if (isLoading) {
     return null;
   }
-
 
   return (
     <main>

@@ -18,7 +18,6 @@ const TeamListe = () => {
   if (isLoading) {
     return null;
   }
-  
 
   return (
     <ul className={styles.list}>
