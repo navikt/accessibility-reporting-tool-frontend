@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
+import * as jsonFile from './report.json';
 
 const api = new Hono();
 
@@ -83,6 +84,7 @@ const teams = [
 ];
 
 
+
 api.get('/teams', (c) => {
     return c.json(teams);
 });
@@ -132,6 +134,14 @@ api.get('/api/reports/summary', (c) => {
             url: 'https://www.nav.no/test-rapport',
         },
     ]);
+});
+
+api.get('/testRapport', (c) => {
+  return c.json(
+    {
+      jsonFile
+    },
+  );
 });
 
 serve({
