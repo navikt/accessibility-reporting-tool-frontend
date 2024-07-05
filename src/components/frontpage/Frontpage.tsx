@@ -2,26 +2,16 @@ import { BodyLong, Button, Heading, Link, VStack } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import { Tabs, Select } from '@navikt/ds-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RapportListe from '@components/rapportliste/rapportListe';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts/PieChart';
 import useSWRImmutable from 'swr/immutable';
-import { fetcher } from '@src/utils/api.client.ts';
+import { apiUrl } from '@src/urls';
 
 const userInTeam = true;
 
 function FrontpageWithoutTeam() {
-  const { data, isLoading } = useSWRImmutable(
-    { url: 'http://localhost:8787/testRapport' },
-    fetcher,
-  );
-
-  console.log(data);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <main>
@@ -71,8 +61,41 @@ type UserProps = {
   //    ******  KODEN UNDER HER BESTEMMER HVA SOM VISES HVIS BRUKEREN ER MEDLEM AV MINST ETT TEAM  ******
 }
 
+const fetcher = (url: string): Promise<any> =>
+  fetch(url).then((res) => res.json());
+
 function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
+  const { data, isLoading } = useSWRImmutable(
+    `${apiUrl}/testRapport`,
+    fetcher,
+  );
+
+  console.log(data);
+  const [jsonReport, setJsonReport] = useState({data});
+  console.log(jsonReport);
+
+
+  {/*
+  let successCriteriaCount = 48;
+
+  let red = 0;
+  let green = 0;
+  let gray = 0;
+
+  for(let i=0; i < successCriteriaCount; i++){
+    if(jsonReport.data.successCriteria[i]["status"] == "NOT_TESTED"){
+        red++;
+    }
+    else if(jsonReport.data.successCriteria[i]["status"] == ""){
+        green++;
+    }
+    else{
+      gray++;
+    }
+
+}
+*/}
 
   return (
     <main className={styles.teamContent}>
