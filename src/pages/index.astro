@@ -1,37 +1,9 @@
 ---
 import styles from "./_index.module.css";
-import {Heading, Link} from "@navikt/ds-react";
 import Layout from "../layouts/Layout.astro";
-import AddErklaeringBtn from "../components/buttons/AddErklaeringBtn";
-import { WrenchIcon, ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
+import ConditionalFrontpage from "@components/frontpage/Frontpage";
 ---
+
 <Layout>
-    <section class={styles.section1}>
-        <section class={styles.innerSection1}>
-            <Heading size="xlarge">a11y rapporteringsverktøy for NAV</Heading>
-            <p class={styles.text}>
-                Dette rapporteringsverktøyet er designet for å styrke NAVs innsats for å sikre universell
-                tilgjengelighet på sine digitale plattformer.
-            </p>
-            <AddErklaeringBtn/>
-        </section>
-    </section>
-    <section class={styles.section2}>
-
-        <article class={styles.article}>
-            <WrenchIcon title="wrench icon" fontSize="3rem"/>
-            <Heading size="medium">Verktøy</Heading>
-            <p class={styles.verktoyTekst}>Dette er noen av verktøyene vi anbefaler for rapportering</p>
-        </article> <!-- Lage ny side her? -->
-
-        <article class={styles.article}>
-            <ComponentIcon title="code icon" fontSize="3rem"/>
-            <Heading size="medium">Les mer på <Link href="https://aksel.nav.no/">Aksel.no</Link></Heading>
-        </article>
-
-        <article class={styles.article}>
-            <FigureIcon title="accessibility figure icon" fontSize="3rem"/>
-            <Heading size="medium">Les mer på <Link href="https://www.uutilsynet.no/">uutilsynet.no</Link></Heading>
-        </article>
-    </section>
+    <ConditionalFrontpage client:only/>
 </Layout>

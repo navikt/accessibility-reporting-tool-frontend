@@ -5,6 +5,7 @@ import { LeaveIcon } from '@navikt/aksel-icons';
 type NavBarProps = {
   userMail: String;
 };
+
 function Navbar({ userMail }: NavBarProps) {
   return (
     <header className={styles.navBarContainer}>

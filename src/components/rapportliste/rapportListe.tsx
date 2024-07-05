@@ -36,7 +36,29 @@ const RapportListe = () => {
           },
     );
   };
+  const handleSort = (sortKey: string) => {
+    setSort(
+      sort && sortKey === sort.orderBy && sort.direction === 'descending'
+        ? undefined
+        : {
+            orderBy: sortKey,
+            direction:
+              sort && sortKey === sort.orderBy && sort.direction === 'ascending'
+                ? 'descending'
+                : 'ascending',
+          },
+    );
+  };
 
+  const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
+    if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
+      return -1;
+    }
+    if (a[orderBy] > b[orderBy]) {
+      return 1;
+    }
+    return 0;
+  };
   const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
     if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
       return -1;
@@ -79,6 +101,7 @@ const RapportListe = () => {
   return (
     <div>
       <Table
+        size="large"
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as string)}
       >
