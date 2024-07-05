@@ -4,6 +4,5 @@ export type CriterionProps = {
   WCAGId: string;
   state: string;
 };
-export type CriteriaProps = {
-  criteria: CriterionProps[];
-};
+
+export type CriteriaProps = CriterionProps[];
