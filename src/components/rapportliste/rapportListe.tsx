@@ -1,7 +1,6 @@
 import { Link, Table } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
 
-import styles from './Rapportliste.module.css';
 import { apiUrl } from '@src/urls';
 import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
@@ -36,29 +35,7 @@ const RapportListe = () => {
           },
     );
   };
-  const handleSort = (sortKey: string) => {
-    setSort(
-      sort && sortKey === sort.orderBy && sort.direction === 'descending'
-        ? undefined
-        : {
-            orderBy: sortKey,
-            direction:
-              sort && sortKey === sort.orderBy && sort.direction === 'ascending'
-                ? 'descending'
-                : 'ascending',
-          },
-    );
-  };
 
-  const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
-    if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
-      return -1;
-    }
-    if (a[orderBy] > b[orderBy]) {
-      return 1;
-    }
-    return 0;
-  };
   const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
     if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
       return -1;
