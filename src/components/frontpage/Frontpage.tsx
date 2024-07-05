@@ -12,7 +12,6 @@ import { apiUrl } from '@src/urls';
 const userInTeam = true;
 
 function FrontpageWithoutTeam() {
-
   return (
     <main>
       <section className={styles.section1}>
@@ -66,17 +65,12 @@ const fetcher = (url: string): Promise<any> =>
 
 function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
-  const { data, isLoading } = useSWRImmutable(
-    `${apiUrl}/testRapport`,
-    fetcher,
-  );
+  const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
 
   console.log(data);
-  const [jsonReport, setJsonReport] = useState({data});
-  console.log(jsonReport);
+  console.log(data?.author);
 
-
-  {/*
+ 
   let successCriteriaCount = 48;
 
   let red = 0;
@@ -84,10 +78,10 @@ function FrontpageWithTeam({ userName }: UserProps) {
   let gray = 0;
 
   for(let i=0; i < successCriteriaCount; i++){
-    if(jsonReport.data.successCriteria[i]["status"] == "NOT_TESTED"){
+    if(data?.successCriteria[i]["status"] == "NOT_TESTED"){
         red++;
     }
-    else if(jsonReport.data.successCriteria[i]["status"] == ""){
+    else if(data?.successCriteria[i]["status"] == ""){
         green++;
     }
     else{
@@ -95,7 +89,12 @@ function FrontpageWithTeam({ userName }: UserProps) {
     }
 
 }
-*/}
+console.log(red);
+
+  if(isLoading){
+    return null;
+  }
+
 
   return (
     <main className={styles.teamContent}>
@@ -134,9 +133,9 @@ function FrontpageWithTeam({ userName }: UserProps) {
                   series={[
                     {
                       data: [
-                        { value: 70, color: 'green', label: 'Oppfylt (%)' },
-                        { value: 20, color: 'red', label: 'Ikke oppfylt (%)' },
-                        { value: 10, color: 'gray', label: 'Ikke aktuelt (%)' },
+                        { value: gray, color: 'green', label: 'Oppfylt (%)' },
+                        { value: red, color: 'red', label: 'Ikke oppfylt (%)' },
+                        { value: green, color: 'gray', label: 'Ikke aktuelt (%)' },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
