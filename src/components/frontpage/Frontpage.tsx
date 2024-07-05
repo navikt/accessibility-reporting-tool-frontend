@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading, Link, VStack } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import { Tabs, Select } from '@navikt/ds-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RapportListe from '@components/rapportliste/rapportListe';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -67,9 +67,8 @@ function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
   const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
 
-  console.log(data);
-  console.log(data?.author);
-
+  //console.log(data);
+  //console.log(data?.author);
   let successCriteriaCount = 0;
   successCriteriaCount = data?.successCriteria.length - 1;
 
