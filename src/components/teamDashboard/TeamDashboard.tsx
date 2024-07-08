@@ -11,12 +11,11 @@ import RapportListe from '@components/rapportliste/rapportListe';
 const fetcher = (url: string): Promise<any> =>
   fetch(url).then((res) => res.json()); //Any er ikke bra. Må endres.
 
-
-function TeamDashboard(props: { team: any; }) { //"Generisk kode for team-dashboard. Selvstendig komponent."
+function TeamDashboard(props: { team: any }) {
+  //"Generisk kode for team-dashboard. Selvstendig komponent."
 
   const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
   const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
-
 
   let successCriteriaCount = 0;
   successCriteriaCount = data?.successCriteria.length - 1;
@@ -44,6 +43,7 @@ function TeamDashboard(props: { team: any; }) { //"Generisk kode for team-dashbo
   }
 
   return (
+  
     <section className={styles.gridWrapper}>
       <section className={styles.lastChanges}>
         <Heading size="medium">Siste endringer</Heading>
@@ -104,13 +104,13 @@ function TeamDashboard(props: { team: any; }) { //"Generisk kode for team-dashbo
         </Heading>
       </section>
     </section>
-  )
+  );
 }
 
-
-function MyTeam({ userName }: UserProps) {  //Vises kun hvis teamet du ser på er ditt.
+function MyTeam({ userName }: UserProps) {
+  //Vises kun hvis teamet du ser på er ditt.
   const [state, setState] = useState('mittTeam');
-  const [current, setCurrentTeam] = useState() //Hvilken team som sees
+  const [current, setCurrentTeam] = useState(); //Hvilken team som sees
 
   //console.log(data);
   //console.log(data?.author);
@@ -122,7 +122,6 @@ function MyTeam({ userName }: UserProps) {  //Vises kun hvis teamet du ser på e
         <h1 className={styles.h1}>God dag {userName}</h1>
         <BodyLong>Du er med i følgende organisasjonsenheter:</BodyLong>
       </header>
-
 
       <Tabs value={state} onChange={setState}>
         <Tabs.List>
@@ -139,8 +138,7 @@ function MyTeam({ userName }: UserProps) {  //Vises kun hvis teamet du ser på e
             <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
 
-          <TeamDashboard team="someTeam"/>
-
+          <TeamDashboard team="someTeam" />
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"
@@ -169,20 +167,16 @@ function MyTeam({ userName }: UserProps) {  //Vises kun hvis teamet du ser på e
   );
 }
 
-function ConditionalTeamDashboard(props: { isMyTeam: boolean; }) { //Vises hvis du ikke er en del av teamet du vil se på.
+function ConditionalTeamDashboard(props: { isMyTeam: boolean }) {
+  //Vises hvis du ikke er en del av teamet du vil se på.
 
   const [isMyTeam, setIsMyTeam] = useState(props.isMyTeam); //Sjekk om brukeren er en del av teamet som vises
 
   if (isMyTeam) {
-    return (
-      <MyTeam userName="Ola Nordmann" />
-    )
+    return <MyTeam userName="Ola Nordmann" />;
   }
 
-  return (
-    <TeamDashboard team="someTeam"/>
-  );
+  return <TeamDashboard team="someTeam" />;
 }
-
 
 export default ConditionalTeamDashboard;
