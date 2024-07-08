@@ -72,20 +72,23 @@ function FrontpageWithTeam({ userName }: UserProps) {
   let successCriteriaCount = 0;
   successCriteriaCount = data?.successCriteria.length - 1;
 
-  let red = 0;
-  let green = 0;
-  let gray = 0;
+  let NOT_COMPLIANT = 0;
+  let COMPLIANT = 0;
+  let NOT_APPLICABLE = 0;
+  let NOT_TESTED = 0;
 
   for (let i = 0; i <= successCriteriaCount; i++) {
-    if (data?.successCriteria[i]['status'] == 'NOT_TESTED') {
-      red++;
-    } else if (data?.successCriteria[i]['status'] == '') {
-      green++;
-    } else {
-      gray++;
+    if (data?.successCriteria[i].status == 'NOT_TESTED') {
+      NOT_TESTED++;
+    } else if (data?.successCriteria[i].status == 'COMPLIANT') {
+      COMPLIANT++;
+    } else if (data?.successCriteria[i].status == 'NOT_APPLICABLE') {
+      NOT_APPLICABLE++;
+    } else { //if status == 'NOT_COMPLIANT'
+      NOT_COMPLIANT++;
     }
   }
-  console.log(red);
+  //console.log(NOT_COMPLIANT);
 
   if (isLoading) {
     return null;
@@ -124,21 +127,22 @@ function FrontpageWithTeam({ userName }: UserProps) {
                 </aside>
 
                 <PieChart
-                  colors={['red', 'gray', 'green']}
+                  colors={['red', 'gray', 'green', 'yellow']}
                   series={[
                     {
                       data: [
-                        { value: gray, color: 'green', label: 'Oppfylt (%)' },
-                        { value: red, color: 'red', label: 'Ikke oppfylt (%)' },
+                        { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
+                        { value: NOT_COMPLIANT, color: 'red', label: 'Ikke oppfylt' },
                         {
-                          value: green,
+                          value: NOT_APPLICABLE,
                           color: 'gray',
-                          label: 'Ikke aktuelt (%)',
+                          label: 'Ikke aktuelt',
                         },
+                        { value: NOT_TESTED, color: '#FFB703', label: 'Ikke testet' }
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
-                      paddingAngle: 3,
+                      paddingAngle: 2,
                       cornerRadius: 5,
                       startAngle: 0,
                       endAngle: 360,
