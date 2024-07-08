@@ -84,7 +84,8 @@ function FrontpageWithTeam({ userName }: UserProps) {
       COMPLIANT++;
     } else if (data?.successCriteria[i].status == 'NOT_APPLICABLE') {
       NOT_APPLICABLE++;
-    } else { //if status == 'NOT_COMPLIANT'
+    } else {
+      //if status == 'NOT_COMPLIANT'
       NOT_COMPLIANT++;
     }
   }
@@ -132,13 +133,21 @@ function FrontpageWithTeam({ userName }: UserProps) {
                     {
                       data: [
                         { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
-                        { value: NOT_COMPLIANT, color: 'red', label: 'Ikke oppfylt' },
+                        {
+                          value: NOT_COMPLIANT,
+                          color: 'red',
+                          label: 'Ikke oppfylt',
+                        },
                         {
                           value: NOT_APPLICABLE,
                           color: 'gray',
                           label: 'Ikke aktuelt',
                         },
-                        { value: NOT_TESTED, color: '#FFB703', label: 'Ikke testet' }
+                        {
+                          value: NOT_TESTED,
+                          color: '#FFB703',
+                          label: 'Ikke testet',
+                        },
                       ],
                       innerRadius: 30,
                       outerRadius: 150,
