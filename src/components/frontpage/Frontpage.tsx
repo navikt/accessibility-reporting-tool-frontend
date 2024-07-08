@@ -1,7 +1,8 @@
 import { Button, Heading, Link } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
-import FrontpageWithTeam from '../teamDashboard/TeamDashboard';
+import ConditionalTeamDashboard from '@components/teamDashboard/TeamDashboard';
+
 
 const userInTeam = true;
 
@@ -48,7 +49,7 @@ function FrontpageWithoutTeam() {
 
 function ConditionalFrontpage() {
   if (userInTeam) {
-    return <FrontpageWithTeam userName="Ola Nordmann" />;
+    return <ConditionalTeamDashboard isMyTeam={userInTeam} />;
   }
   {
     return <FrontpageWithoutTeam />;

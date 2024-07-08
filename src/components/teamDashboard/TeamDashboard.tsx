@@ -11,12 +11,13 @@ import RapportListe from '@components/rapportliste/rapportListe';
 const fetcher = (url: string): Promise<any> =>
   fetch(url).then((res) => res.json()); //Any er ikke bra. Må endres.
 
-function FrontpageWithTeam({ userName }: UserProps) {
-  const [state, setState] = useState('mittTeam');
-  const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
 
-  //console.log(data);
-  //console.log(data?.author);
+function TeamDashboard(props: { team: any; }) { //"Generisk kode for team-dashboard. Selvstendig komponent."
+
+  const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
+  const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
+
+
   let successCriteriaCount = 0;
   successCriteriaCount = data?.successCriteria.length - 1;
 
@@ -37,11 +38,83 @@ function FrontpageWithTeam({ userName }: UserProps) {
       NOT_COMPLIANT++;
     }
   }
-  //console.log(NOT_COMPLIANT);
 
   if (isLoading) {
     return null;
   }
+
+  return (
+    <section className={styles.gridWrapper}>
+      <section className={styles.lastChanges}>
+        <Heading size="medium">Siste endringer</Heading>
+      </section>
+      <article className={styles.accessibilityStatusContainer}>
+        <Heading size="large">Tilgjengelighetsstatus</Heading>
+        <section className={styles.accessibilityStatusInner}>
+          <aside className={styles.selectStatementContainer}>
+            <Heading size="medium">Erklæringer</Heading>
+          </aside>
+
+          <PieChart
+            colors={['red', 'gray', 'green', 'yellow']}
+            series={[
+              {
+                data: [
+                  { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
+                  {
+                    value: NOT_COMPLIANT,
+                    color: 'red',
+                    label: 'Ikke oppfylt',
+                  },
+                  {
+                    value: NOT_APPLICABLE,
+                    color: 'gray',
+                    label: 'Ikke aktuelt',
+                  },
+                  {
+                    value: NOT_TESTED,
+                    color: '#FFB703',
+                    label: 'Ikke testet',
+                  },
+                ],
+                innerRadius: 30,
+                outerRadius: 150,
+                paddingAngle: 2,
+                cornerRadius: 5,
+                startAngle: 0,
+                endAngle: 360,
+              },
+            ]}
+            width={550}
+            height={300}
+          />
+        </section>
+      </article>
+      <article className={styles.membersContainer}>
+        <Heading size="medium">Admin</Heading>
+        <Heading size="medium">Medlemmer</Heading>
+      </article>
+      <section className={styles.reportsContainer}>
+        <Heading size="large" spacing>
+          Rapporter
+        </Heading>
+        <RapportListe />
+        <Heading size="large" spacing>
+          Samlerapporter
+        </Heading>
+      </section>
+    </section>
+  )
+}
+
+
+function MyTeam({ userName }: UserProps) {  //Vises kun hvis teamet du ser på er ditt.
+  const [state, setState] = useState('mittTeam');
+  const [current, setCurrentTeam] = useState() //Hvilken team som sees
+
+  //console.log(data);
+  //console.log(data?.author);
+  //console.log(NOT_COMPLIANT);
 
   return (
     <main className={styles.teamContent}>
@@ -49,6 +122,7 @@ function FrontpageWithTeam({ userName }: UserProps) {
         <h1 className={styles.h1}>God dag {userName}</h1>
         <BodyLong>Du er med i følgende organisasjonsenheter:</BodyLong>
       </header>
+
 
       <Tabs value={state} onChange={setState}>
         <Tabs.List>
@@ -64,66 +138,9 @@ function FrontpageWithTeam({ userName }: UserProps) {
             </Select>
             <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
-          <section className={styles.gridWrapper}>
-            <section className={styles.lastChanges}>
-              <Heading size="medium">Siste endringer</Heading>
-            </section>
-            <article className={styles.accessibilityStatusContainer}>
-              <Heading size="large">Tilgjengelighetsstatus</Heading>
-              <section className={styles.accessibilityStatusInner}>
-                <aside className={styles.selectStatementContainer}>
-                  <Heading size="medium">Erklæringer</Heading>
-                </aside>
 
-                <PieChart
-                  colors={['red', 'gray', 'green', 'yellow']}
-                  series={[
-                    {
-                      data: [
-                        { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
-                        {
-                          value: NOT_COMPLIANT,
-                          color: 'red',
-                          label: 'Ikke oppfylt',
-                        },
-                        {
-                          value: NOT_APPLICABLE,
-                          color: 'gray',
-                          label: 'Ikke aktuelt',
-                        },
-                        {
-                          value: NOT_TESTED,
-                          color: '#FFB703',
-                          label: 'Ikke testet',
-                        },
-                      ],
-                      innerRadius: 30,
-                      outerRadius: 150,
-                      paddingAngle: 2,
-                      cornerRadius: 5,
-                      startAngle: 0,
-                      endAngle: 360,
-                    },
-                  ]}
-                  width={550}
-                  height={300}
-                />
-              </section>
-            </article>
-            <article className={styles.membersContainer}>
-              <Heading size="medium">Admin</Heading>
-              <Heading size="medium">Medlemmer</Heading>
-            </article>
-            <section className={styles.reportsContainer}>
-              <Heading size="large" spacing>
-                Rapporter
-              </Heading>
-              <RapportListe />
-              <Heading size="large" spacing>
-                Samlerapporter
-              </Heading>
-            </section>
-          </section>
+          <TeamDashboard team="someTeam"/>
+
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"
@@ -152,4 +169,20 @@ function FrontpageWithTeam({ userName }: UserProps) {
   );
 }
 
-export default FrontpageWithTeam;
+function ConditionalTeamDashboard(props: { isMyTeam: boolean; }) { //Vises hvis du ikke er en del av teamet du vil se på.
+
+  const [isMyTeam, setIsMyTeam] = useState(props.isMyTeam); //Sjekk om brukeren er en del av teamet som vises
+
+  if (isMyTeam) {
+    return (
+      <MyTeam userName="Ola Nordmann" />
+    )
+  }
+
+  return (
+    <TeamDashboard team="someTeam"/>
+  );
+}
+
+
+export default ConditionalTeamDashboard;
