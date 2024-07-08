@@ -13,7 +13,8 @@ export type OrganizationUnit = {
   members: string[];
 };
 
-export type UserProps = { //Må utvides kraftig
+export type UserProps = {
+  //Må utvides kraftig
   userName: String;
 };
 

@@ -46,7 +46,6 @@ function FrontpageWithoutTeam() {
   );
 }
 
-
 function ConditionalFrontpage() {
   if (userInTeam) {
     return <FrontpageWithTeam userName="Ola Nordmann" />;

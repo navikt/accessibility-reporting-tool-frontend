@@ -1,15 +1,15 @@
-import type { UserProps } from "@src/types";
-import { apiUrl } from "@src/urls";
-import { useState } from "react";
-import useSWRImmutable from "swr/immutable";
-import styles from "./TeamDashboard.module.css";
-import { BodyLong, Button, Heading, Select, Tabs } from "@navikt/ds-react";
-import { FilePlusIcon } from "@navikt/aksel-icons";
-import { PieChart } from "@mui/x-charts";
-import RapportListe from "@components/rapportliste/rapportListe";
+import type { UserProps } from '@src/types';
+import { apiUrl } from '@src/urls';
+import { useState } from 'react';
+import useSWRImmutable from 'swr/immutable';
+import styles from './TeamDashboard.module.css';
+import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
+import { FilePlusIcon } from '@navikt/aksel-icons';
+import { PieChart } from '@mui/x-charts';
+import RapportListe from '@components/rapportliste/rapportListe';
 
-const fetcher = (url: string): Promise<any> =>  //Any er ikke bra. Må endres.
-  fetch(url).then((res) => res.json());
+const fetcher = (url: string): Promise<any> =>
+  fetch(url).then((res) => res.json()); //Any er ikke bra. Må endres.
 
 function FrontpageWithTeam({ userName }: UserProps) {
   const [state, setState] = useState('mittTeam');
