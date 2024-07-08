@@ -43,7 +43,6 @@ function TeamDashboard(props: { team: any }) {
   }
 
   return (
-  
     <section className={styles.gridWrapper}>
       <section className={styles.lastChanges}>
         <Heading size="medium">Siste endringer</Heading>
