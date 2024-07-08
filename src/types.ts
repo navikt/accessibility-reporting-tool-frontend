@@ -13,6 +13,11 @@ export type OrganizationUnit = {
   members: string[];
 };
 
+export type UserProps = {
+  //Må utvides kraftig
+  userName: String;
+};
+
 export type Author = {
   email: string;
   oid: string; // Ask Rannveig what this is?

@@ -1,6 +1,7 @@
 ---
+import ConditionalTeamDashboard from "@components/teamDashboard/TeamDashboard";
 import Layout from "../layouts/Layout.astro";
 ---
 <Layout>
-    <h1>Her kommer team-side</h1>
+    <ConditionalTeamDashboard isMyTeam={false} client:only/>
 </Layout>
