@@ -9,7 +9,7 @@ interface AddOrgBtnProps {
 const AddOrgBtn: React.FC<AddOrgBtnProps> = ({ onClick }) => {
   return (
     <Button variant="secondary" icon={<PersonPlusIcon />} onClick={onClick}>
-      Legg til organisasjonsenhet{' '}
+      Legg til ditt team{' '}
     </Button>
   );
 };

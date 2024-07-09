@@ -3,10 +3,6 @@
   grid-template-columns: auto auto auto;
   background-color: white;
   border-radius: 10px;
-  width: 80%;
-  height: 80%;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 300px;
   padding: 40px 40px 40px 40px;
   text-align: left;
@@ -19,10 +15,12 @@
   font-size: 20px;
 }
 
-.TeamListeContainer {
-  position: absolute;
-  top: 120px;
-  right: 50px;
+.wrapper{
+  width: 80%;
+  height: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 
