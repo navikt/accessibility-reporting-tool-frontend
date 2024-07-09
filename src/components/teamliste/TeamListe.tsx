@@ -35,7 +35,7 @@ const TeamListe = () => {
 
   return (
     <section className={styles.wrapper}>
-        <ModalElement onAddTeam={handleAddTeam}/>
+      <ModalElement onAddTeam={handleAddTeam} />
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
