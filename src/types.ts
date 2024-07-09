@@ -1,10 +1,14 @@
-export type CriterionProps = {
+export type CriterionType = { [key: string]: string }; /*{
   title: string;
   description: string;
   WCAGId: string;
   state: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
-export type CriteriaProps = CriterionProps[];
+export type CriteriaProps = Criterion[];
+*/
+
+export type CriteriaProps = CriterionType[];
 
 export type OrganizationUnit = {
   id: string;

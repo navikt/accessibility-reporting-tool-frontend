@@ -1,15 +1,14 @@
 import { Textarea, Radio, RadioGroup } from '@navikt/ds-react';
 import { useState } from 'react';
-import type { CriterionProps } from '@src/types';
+import type { CriterionType } from '@src/types';
 import styles from './Criterion.module.css';
 
-const Criterion = (criterion: CriterionProps) => {
-  const [currentState, setCurrentState] = useState<string>(criterion.state);
-  const handleChange = (val: string) => {
-    setCurrentState(val);
-    console.log(val);
-  };
+type CriterionProps = {
+  criterion: CriterionType;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
+const Criterion = ({ criterion, handleChange }: CriterionProps) => {
   return (
     <div className={styles.criterionWrapper}>
       <div className={styles.criterion}>
@@ -18,12 +17,17 @@ const Criterion = (criterion: CriterionProps) => {
           legend={criterion.title}
           onChange={handleChange}
           description={criterion.description}
+          defaultValue={
+            criterion.state !== 'notTested' ? criterion.state : 'notTested'
+          }
         >
           <Radio value="yes">Ja</Radio>
           <Radio value="no">Nei</Radio>
+          <Radio value="notTested">Ikke testet</Radio>
+
           <Radio value="notApplicable">Ikke aktuelt</Radio>
         </RadioGroup>
-        {currentState === 'no' ? (
+        {criterion.state === 'no' ? (
           <Textarea
             className={styles.textarea}
             label="Hva er grunnen til at du mener kriteriet ikke er oppfylt?"

@@ -96,7 +96,7 @@ api.get('/api/criteria', (c) => {
       description:
         'All ikke-tekstlig innhold som bilder, ikoner, video og lyd skal ha en tekstlig alternativ tekst som beskriver innholdet.',
       WCAGId: '1.1.1',
-      state: 'no',
+      state: 'notTested',
     },
     {
       title: '1.2.1 Lyd og videoinnhold',

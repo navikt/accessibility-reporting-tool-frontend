@@ -1,25 +1,64 @@
-import Criteria from './criteria/Criteria';
 import { useState } from 'react';
-import { Stepper } from '@navikt/ds-react';
+import Criterion from './criterion/Criterion';
+import type { CriterionType } from '@src/types';
+import { apiUrl } from '@src/urls';
+import { fetcher } from '@src/utils/api.client';
+import useSWRImmutable from 'swr/immutable';
 
 const CreateReport = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
+
+  const handleCriterionChange = (WCAGId: string, updatedData: string) => {
+    console.log('******', updatedData);
+    setCriteriaData((prev) => {
+      const index = prev.findIndex((criterion) => criterion.WCAGId === WCAGId);
+      console.log('index', index);
+      console.log('prev', prev);
+
+      if (index !== -1) {
+        // Clone the array for immutability
+        const newCriteriaData = [...prev];
+        // Merge filtered updated data with the existing criterion data
+        newCriteriaData[index] = {
+          ...newCriteriaData[index],
+          state: updatedData,
+        };
+        console.log(newCriteriaData);
+        return newCriteriaData;
+      }
+      return prev;
+    });
+  };
+
+  const { data, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/criteria` },
+    fetcher,
+  );
+
+  if (!isLoading && criteriaData.length === 0) {
+    setCriteriaData(data);
+  }
 
   return (
     <div>
-      <Stepper
-        aria-labelledby="stepper-heading"
-        activeStep={activeStep}
-        onStepChange={(x) => setActiveStep(x)}
-        orientation="horizontal"
-      >
-        <Stepper.Step href="#">Metadata</Stepper.Step>
-        <Stepper.Step href="#">Mulig å oppfatte</Stepper.Step>
-        <Stepper.Step href="#">Mulig å betjene</Stepper.Step>
-        <Stepper.Step href="#">Forståelig</Stepper.Step>
-        <Stepper.Step href="#">Robust</Stepper.Step>
-      </Stepper>
-      <Criteria />
+      <form>
+        <label htmlFor="report-name">
+          Rapportnavn
+          <input type="text" id="report-name" name="report-name" />
+        </label>
+        <label htmlFor="report-url">
+          URL
+          <input type="text" id="report-url" name="report-url" />
+        </label>
+        {criteriaData?.map((criterion: CriterionType) => (
+          <Criterion
+            key={criterion.WCAGId}
+            criterion={criterion}
+            handleChange={(e) => handleCriterionChange(criterion.WCAGId, e)}
+          />
+        ))}
+        <button type="submit">Opprett Rapport</button>
+      </form>
     </div>
   );
 };
