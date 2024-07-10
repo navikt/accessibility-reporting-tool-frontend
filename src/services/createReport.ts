@@ -25,5 +25,6 @@ export const InitializeReport = (title: string, url: string) => {
   console.log(mutate);
   return {
     createReport: mutate,
+    report: data,
   };
 };
