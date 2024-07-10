@@ -45,13 +45,19 @@ function TeamDashboard(props: { team: any }) {
   return (
     <section className={styles.gridWrapper}>
       <section className={styles.lastChanges}>
-        <Heading level='3' size="medium">Siste endringer</Heading>
+        <Heading level="3" size="medium">
+          Siste endringer
+        </Heading>
       </section>
       <article className={styles.accessibilityStatusContainer}>
-        <Heading level='2' size="large">Tilgjengelighetsstatus</Heading>
+        <Heading level="2" size="large">
+          Tilgjengelighetsstatus
+        </Heading>
         <section className={styles.accessibilityStatusInner}>
           <aside className={styles.selectStatementContainer}>
-            <Heading level='3' size="medium">Erklæringer</Heading>
+            <Heading level="3" size="medium">
+              Erklæringer
+            </Heading>
           </aside>
 
           <PieChart
@@ -90,15 +96,19 @@ function TeamDashboard(props: { team: any }) {
         </section>
       </article>
       <article className={styles.membersContainer}>
-        <Heading level='3' size="medium">Admin</Heading>
-        <Heading level='3' size="medium">Medlemmer</Heading>
+        <Heading level="3" size="medium">
+          Admin
+        </Heading>
+        <Heading level="3" size="medium">
+          Medlemmer
+        </Heading>
       </article>
       <section className={styles.reportsContainer}>
-        <Heading level='2' size="large" spacing>
+        <Heading level="2" size="large" spacing>
           Rapporter
         </Heading>
         <RapportListe />
-        <Heading level='2' size="large" spacing>
+        <Heading level="2" size="large" spacing>
           Samlerapporter
         </Heading>
       </section>
