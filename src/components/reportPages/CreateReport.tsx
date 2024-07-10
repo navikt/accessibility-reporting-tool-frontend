@@ -4,10 +4,13 @@ import type { CriterionType } from '@src/types';
 import { apiUrl } from '@src/urls';
 import { fetcher } from '@src/utils/api.client';
 import useSWRImmutable from 'swr/immutable';
+import { InitializeReport } from '@src/services/createReport';
 
 const CreateReport = () => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
 
+  const newReport = InitializeReport('title', 'url');
+  console.log(newReport);
   const handleCriterionChange = (WCAGId: string, updatedData: string) => {
     console.log('******', updatedData);
     setCriteriaData((prev) => {

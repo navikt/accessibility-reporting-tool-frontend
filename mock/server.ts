@@ -147,6 +147,20 @@ api.get('api/testRapport', (c) => {
   return c.json(jsonFile);
 });
 
+api.post('/api/reports/new', (c) => {
+  // Create a custom object with the desired properties and values
+  const initializedReport = {
+    id: '123456789',
+    title: 'Example Report',
+    url: 'https://www.example.com',
+    authorEmail: 'example@example.com',
+    createdDate: new Date().toISOString(),
+    // Add more properties as needed
+  };
+
+  return c.json(initializedReport); // Send the custom object as the response
+});
+
 serve({
   fetch: api.fetch,
   port: 8787,
