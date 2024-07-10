@@ -7,8 +7,8 @@ import ModalElement from '@components/Modal/Modal.tsx';
 import { apiUrl } from '@src/urls';
 
 interface Team {
-  navn: string;
-  url: string;
+  name: string;
+  //url: string;
   email: string;
   members?: string[];
 }
@@ -40,9 +40,9 @@ const TeamListe = () => {
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
-            <li key={team.navn} className={styles.listItem}>
+            <li key={team.name} className={styles.listItem}>
               <Link href="/team" variant="neutral">
-                {team.navn}
+                {team.name}
               </Link>
             </li>
           );

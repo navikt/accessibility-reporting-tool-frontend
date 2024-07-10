@@ -7,8 +7,8 @@ interface ModalElementProps {
 }
 
 interface Team {
-  navn: string;
-  url: string;
+  name: string;
+  //url: string
   email: string;
   members?: string[];
 }
@@ -31,8 +31,8 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
     const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
     const newTeam: Team = {
-      navn: teamName,
-      url: `/team/${urlFriendlyName}`,
+      name: teamName,
+      //url: `/team/${urlFriendlyName}`,
       email: teamEmail,
       members: members.filter((member) => member),
     };
