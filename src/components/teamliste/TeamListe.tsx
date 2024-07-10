@@ -4,6 +4,7 @@ import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/api.client.ts';
 import styles from './TeamListe.module.css';
 import ModalElement from '@components/Modal/Modal.tsx';
+import { apiUrl } from '@src/urls';
 
 interface Team {
   navn: string;
@@ -14,7 +15,7 @@ interface Team {
 
 const TeamListe = () => {
   const { data, isLoading, mutate } = useSWRImmutable(
-    { url: 'http://localhost:8787/teams' },
+    { url: `${apiUrl}/teams` },
     fetcher,
   );
   console.log(data);

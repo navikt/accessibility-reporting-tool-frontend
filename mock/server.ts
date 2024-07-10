@@ -85,7 +85,7 @@ const teams = [
 
 
 
-api.get('/teams', (c) => {
+api.get('api/teams', (c) => {
     return c.json(teams);
 });
 
