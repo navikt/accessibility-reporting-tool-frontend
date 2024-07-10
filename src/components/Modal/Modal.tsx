@@ -32,7 +32,7 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
     const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
     const newTeam: Team = {
-      id: teamName+teamName.length, //lol dette får endres
+      id: teamName + teamName.length, //lol dette får endres
       name: teamName,
       //url: `/team/${urlFriendlyName}`,
       email: teamEmail,

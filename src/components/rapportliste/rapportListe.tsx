@@ -14,7 +14,7 @@ interface Rapport {
 
 const RapportListe = () => {
   const { data, isLoading } = useSWRImmutable(
-   { url: `${apiUrl}/reports/list`},
+    { url: `${apiUrl}/reports/list` },
     fetcher,
   );
   const [sort, setSort] = useState<SortState | undefined>();

@@ -13,9 +13,9 @@ function TeamDashboard(props: { team: any }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
   const { data, isLoading } = useSWRImmutable(
-    {url:`${apiUrl}/testRapport`},
-     fetcher
-    );
+    { url: `${apiUrl}/testRapport` },
+    fetcher,
+  );
   const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
 
   let successCriteriaCount = 0;

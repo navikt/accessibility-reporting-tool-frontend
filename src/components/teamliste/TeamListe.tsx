@@ -15,7 +15,6 @@ interface Team {
 }
 
 const TeamListe = () => {
-
   const { data, isLoading, mutate } = useSWRImmutable(
     { url: `${apiUrl}/teams` },
     fetcher,
