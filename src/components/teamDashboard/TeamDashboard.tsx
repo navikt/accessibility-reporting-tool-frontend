@@ -7,14 +7,15 @@ import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import RapportListe from '@components/rapportliste/rapportListe';
-
-const fetcher = (url: string): Promise<any> =>
-  fetch(url).then((res) => res.json()); //Any er ikke bra. Må endres.
+import { fetcher } from '@src/utils/api.client';
 
 function TeamDashboard(props: { team: any }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const { data, isLoading } = useSWRImmutable(`${apiUrl}/testRapport`, fetcher);
+  const { data, isLoading } = useSWRImmutable(
+    {url:`${apiUrl}/testRapport`},
+     fetcher
+    );
   const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
 
   let successCriteriaCount = 0;

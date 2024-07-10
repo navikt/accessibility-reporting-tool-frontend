@@ -7,6 +7,7 @@ import ModalElement from '@components/Modal/Modal.tsx';
 import { apiUrl } from '@src/urls';
 
 interface Team {
+  id: string;
   name: string;
   //url: string;
   email: string;
@@ -14,6 +15,7 @@ interface Team {
 }
 
 const TeamListe = () => {
+
   const { data, isLoading, mutate } = useSWRImmutable(
     { url: `${apiUrl}/teams` },
     fetcher,
@@ -40,7 +42,7 @@ const TeamListe = () => {
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
-            <li key={team.name} className={styles.listItem}>
+            <li key={team.id} className={styles.listItem}>
               <Link href="/team" variant="neutral">
                 {team.name}
               </Link>

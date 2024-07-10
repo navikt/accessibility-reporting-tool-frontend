@@ -4,6 +4,7 @@ import useSWRImmutable from 'swr/immutable';
 import { apiUrl } from '@src/urls';
 import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
+import { fetcher } from '@src/utils/api.client';
 
 interface Rapport {
   navn: string;
@@ -11,12 +12,9 @@ interface Rapport {
   dato: string;
 }
 
-const fetcher = (url: string): Promise<Rapport[]> =>
-  fetch(url).then((res) => res.json());
-
 const RapportListe = () => {
   const { data, isLoading } = useSWRImmutable(
-    `${apiUrl}/reports/list`,
+   { url: `${apiUrl}/reports/list`},
     fetcher,
   );
   const [sort, setSort] = useState<SortState | undefined>();
