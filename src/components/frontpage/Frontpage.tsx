@@ -10,7 +10,7 @@ function FrontpageWithoutTeam() {
     <main>
       <section className={styles.section1}>
         <section className={styles.innerSection1}>
-          <Heading size="xlarge">a11y rapporteringsverktøy for NAV</Heading>
+          <Heading level='1' size="xlarge">a11y rapporteringsverktøy for NAV</Heading>
           <p className={styles.text}>
             Dette rapporteringsverktøyet er designet for å styrke NAVs innsats
             for å sikre universell tilgjengelighet på sine digitale plattformer.
@@ -21,7 +21,7 @@ function FrontpageWithoutTeam() {
       <section className={styles.section2}>
         <article className={styles.article}>
           <WrenchIcon title="wrench icon" fontSize="3rem" />
-          <Heading size="medium">Verktøy</Heading>
+          <Heading level='3' size="medium">Verktøy</Heading>
           <p className={styles.verktoyTekst}>
             Dette er noen av verktøyene vi anbefaler for rapportering
           </p>
@@ -29,14 +29,14 @@ function FrontpageWithoutTeam() {
 
         <article className={styles.article}>
           <ComponentIcon title="code icon" fontSize="3rem" />
-          <Heading size="medium">
+          <Heading level='3' size="medium">
             Les mer på <Link href="https://aksel.nav.no/">Aksel.no</Link>
           </Heading>
         </article>
 
         <article className={styles.article}>
           <FigureIcon title="accessibility figure icon" fontSize="3rem" />
-          <Heading size="medium">
+          <Heading level='3' size="medium">
             Les mer på{' '}
             <Link href="https://www.uutilsynet.no/">uutilsynet.no</Link>
           </Heading>
