@@ -16,17 +16,12 @@ function Navbar({ userMail }: NavBarProps) {
           </Link>
         </li>
         <li>
-          <Link underline={false} variant="neutral" href="/organisasjonsenhet">
-            Organisasjonsenhet
+          <Link underline={false} variant="neutral" href="/teams">
+            Teams
           </Link>
         </li>
         <li>
-          <Link underline={false} variant="neutral" href="/dineerklaeringer">
-            Dine erklæringer
-          </Link>
-        </li>
-        <li>
-          <Link underline={false} variant="neutral" href="/rapportlisteSide">
+          <Link underline={false} variant="neutral" href="/alleRapporter">
             Alle rapporter
           </Link>
         </li>

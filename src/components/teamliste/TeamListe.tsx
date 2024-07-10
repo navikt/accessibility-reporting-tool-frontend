@@ -34,22 +34,20 @@ const TeamListe = () => {
   }
 
   return (
-    <div>
-      <div className={styles.TeamListeContainer}>
-        <ModalElement onAddTeam={handleAddTeam} />
-      </div>
+    <section className={styles.wrapper}>
+      <ModalElement onAddTeam={handleAddTeam} />
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
             <li key={team.navn} className={styles.listItem}>
-              <Link href={team.url} variant="neutral">
+              <Link href="/team" variant="neutral">
                 {team.navn}
               </Link>
             </li>
           );
         })}
       </ul>
-    </div>
+    </section>
   );
 };
 

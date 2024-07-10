@@ -143,10 +143,8 @@ api.get('/api/criteria', (c) => {
   ]);
 });
 
-api.get('/testRapport', (c) => {
-  return c.json({
-    jsonFile,
-  });
+api.get('api/testRapport', (c) => {
+  return c.json(jsonFile);
 });
 
 serve({

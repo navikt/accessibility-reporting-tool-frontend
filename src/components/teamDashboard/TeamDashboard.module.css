@@ -1,0 +1,103 @@
+.teamContent{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.h1 {
+    color: var(--a-blue-800);
+}
+
+
+.selector, .selector2{
+    width: 20%;
+}
+
+.selector{margin-top: 20px;}
+
+.myTeamHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.myReportsHeader{
+    display: flex;
+    justify-content: right;
+}
+
+.addStatementBtn{
+    margin-top: 52px;
+    margin-bottom: 20px;
+}
+
+.gridWrapper{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    min-height: 1000px;
+    display: grid;
+    gap: 16px;
+    grid-template-areas: 
+    'top top top top top'
+    'mid mid mid mid mid2'
+    'bot bot bot bot bot'
+    ;
+}
+
+.gridWrapper > section, article{
+    background-color: white;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: var(--a-shadow-small);
+}
+
+.lastChanges{
+    min-height: 80px;
+    grid-area: top;
+}
+
+.accessibilityStatusContainer{
+    min-height: 400px;
+    grid-area: mid;
+}
+
+.accessibilityStatusInner{
+    min-height: 80%;
+    display: flex;
+    flex-direction: row;
+}
+
+.selectStatementContainer{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px 15px 10px;
+    box-shadow: var(--a-shadow-xsmall);
+    border-radius: 10px;
+    min-width: 20%;
+    margin-top: 20px;
+}
+
+.membersContainer{
+    min-height: 400px;
+    grid-area: mid2;
+}
+
+.reportsContainer{
+    min-height: 120px;
+    grid-area: bot;
+}
+
+.myReportsContainer{
+    background-color: white;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.myReportsContainer>section{
+    display: flex;
+    justify-content: space-between;
+
+}

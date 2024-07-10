@@ -9,23 +9,25 @@
 .searchInput {
   padding: 8px;
   font-size: 16px;
-  width: 200px;
 }
 
 .SearchResults {
   border: 1px solid #ccc;
-  borderradius: 8px;
   padding: 16px;
-  backgroundcolor: #f9f9f9;
+  background-color: #f9f9f9;
+  box-shadow: var(--a-shadow-small);
 }
 
 .SearchBulletRemoval {
   list-style-type: none;
   padding: 0;
+  position: absolute;
+  width: 23.5%;
+  margin-top: 5px;
 }
+
 .FormattingResults {
   text-decoration: none;
-  color: black;
   transition: all 0.3s ease;
 }
 
