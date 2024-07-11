@@ -6,9 +6,7 @@ export const InitializeReport = (title: string, url: string) => {
     const response = await fetch(`${apiUrl}/reports/new`, {
       method: 'POST',
       body: JSON.stringify({ title, url }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      credentials: 'include',
     });
 
     if (response.ok) {

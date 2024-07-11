@@ -1,12 +1,15 @@
 import type { UserProps } from '@src/types';
 import { apiUrl } from '@src/urls';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import styles from './TeamDashboard.module.css';
 import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import RapportListe from '@components/rapportliste/rapportListe';
+import { InitializeReport } from '@src/services/createReport';
+import { C } from 'dist/server/chunks/astro_GZDYimvH.mjs';
+import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 
 const fetcher = (url: string): Promise<any> =>
   fetch(url).then((res) => res.json()); //Any er ikke bra. Må endres.
@@ -120,6 +123,7 @@ function MyTeam({ userName }: UserProps) {
   //Vises kun hvis teamet du ser på er ditt.
   const [state, setState] = useState('mittTeam');
   const [current, setCurrentTeam] = useState(); //Hvilken team som sees
+  const initializeReportRef = useRef<HTMLDialogElement>(null);
 
   //console.log(data);
   //console.log(data?.author);
@@ -144,7 +148,7 @@ function MyTeam({ userName }: UserProps) {
               <option value="teamInkludering">Team Inkludering</option>
               <option value="teamMats">Team Mats</option>
             </Select>
-            <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
+            <CreateReportModal />
           </header>
 
           <TeamDashboard team="someTeam" />
@@ -154,9 +158,7 @@ function MyTeam({ userName }: UserProps) {
           className="h-24 w-full bg-gray-50 p-4"
         >
           <header className={styles.myReportsHeader}>
-            <Button icon={<FilePlusIcon />} className={styles.addStatementBtn}>
-              Lag ny erklæring
-            </Button>
+            <CreateReportModal />
           </header>
           <section className={styles.myReportsContainer}>
             <section>
