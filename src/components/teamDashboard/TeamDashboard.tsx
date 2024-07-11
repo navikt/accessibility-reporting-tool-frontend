@@ -9,7 +9,6 @@ import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 
-
 function TeamDashboard(props: { team: any }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
@@ -24,8 +23,6 @@ function TeamDashboard(props: { team: any }) {
   );
 
   const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
-
-
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -117,11 +114,12 @@ function TeamDashboard(props: { team: any }) {
         <Heading level="2" size="large" spacing>
           Rapporter
         </Heading>
-        {isLoadingList
-        ? <p>Loading...</p>
-        : <ReportList reports={reportListData} />
-        }
-        
+        {isLoadingList ? (
+          <p>Loading...</p>
+        ) : (
+          <ReportList reports={reportListData} />
+        )}
+
         <Heading level="2" size="large" spacing>
           Samlerapporter
         </Heading>
@@ -143,7 +141,6 @@ function MyTeam({ userName }: UserProps) {
   //console.log(data);
   //console.log(data?.author);
   //console.log(NOT_COMPLIANT);
-
 
   return (
     <main className={styles.teamContent}>

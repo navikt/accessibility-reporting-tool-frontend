@@ -8,12 +8,11 @@ interface Rapport {
   dato: string;
 }
 
-interface ReportListProps{
-  reports: Rapport[]
+interface ReportListProps {
+  reports: Rapport[];
 }
 
 const ReportList = ({ reports }: ReportListProps) => {
-
   const [data, setData] = useState(reports);
   const [sort, setSort] = useState<SortState | undefined>();
   console.log(data);
@@ -69,7 +68,7 @@ const ReportList = ({ reports }: ReportListProps) => {
     return `${d}.${m}.${y}`;
   };
 
- // if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>
