@@ -155,7 +155,51 @@ api.post('/api/reports/new', (c) => {
     url: 'https://www.example.com',
     authorEmail: 'example@example.com',
     createdDate: new Date().toISOString(),
-    // Add more properties as needed
+    team: {
+      id: '123456789',
+      name: 'Example Team',
+    },
+    successCriteria: [
+      {
+        name: 'Ikke-tekstlig innhold',
+        description:
+          'Gi brukeren et tekstalternativ for innhold som ikke er tekst.',
+        principle: '1.  Mulig å oppfatte',
+        guideline: '1.1 Tekstalternativer',
+        tools: 'ARC Toolkit',
+        number: '1.1.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Ikoner, bilder, grafer',
+        status: 'NOT_TESTED',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+      },
+      {
+        name: 'Bare lyd og bare video (forhåndsinnspilt)',
+        description:
+          ' Gi brukeren et alternativ når innholdet presenteres kun som video eller lyd.',
+        principle: '1.  Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'NOT_TESTED',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/audio-only-and-video-only-prerecorded.html',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.2.1',
+      },
+    ],
   };
 
   return c.json(initializedReport); // Send the custom object as the response
