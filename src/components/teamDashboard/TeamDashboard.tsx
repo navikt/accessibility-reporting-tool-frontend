@@ -1,25 +1,31 @@
 import type { UserProps } from '@src/types';
 import { apiUrl } from '@src/urls';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import styles from './TeamDashboard.module.css';
 import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
-import RapportListe from '@components/rapportliste/rapportListe';
 import { fetcher } from '@src/utils/api.client';
+import ReportList from '@components/ReportList/ReportList';
 
 function TeamDashboard(props: { team: any }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const { data, isLoading } = useSWRImmutable(
+  const { data: reportData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/testRapport` },
     fetcher,
   );
+
+  const { data: reportListData, isLoading: isLoadingList } = useSWRImmutable(
+    { url: `${apiUrl}/reports/list` },
+    fetcher,
+  );
+
   const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
 
   let successCriteriaCount = 0;
-  successCriteriaCount = data?.successCriteria.length - 1;
+  successCriteriaCount = reportData?.successCriteria.length - 1;
 
   let NOT_COMPLIANT = 0;
   let COMPLIANT = 0;
@@ -27,11 +33,11 @@ function TeamDashboard(props: { team: any }) {
   let NOT_TESTED = 0;
 
   for (let i = 0; i <= successCriteriaCount; i++) {
-    if (data?.successCriteria[i].status == 'NOT_TESTED') {
+    if (reportData?.successCriteria[i].status == 'NOT_TESTED') {
       NOT_TESTED++;
-    } else if (data?.successCriteria[i].status == 'COMPLIANT') {
+    } else if (reportData?.successCriteria[i].status == 'COMPLIANT') {
       COMPLIANT++;
-    } else if (data?.successCriteria[i].status == 'NOT_APPLICABLE') {
+    } else if (reportData?.successCriteria[i].status == 'NOT_APPLICABLE') {
       NOT_APPLICABLE++;
     } else {
       //if status == 'NOT_COMPLIANT'
@@ -108,7 +114,12 @@ function TeamDashboard(props: { team: any }) {
         <Heading level="2" size="large" spacing>
           Rapporter
         </Heading>
-        <RapportListe />
+        {isLoadingList ? (
+          <p>Loading...</p>
+        ) : (
+          <ReportList reports={reportListData} />
+        )}
+
         <Heading level="2" size="large" spacing>
           Samlerapporter
         </Heading>
@@ -121,6 +132,11 @@ function MyTeam({ userName }: UserProps) {
   //Vises kun hvis teamet du ser på er ditt.
   const [state, setState] = useState('mittTeam');
   const [current, setCurrentTeam] = useState(); //Hvilken team som sees
+
+  const { data, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/reports/list` },
+    fetcher,
+  );
 
   //console.log(data);
   //console.log(data?.author);
@@ -168,8 +184,7 @@ function MyTeam({ userName }: UserProps) {
                 <option value="teamMats">Team Mats</option>
               </Select>
             </section>
-
-            <RapportListe />
+            <ReportList reports={data} />
           </section>
         </Tabs.Panel>
       </Tabs>

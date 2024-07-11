@@ -1,10 +1,6 @@
 import { Link, Table } from '@navikt/ds-react';
-import useSWRImmutable from 'swr/immutable';
-
-import { apiUrl } from '@src/urls';
 import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
-import { fetcher } from '@src/utils/api.client';
 
 interface Rapport {
   navn: string;
@@ -12,11 +8,12 @@ interface Rapport {
   dato: string;
 }
 
-const RapportListe = () => {
-  const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/reports/list` },
-    fetcher,
-  );
+interface ReportListProps {
+  reports: Rapport[];
+}
+
+const ReportList = ({ reports }: ReportListProps) => {
+  const [data, setData] = useState(reports);
   const [sort, setSort] = useState<SortState | undefined>();
   console.log(data);
 
@@ -71,7 +68,7 @@ const RapportListe = () => {
     return `${d}.${m}.${y}`;
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -111,4 +108,4 @@ const RapportListe = () => {
   );
 };
 
-export default RapportListe;
+export default ReportList;
