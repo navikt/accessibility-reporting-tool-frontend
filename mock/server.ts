@@ -197,7 +197,6 @@ api.post('/api/reports/new', (c) => {
         helpUrl: null,
         wcagVersion: '2.1',
         wcagLevel: 'A',
-        successCriterionNumber: '1.2.1',
       },
     ],
   };
