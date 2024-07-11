@@ -140,7 +140,6 @@ function MyTeam({ userName }: UserProps) {
     { url: `${apiUrl}/reports/list` },
     fetcher,
   );
-  const initializeReportRef = useRef<HTMLDialogElement>(null);
 
   //console.log(data);
   //console.log(data?.author);
