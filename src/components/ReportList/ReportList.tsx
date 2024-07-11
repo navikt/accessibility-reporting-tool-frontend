@@ -1,5 +1,5 @@
 import { Link, Table } from '@navikt/ds-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
 
 interface Rapport {
