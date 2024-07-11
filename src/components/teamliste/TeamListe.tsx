@@ -4,17 +4,19 @@ import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/api.client.ts';
 import styles from './TeamListe.module.css';
 import ModalElement from '@components/Modal/Modal.tsx';
+import { apiUrl } from '@src/urls';
 
 interface Team {
-  navn: string;
-  url: string;
+  id: string;
+  name: string;
+  //url: string;
   email: string;
   members?: string[];
 }
 
 const TeamListe = () => {
   const { data, isLoading, mutate } = useSWRImmutable(
-    { url: 'http://localhost:8787/teams' },
+    { url: `${apiUrl}/teams` },
     fetcher,
   );
   console.log(data);
@@ -39,9 +41,9 @@ const TeamListe = () => {
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
-            <li key={team.navn} className={styles.listItem}>
+            <li key={team.id} className={styles.listItem}>
               <Link href="/team" variant="neutral">
-                {team.navn}
+                {team.name}
               </Link>
             </li>
           );
