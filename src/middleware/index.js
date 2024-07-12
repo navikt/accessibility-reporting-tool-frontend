@@ -1,0 +1,33 @@
+import { getToken } from '@navikt/oasis';
+import { isLocal } from '@src/utils/environment';
+import { defineMiddleware } from 'astro/middleware';
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  console.log('Running middleware');
+
+  const token = getToken(context.request);
+  if (isLocal) {
+    return next();
+  }
+  if (!token) {
+    return context.redirect('/login');
+  }
+  const validation = await validateToken(token);
+  if (!validation.ok) {
+    console.log('Token is not valid');
+    return context.redirect('/login');
+  }
+  // const obo = await requestOboToken(token, 'an:example:audience');
+  // if (!obo.ok) {
+  // }
+  // fetch('https://a11y-statement.ansatt.dev.nav.no/api', {
+  //   headers: { Authorization: `Bearer ${obo.token}` },
+  // });
+
+  const parse = parseAzureUserToken(token);
+  if (parse.ok) {
+    console.log(`name: ${parse.preferred_username} (${parse.NAVident})`);
+    const name = await parse.name;
+    console.log(`name: ${name}`);
+  }
+});
