@@ -1,12 +1,6 @@
 import { useRef, useState } from 'react';
-import {
-  Button,
-  Dropdown,
-  Link,
-  Modal,
-  Select,
-  TextField,
-} from '@navikt/ds-react';
+import { Button, Modal, Select, TextField } from '@navikt/ds-react';
+import { InitializeReport } from '@src/services/createReport';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -15,6 +9,22 @@ const CreateReportModal = () => {
     url: '',
     team: '',
   });
+  const handleSubmit = () => {
+    const { report } = InitializeReport(reportDetails.title, reportDetails.url);
+    console.log(report);
+    ref.current?.close();
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    setReportDetails({
+      ...reportDetails,
+      [e.target.name]: e.target.value,
+    });
+    console.log(reportDetails);
+  };
+
   return (
     <div>
       <Button
@@ -31,16 +41,22 @@ const CreateReportModal = () => {
           <TextField
             label="Tittel"
             type="text"
-            id="report-title"
-            name="report-title"
+            id="title"
+            name="title"
+            onChange={handleChange}
           />
           <TextField
             label="URL"
             type="text"
-            id="report-url"
-            name="report-url"
+            id="url"
+            name="url"
+            onChange={handleChange}
           />
-          <Select label="Hilket team er ansvarlig for løsningen?">
+          <Select
+            label="Hilket team er ansvarlig for løsningen?"
+            name="team"
+            onChange={handleChange}
+          >
             <option value="">Velg land</option>
             <option value="norge">Norge</option>
             <option value="sverige">Sverige</option>
@@ -48,7 +64,7 @@ const CreateReportModal = () => {
           </Select>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="button" onClick={() => ref?.current?.close()}>
+          <Button type="button" onClick={handleSubmit}>
             Oprett rapport
           </Button>
           <Button
