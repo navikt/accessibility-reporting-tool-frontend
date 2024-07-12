@@ -12,7 +12,7 @@ import ReportList from '@components/ReportList/ReportList';
 function TeamDashboard(props: { team: any }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const { data: reportData, isLoading } = useSWRImmutable(
+  const { data: reportData, isLoading: isLoadingReport } = useSWRImmutable(
     { url: `${apiUrl}/testRapport` },
     fetcher,
   );
@@ -45,7 +45,7 @@ function TeamDashboard(props: { team: any }) {
     }
   }
 
-  if (isLoading) {
+  if (isLoadingReport) {
     return null;
   }
 

@@ -13,7 +13,10 @@ interface ReportListProps {
 }
 
 const ReportList = ({ reports }: ReportListProps) => {
+  
+  
   const [data, setData] = useState(reports);
+  
   const [sort, setSort] = useState<SortState | undefined>();
   console.log(data);
 

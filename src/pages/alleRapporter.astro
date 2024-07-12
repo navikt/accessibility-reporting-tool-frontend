@@ -1,33 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import ReportList from '@components/ReportList/ReportList';
+import AllReportsList from '@components/ReportList/AllReportsList';
 import SamletListe from "../components/Samlerapporter/samlerapporter";
 import Searchbar from "../components/Searchbar/Searchbar";
 import styles from "./_alleRapporter.module.css"
 import { Heading } from "@navikt/ds-react/Typography";
 
 ---
-<script>
-import { apiUrl } from "@src/urls";
-import { fetcher } from "@src/utils/api.client";
-import useSWRImmutable from "swr/immutable";
-
-    const { data, isLoading } = useSWRImmutable(
-  { url: `${apiUrl}/reports/list` },
-  fetcher,
-);
-</script>
 
 <Layout>
 
     <h1 class={styles.h1}>Alle rapporter</h1>
-
     <section class={styles.content}>
         <Heading size="medium" level="3">Rapporter for enkeltsider</Heading>
         <div class={styles.search}>
             <Searchbar client:only="react"/>
         </div>
-        <ReportList reports={data} client:only="react"/>
+        <AllReportsList client:only="react"/>
         <Heading size="medium" level="3">Samlerapporter</Heading>
         <SamletListe client:only="react"/>
     </section>

@@ -94,10 +94,22 @@ const teams = [
     },
 ];
 
-
-
 api.get('api/teams', (c) => {
     return c.json(teams);
+});
+
+api.get('api/myUser', (c) => {
+    return c.json({
+        email: "my.user@nav.no",
+        myOrganizationUnits: teams,
+        myReports: [{
+            id: "12erh34",
+            organizationUnit: teams[0],
+            lastChanged: "2024-05-10",
+            lastUpdatedBy: "Nima Hakimi"
+        }]
+
+    })
 });
 
 api.get('/api/reports/list', (c) => {
