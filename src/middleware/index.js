@@ -9,6 +9,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (isLocal) {
     return next();
   }
+  if (context.request.url.includes('/internal')) {
+    return next();
+  }
   if (!token) {
     return context.redirect('/login');
   }
