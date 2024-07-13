@@ -5,7 +5,8 @@ import { defineMiddleware } from 'astro/middleware';
 export const onRequest = defineMiddleware(async (context, next) => {
   console.log('Running middleware');
 
-  const token = getToken(context.request);
+  const token = getToken(context.request.headers);
+  console.log(`Token: ${token}`);
   if (isLocal) {
     return next();
   }
@@ -14,7 +15,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
   if (!token) {
     console.log('No token');
-    return context.redirect('/oauth2/login');
+    return next(); // context.redirect('/oauth2/login');
   }
   const validation = await validateToken(token);
   if (!validation.ok) {
