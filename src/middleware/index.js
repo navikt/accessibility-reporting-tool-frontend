@@ -13,12 +13,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
   if (!token) {
-    return context.redirect('/login');
+    return context.redirect('/oauth2/login');
   }
   const validation = await validateToken(token);
   if (!validation.ok) {
     console.log('Token is not valid');
-    return context.redirect('/login');
+    return context.redirect('/oauth2/login');
   }
   // const obo = await requestOboToken(token, 'an:example:audience');
   // if (!obo.ok) {
