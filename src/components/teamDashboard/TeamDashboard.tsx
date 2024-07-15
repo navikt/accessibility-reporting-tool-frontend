@@ -130,22 +130,31 @@ function TeamDashboard(props: { team: any }) {
 
 function MyTeam({ userName }: UserProps) {
   //Vises kun hvis teamet du ser på er ditt.
-  const [state, setState] = useState('mittTeam');
-  const [current, setCurrentTeam] = useState(); //Hvilken team som sees
-
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/reports/list` },
+    { url: `${apiUrl}/users/details` },
     fetcher,
   );
+
+
+  const [state, setState] = useState('mittTeam');
+  const [current, setCurrentTeam] = useState(""); //Hvilken team som sees
 
   //console.log(data);
   //console.log(data?.author);
   //console.log(NOT_COMPLIANT);
 
+useEffect(() => {
+  setCurrentTeam(data?.teams[0]);
+},[data])
+
+  if(isLoading){
+    return null;
+  }
+
   return (
     <main className={styles.teamContent}>
       <header>
-        <h1 className={styles.h1}>God dag {userName}</h1>
+        <h1 className={styles.h1}>God dag {data?.name}</h1>
         <BodyLong>Du er med i følgende organisasjonsenheter:</BodyLong>
       </header>
 
@@ -184,7 +193,7 @@ function MyTeam({ userName }: UserProps) {
                 <option value="teamMats">Team Mats</option>
               </Select>
             </section>
-            <ReportList reports={data} />
+            <ReportList reports={data?.reports} />
           </section>
         </Tabs.Panel>
       </Tabs>
