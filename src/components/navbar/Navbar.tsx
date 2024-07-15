@@ -1,12 +1,21 @@
 import { Link } from '@navikt/ds-react';
 import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
+import { apiUrl } from '@src/urls';
+import { fetcher } from '@src/utils/api.client';
+import useSWRImmutable from 'swr/immutable';
 
-type NavBarProps = {
-  userMail: String;
-};
+function Navbar() {
 
-function Navbar({ userMail }: NavBarProps) {
+  const { data, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/user/details` },
+    fetcher,
+  );
+
+  if(isLoading){
+    return null;
+  }
+
   return (
     <header className={styles.navBarContainer}>
       <ul className={styles.navBarP1}>
@@ -29,7 +38,7 @@ function Navbar({ userMail }: NavBarProps) {
       <ul className={styles.navBarP2}>
         <li>
           <p>
-            Innlogget som <strong>{userMail}</strong>
+            Innlogget som <strong>{data.email}</strong>
           </p>
         </li>
         <li className={styles.utlogging}>
