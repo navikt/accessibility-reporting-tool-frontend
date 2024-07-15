@@ -98,7 +98,7 @@ api.get('api/teams', (c) => {
     return c.json(teams);
 });
 
-api.get('api/user/details', (c) => {
+api.get('api/users/details', (c) => {
     return c.json({
         email: "my.user@nav.no",
         myOrganizationUnits: teams,

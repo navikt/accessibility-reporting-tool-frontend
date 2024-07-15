@@ -7,7 +7,7 @@ import useSWRImmutable from 'swr/immutable';
 
 function Navbar() {
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/user/details` },
+    { url: `${apiUrl}/users/details` },
     fetcher,
   );
 
