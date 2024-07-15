@@ -15,7 +15,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
   if (!token) {
     console.log('No token');
-    return context.redirect('/oauth2/login');
+    return next(); //context.redirect('/oauth2/login');
   }
   const validation = await validateToken(token);
   if (!validation.ok) {
