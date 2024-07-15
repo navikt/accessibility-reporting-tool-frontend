@@ -101,7 +101,7 @@ api.get('api/teams', (c) => {
 api.get('api/users/details', (c) => {
     return c.json({
         email: "my.user@nav.no",
-        myOrganizationUnits: teams,
+        teams: teams,
         myReports: [{
             id: "12erh34",
             organizationUnit: teams[0],

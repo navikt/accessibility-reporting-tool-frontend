@@ -2,8 +2,10 @@ import { Button, Heading, Link } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import ConditionalTeamDashboard from '@components/teamDashboard/TeamDashboard';
-
-const userInTeam = true;
+import useSWRImmutable from 'swr/immutable';
+import { apiUrl } from '@src/urls';
+import { fetcher } from '@src/utils/api.client';
+import { useEffect, useState } from 'react';
 
 function FrontpageWithoutTeam() {
   return (
@@ -17,7 +19,7 @@ function FrontpageWithoutTeam() {
             Dette rapporteringsverktøyet er designet for å styrke NAVs innsats
             for å sikre universell tilgjengelighet på sine digitale plattformer.
           </p>
-          <Button>Finn ditt team</Button>
+          <Button variant='secondary'><Link href='/teams' >Finn ditt team</Link></Button>
         </section>
       </section>
       <section className={styles.section2}>
@@ -51,6 +53,21 @@ function FrontpageWithoutTeam() {
 }
 
 function ConditionalFrontpage() {
+
+  const { data, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/users/details` },
+    fetcher,
+  );
+
+  const [userInTeam, setUserInTeam] = useState(false);
+
+  useEffect(() => {
+    if(data?.teams.length > 0){
+      setUserInTeam(true);
+
+    }
+  },[data])
+
   if (userInTeam) {
     return <ConditionalTeamDashboard isMyTeam={userInTeam} />;
   }
