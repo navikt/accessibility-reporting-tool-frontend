@@ -135,19 +135,18 @@ function MyTeam({ userName }: UserProps) {
     fetcher,
   );
 
-
   const [state, setState] = useState('mittTeam');
-  const [current, setCurrentTeam] = useState(""); //Hvilken team som sees
+  const [current, setCurrentTeam] = useState(''); //Hvilken team som sees
 
   //console.log(data);
   //console.log(data?.author);
   //console.log(NOT_COMPLIANT);
 
-useEffect(() => {
-  setCurrentTeam(data?.teams[0]);
-},[data])
+  useEffect(() => {
+    setCurrentTeam(data?.teams[0]);
+  }, [data]);
 
-  if(isLoading){
+  if (isLoading) {
     return null;
   }
 
