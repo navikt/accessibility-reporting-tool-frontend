@@ -19,7 +19,9 @@ function FrontpageWithoutTeam() {
             Dette rapporteringsverktøyet er designet for å styrke NAVs innsats
             for å sikre universell tilgjengelighet på sine digitale plattformer.
           </p>
-          <Button variant='secondary'><Link href='/teams' >Finn ditt team</Link></Button>
+          <Button variant="secondary">
+            <Link href="/teams">Finn ditt team</Link>
+          </Button>
         </section>
       </section>
       <section className={styles.section2}>
@@ -53,7 +55,6 @@ function FrontpageWithoutTeam() {
 }
 
 function ConditionalFrontpage() {
-
   const { data, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
     fetcher,
@@ -62,11 +63,10 @@ function ConditionalFrontpage() {
   const [userInTeam, setUserInTeam] = useState(false);
 
   useEffect(() => {
-    if(data?.teams.length > 0){
+    if (data?.teams.length > 0) {
       setUserInTeam(true);
-
     }
-  },[data])
+  }, [data]);
 
   if (userInTeam) {
     return <ConditionalTeamDashboard isMyTeam={userInTeam} />;
