@@ -6,13 +6,12 @@ import { fetcher } from '@src/utils/api.client';
 import useSWRImmutable from 'swr/immutable';
 
 function Navbar() {
-
   const { data, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/user/details` },
     fetcher,
   );
 
-  if(isLoading){
+  if (isLoading) {
     return null;
   }
 
