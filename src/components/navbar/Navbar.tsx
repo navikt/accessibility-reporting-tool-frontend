@@ -11,6 +11,8 @@ function Navbar() {
     fetcher,
   );
 
+  console.log(data);
+
   if (isLoading) {
     return null;
   }
