@@ -14,25 +14,41 @@ const Criterion = ({ criterion, handleChange }: CriterionProps) => {
       <div className={styles.criterion}>
         <RadioGroup
           className={styles.radioGroup}
-          legend={criterion.title}
+          legend={criterion.name}
           onChange={handleChange}
           description={criterion.description}
           defaultValue={
-            criterion.state !== 'notTested' ? criterion.state : 'notTested'
+            criterion.status !== 'NOT_TESTED' ? criterion.status : 'NOT_TESTED'
           }
         >
-          <Radio value="yes">Ja</Radio>
-          <Radio value="no">Nei</Radio>
-          <Radio value="notTested">Ikke testet</Radio>
+          <Radio value="COMPLIANT">Ja</Radio>
+          <Radio value="NON_COMPLIANT">Nei</Radio>
+          <Radio value="NOT_TESTED">Ikke testet</Radio>
 
-          <Radio value="notApplicable">Ikke aktuelt</Radio>
+          <Radio value="NOT_APPLICABLE">Ikke aktuelt</Radio>
         </RadioGroup>
-        {criterion.state === 'no' ? (
-          <Textarea
-            className={styles.textarea}
-            label="Hva er grunnen til at du mener kriteriet ikke er oppfylt?"
-            description="Her skal du beskrive promblemene dette kriteriet medfører, og inforfomere brukeren om eventuelle workarounds."
-          />
+        {criterion.status === 'NON_COMPLIANT' ? (
+          <div className={styles.textareaWrapper}>
+            <Textarea
+              className={styles.textarea}
+              label="Det er innhold på siden som bryter kravet."
+              description="Beskriv kort hvilket innhold som bryter kravet, hvorfor og konsekvensene dette får for brukeren."
+              defaultValue={criterion.breakingTheLaw}
+            />
+            <Textarea
+              className={styles.textarea}
+              label="Det er innhold i på siden som ikke er underlagt kravet"
+              description="Hvilket innhold er ikke underlagt kravet?
+"
+              defaultValue={criterion.lawDoesNotApply}
+            />
+            <Textarea
+              className={styles.textarea}
+              label="Innholdet er unntatt fordi det er en uforholdsmessig stor byrde å følge kravet."
+              description="Hvorfor mener vi at det er en uforholdsmessig stor byrde for innholdet å følge kravet?"
+              defaultValue={criterion.tooHardToComply}
+            />
+          </div>
         ) : null}
       </div>
     </div>

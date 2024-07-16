@@ -1,10 +1,11 @@
 interface Props {
   url: string;
+  method: string;
 }
 
-export const fetcher = async ({ url }: Props) => {
+export const fetcher = async ({ url, method = 'GET' }: Props) => {
   const response = await fetch(url, {
-    method: 'GET',
+    method: method,
     credentials: 'include',
   });
 

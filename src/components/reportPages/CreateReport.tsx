@@ -1,20 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
-import type { CriterionType } from '@src/types';
-import { apiUrl } from '@src/urls';
-import { fetcher } from '@src/utils/api.client';
-import useSWRImmutable from 'swr/immutable';
-import { InitializeReport } from '@src/services/createReport';
+import type { CriterionType, Report } from '@src/types';
+import { getReport } from '@src/services/reportServices';
+import useSWR from 'swr';
 
-const CreateReport = () => {
+const CreateReport = ({ id }: string) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
-
-  const newReport = InitializeReport('title', 'url');
-  console.log(newReport);
+  const { data: report, isLoading } = useSWR<Report>(
+    `/reports/${id}`,
+    getReport,
+  );
+  console.log;
   const handleCriterionChange = (WCAGId: string, updatedData: string) => {
     console.log('******', updatedData);
     setCriteriaData((prev) => {
-      const index = prev.findIndex((criterion) => criterion.WCAGId === WCAGId);
+      const index = prev.findIndex((criterion) => criterion.number === WCAGId);
       console.log('index', index);
       console.log('prev', prev);
 
@@ -24,7 +24,7 @@ const CreateReport = () => {
         // Merge filtered updated data with the existing criterion data
         newCriteriaData[index] = {
           ...newCriteriaData[index],
-          state: updatedData,
+          status: updatedData,
         };
         console.log(newCriteriaData);
         return newCriteriaData;
@@ -33,13 +33,14 @@ const CreateReport = () => {
     });
   };
 
-  const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/criteria` },
-    fetcher,
-  );
+  useEffect(() => {
+    if (!isLoading && report) {
+      setCriteriaData(report.successCriteria);
+    }
+  }, [isLoading, report]);
 
-  if (!isLoading && criteriaData.length === 0) {
-    setCriteriaData(data);
+  if (isLoading) {
+    return <div>Loading report...</div>;
   }
 
   return (
@@ -47,7 +48,12 @@ const CreateReport = () => {
       <form>
         <label htmlFor="report-name">
           Rapportnavn
-          <input type="text" id="report-name" name="report-name" />
+          <input
+            type="text"
+            id="report-name"
+            name="report-name"
+            defaultValue={report?.descriptiveName}
+          />
         </label>
         <label htmlFor="report-url">
           URL
@@ -55,9 +61,9 @@ const CreateReport = () => {
         </label>
         {criteriaData?.map((criterion: CriterionType) => (
           <Criterion
-            key={criterion.WCAGId}
+            key={criterion.number}
             criterion={criterion}
-            handleChange={(e) => handleCriterionChange(criterion.WCAGId, e)}
+            handleChange={(e) => handleCriterionChange(criterion.number, e)}
           />
         ))}
         <button type="submit">Opprett Rapport</button>

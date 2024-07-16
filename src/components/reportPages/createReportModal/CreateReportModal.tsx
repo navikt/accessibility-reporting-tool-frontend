@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
-import { InitializeReport } from '@src/services/createReport';
+import { createReport } from '@src/services/reportServices';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -10,8 +10,12 @@ const CreateReportModal = () => {
     team: '',
   });
   const handleSubmit = () => {
-    const { report } = InitializeReport(reportDetails.title, reportDetails.url);
-    console.log(report);
+    const reportId = createReport(
+      reportDetails.title,
+      reportDetails.url,
+      reportDetails.team,
+    );
+    console.log(reportId);
     ref.current?.close();
   };
 

@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
-import * as teams from '../teams.json';
+import * as teamsJson from '../teams.json';
 
 const api = new Hono();
 
@@ -201,15 +201,17 @@ api.get('/api/criteria', (c) => {
 api.get('api/testRapport', (c) => {
   return c.json(jsonFile);
 });
-
 api.post('/api/reports/new', (c) => {
-  // Create a custom object with the desired properties and values
+  return c.json({ id: '123456789' });
+});
+api.get('/api/reports/123456789', (c) => {
   const initializedReport = {
     id: '123456789',
     title: 'Example Report',
     url: 'https://www.example.com',
     authorEmail: 'example@example.com',
     createdDate: new Date().toISOString(),
+    lastEditedDate: new Date().toISOString(),
     team: {
       id: '123456789',
       name: 'Example Team',

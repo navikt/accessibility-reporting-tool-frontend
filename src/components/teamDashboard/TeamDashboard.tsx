@@ -8,8 +8,7 @@ import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
-import { InitializeReport } from '@src/services/createReport';
-import { C } from 'dist/server/chunks/astro_GZDYimvH.mjs';
+import { createReport } from '@src/services/reportServices';
 import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 
 function TeamDashboard(props: { team: any }) {
