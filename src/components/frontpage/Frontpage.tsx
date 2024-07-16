@@ -65,8 +65,7 @@ function ConditionalFrontpage() {
   useEffect(() => {
     if (data?.teams.length > 0) {
       setUserInTeam(true);
-    }
-    else{
+    } else {
       setUserInTeam(false);
     }
   }, [data]);
