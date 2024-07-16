@@ -129,11 +129,11 @@ function TeamDashboard(props: { team: any }) {
 }
 
 interface Team {
-  email: string,
-  id: string,
-  members: string[],
-  name: string,
-  url: string
+  email: string;
+  id: string;
+  members: string[];
+  name: string;
+  url: string;
 }
 
 function MyTeam({ userName }: UserProps) {
@@ -174,8 +174,10 @@ function MyTeam({ userName }: UserProps) {
           <header className={styles.myTeamHeader}>
             <Select className={styles.selector} label="Velg team">
               {userData?.teams.map((team: Team) => {
-                return(
-                  <option key={team.id} value={team.id}>{team.name}</option>
+                return (
+                  <option key={team.id} value={team.id}>
+                    {team.name}
+                  </option>
                 );
               })}
             </Select>
@@ -197,12 +199,14 @@ function MyTeam({ userName }: UserProps) {
             <section>
               <Heading size="large">Mine rapporter</Heading>
               <Select className={styles.selector} label="Velg team">
-              {userData?.teams.map((team: Team) => {
-                return(
-                  <option key={team.id} value={team.id}>{team.name}</option>
-                );
-              })}
-            </Select>
+                {userData?.teams.map((team: Team) => {
+                  return (
+                    <option key={team.id} value={team.id}>
+                      {team.name}
+                    </option>
+                  );
+                })}
+              </Select>
             </section>
             <ReportList reports={userData?.reports} />
           </section>
