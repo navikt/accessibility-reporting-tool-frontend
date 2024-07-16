@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
 
 interface Rapport {
-  navn: string;
+  descriptiveName: string;
   url: string;
   dato: string;
 }
@@ -92,10 +92,10 @@ const ReportList = ({ reports }: ReportListProps) => {
         <Table.Body>
           {sortedData?.map((rapport: Rapport) => {
             return (
-              <Table.Row key={rapport.navn}>
+              <Table.Row key={rapport.descriptiveName}>
                 <Table.HeaderCell>
                   <Link href={rapport.url} variant="action">
-                    {rapport.navn}
+                    {rapport.descriptiveName}
                   </Link>
                 </Table.HeaderCell>
                 <Table.DataCell>{rapport.url}</Table.DataCell>

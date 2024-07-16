@@ -104,7 +104,7 @@ api.get('api/users/details', (c) => {
         name: "JasMaNi Hakaurlander",
         teams: teams,
         reports: [{
-            navn: "Ayyyy",
+            descriptiveName: "Ayyyy",
             id: "12erh34",
             organizationUnit: teams[0],
             lastChanged: "2024-05-10",
@@ -117,22 +117,22 @@ api.get('api/users/details', (c) => {
 api.get('/api/reports/list', (c) => {
     return c.json([
         {
-            navn: "TestNavn",
+            descriptiveName: "TestNavn",
             url: "https://www.nav.no/test-rapport",
             dato: "2024-05-10",
         },
         {
-            navn: "Min Side",
+            descriptiveName: "Min Side",
             url: "https://www.nav.no/test-rapport",
             dato: "2024-06-15",
         },
         {
-            navn: "Aktivitetsplan",
+            descriptiveName: "Aktivitetsplan",
             url: "https://www.nav.no/test-rapport",
             dato: "2024-05-10",
         },
         {
-            navn: "Barnebidrag",
+            descriptiveName: "Barnebidrag",
             url: "https://www.nav.no/test-rapport",
             dato: "2024-04-20",
         },

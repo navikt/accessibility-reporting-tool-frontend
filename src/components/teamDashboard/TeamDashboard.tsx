@@ -22,7 +22,7 @@ function TeamDashboard(props: { team: any }) {
     fetcher,
   );
 
-  const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees.
+  const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -128,9 +128,17 @@ function TeamDashboard(props: { team: any }) {
   );
 }
 
+interface Team {
+  email: string,
+  id: string,
+  members: string[],
+  name: string,
+  url: string
+}
+
 function MyTeam({ userName }: UserProps) {
   //Vises kun hvis teamet du ser på er ditt.
-  const { data, isLoading } = useSWRImmutable(
+  const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
     fetcher,
   );
@@ -143,8 +151,8 @@ function MyTeam({ userName }: UserProps) {
   //console.log(NOT_COMPLIANT);
 
   useEffect(() => {
-    setCurrentTeam(data?.teams[0]);
-  }, [data]);
+    setCurrentTeam(userData?.teams[0]);
+  }, [userData]);
 
   if (isLoading) {
     return null;
@@ -153,7 +161,7 @@ function MyTeam({ userName }: UserProps) {
   return (
     <main className={styles.teamContent}>
       <header>
-        <h1 className={styles.h1}>God dag {data?.name}</h1>
+        <h1 className={styles.h1}>God dag {userData?.name}</h1>
         <BodyLong>Du er med i følgende organisasjonsenheter:</BodyLong>
       </header>
 
@@ -165,9 +173,11 @@ function MyTeam({ userName }: UserProps) {
         <Tabs.Panel value="mittTeam" className="h-24 w-full bg-gray-50 p-4">
           <header className={styles.myTeamHeader}>
             <Select className={styles.selector} label="Velg team">
-              <option value="">Velg team</option>
-              <option value="teamInkludering">Team Inkludering</option>
-              <option value="teamMats">Team Mats</option>
+              {userData?.teams.map((team: Team) => {
+                return(
+                  <option key={team.id} value={team.id}>{team.name}</option>
+                );
+              })}
             </Select>
             <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
@@ -186,13 +196,15 @@ function MyTeam({ userName }: UserProps) {
           <section className={styles.myReportsContainer}>
             <section>
               <Heading size="large">Mine rapporter</Heading>
-              <Select className={styles.selector2} label="">
-                <option value="">Velg team</option>
-                <option value="teamInkludering">Team Inkludering</option>
-                <option value="teamMats">Team Mats</option>
-              </Select>
+              <Select className={styles.selector} label="Velg team">
+              {userData?.teams.map((team: Team) => {
+                return(
+                  <option key={team.id} value={team.id}>{team.name}</option>
+                );
+              })}
+            </Select>
             </section>
-            <ReportList reports={data?.reports} />
+            <ReportList reports={userData?.reports} />
           </section>
         </Tabs.Panel>
       </Tabs>
