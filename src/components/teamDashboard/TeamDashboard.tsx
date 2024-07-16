@@ -1,6 +1,6 @@
 import type { UserProps } from '@src/types';
 import { apiUrl } from '@src/urls';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type SetStateAction } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import styles from './TeamDashboard.module.css';
 import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
@@ -136,7 +136,7 @@ interface Team {
   url: string;
 }
 
-function MyTeam({ userName }: UserProps) {
+function MyTeam() {
   //Vises kun hvis teamet du ser på er ditt.
   const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
@@ -144,15 +144,11 @@ function MyTeam({ userName }: UserProps) {
   );
 
   const [state, setState] = useState('mittTeam');
-  const [current, setCurrentTeam] = useState(''); //Hvilken team som sees
+  const [currentTeam, setCurrentTeam] = useState(userData.teams[0].id); //Hvilken team som sees
 
   //console.log(data);
   //console.log(data?.author);
   //console.log(NOT_COMPLIANT);
-
-  useEffect(() => {
-    setCurrentTeam(userData?.teams[0]);
-  }, [userData]);
 
   if (isLoading) {
     return null;
@@ -162,7 +158,9 @@ function MyTeam({ userName }: UserProps) {
     <main className={styles.teamContent}>
       <header>
         <h1 className={styles.h1}>God dag {userData?.name}</h1>
-        <BodyLong>Du er med i følgende organisasjonsenheter:</BodyLong>
+        <BodyLong>
+          Denne teksten sjekker bare at team-selector funker: {currentTeam}
+        </BodyLong>
       </header>
 
       <Tabs value={state} onChange={setState}>
@@ -172,7 +170,12 @@ function MyTeam({ userName }: UserProps) {
         </Tabs.List>
         <Tabs.Panel value="mittTeam" className="h-24 w-full bg-gray-50 p-4">
           <header className={styles.myTeamHeader}>
-            <Select className={styles.selector} label="Velg team">
+            <Select
+              className={styles.selector}
+              label="Velg team"
+              value={currentTeam}
+              onChange={(e) => setCurrentTeam(e.target.value)}
+            >
               {userData?.teams.map((team: Team) => {
                 return (
                   <option key={team.id} value={team.id}>
@@ -198,7 +201,12 @@ function MyTeam({ userName }: UserProps) {
           <section className={styles.myReportsContainer}>
             <section>
               <Heading size="large">Mine rapporter</Heading>
-              <Select className={styles.selector} label="Velg team">
+              <Select
+                className={styles.selector}
+                label="Velg team"
+                value={currentTeam}
+                onChange={(e) => setCurrentTeam(e.target.value)}
+              >
                 {userData?.teams.map((team: Team) => {
                   return (
                     <option key={team.id} value={team.id}>
@@ -222,7 +230,7 @@ function ConditionalTeamDashboard(props: { isMyTeam: boolean }) {
   const [isMyTeam, setIsMyTeam] = useState(props.isMyTeam); //Sjekk om brukeren er en del av teamet som vises
 
   if (isMyTeam) {
-    return <MyTeam userName="Ola Nordmann" />;
+    return <MyTeam />;
   }
 
   return <TeamDashboard team="someTeam" />;
