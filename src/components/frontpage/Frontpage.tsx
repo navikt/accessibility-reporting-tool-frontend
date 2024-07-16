@@ -60,11 +60,14 @@ function ConditionalFrontpage() {
     fetcher,
   );
 
-  const [userInTeam, setUserInTeam] = useState(false);
+  const [userInTeam, setUserInTeam] = useState(true);
 
   useEffect(() => {
     if (data?.teams.length > 0) {
       setUserInTeam(true);
+    }
+    else{
+      setUserInTeam(false);
     }
   }, [data]);
 
