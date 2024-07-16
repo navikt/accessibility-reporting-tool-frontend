@@ -3,9 +3,10 @@ import { useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
 
 interface Rapport {
-  descriptiveName: string;
-  url: string;
-  dato: string;
+  title: string;
+  id: string;
+  teamId: string;
+  date: string;
 }
 
 interface ReportListProps {
@@ -83,7 +84,7 @@ const ReportList = ({ reports }: ReportListProps) => {
             <Table.ColumnHeader sortKey="navn" sortable>
               Navn
             </Table.ColumnHeader>
-            <Table.ColumnHeader>URL</Table.ColumnHeader>
+            <Table.ColumnHeader>Team</Table.ColumnHeader>
             <Table.ColumnHeader sortKey="dato" sortable>
               Dato
             </Table.ColumnHeader>
@@ -92,14 +93,14 @@ const ReportList = ({ reports }: ReportListProps) => {
         <Table.Body>
           {sortedData?.map((rapport: Rapport) => {
             return (
-              <Table.Row key={rapport.descriptiveName}>
+              <Table.Row key={rapport.title}>
                 <Table.HeaderCell>
-                  <Link href={rapport.url} variant="action">
-                    {rapport.descriptiveName}
+                  <Link href={rapport.teamId} variant="action">
+                    {rapport.title}
                   </Link>
                 </Table.HeaderCell>
-                <Table.DataCell>{rapport.url}</Table.DataCell>
-                <Table.DataCell>{format(rapport.dato)}</Table.DataCell>
+                <Table.DataCell>{rapport.teamId}</Table.DataCell>
+                <Table.DataCell>{format(rapport.date)}</Table.DataCell>
               </Table.Row>
             );
           })}
