@@ -3,14 +3,39 @@ import { apiUrl } from '@src/urls';
 import { useEffect, useState, type SetStateAction } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import styles from './TeamDashboard.module.css';
-import { BodyLong, Button, Heading, Select, Tabs } from '@navikt/ds-react';
+import {
+  BodyLong,
+  Button,
+  Heading,
+  Radio,
+  RadioGroup,
+  Select,
+  Tabs,
+} from '@navikt/ds-react';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 
-function TeamDashboard(props: { team: any }) {
+interface Team {
+  email: string;
+  id: string;
+  members: string[];
+  name: string;
+  url: string;
+}
+
+interface TeamReport {
+  title: string;
+  id: string;
+  teamId: string;
+  date: string;
+}
+
+function TeamDashboard(props: { teamId: string; reportList: TeamReport[] }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
+
+  const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
 
   const { data: reportData, isLoading: isLoadingReport } = useSWRImmutable(
     { url: `${apiUrl}/testRapport` },
@@ -18,11 +43,13 @@ function TeamDashboard(props: { team: any }) {
   );
 
   const { data: reportListData, isLoading: isLoadingList } = useSWRImmutable(
-    { url: `${apiUrl}/reports/list` },
+    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
 
-  const [currentTeam, setCurrentTeam] = useState(props.team); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
+  const [currentReportId, setCurrentReportId] = useState('');
+
+  const handleChange = (val: string) => setCurrentReportId(val);
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -44,11 +71,18 @@ function TeamDashboard(props: { team: any }) {
       NOT_COMPLIANT++;
     }
   }
+  useEffect(() => {
+    if (!isLoadingReport || !isLoadingList) {
+      setCurrentReportId(reportListData[0].id);
+      console.log(reportListData[0].id, '***');
+    }
+  }, [isLoadingList, reportListData]);
 
-  if (isLoadingReport) {
-    return null;
+  if (isLoadingReport || isLoadingList) {
+    return <h1>Loading...</h1>;
   }
 
+  console.log(currentReportId, 10000000);
   return (
     <section className={styles.gridWrapper}>
       <section className={styles.lastChanges}>
@@ -61,9 +95,23 @@ function TeamDashboard(props: { team: any }) {
           Tilgjengelighetsstatus
         </Heading>
         <section className={styles.accessibilityStatusInner}>
-          <aside className={styles.selectStatementContainer}>
+          <aside className={styles.selectReportContainer}>
             <Heading level="3" size="medium">
-              Erklæringer
+              Rapporter
+              <RadioGroup
+                legend="Velg rapport"
+                onChange={handleChange}
+                defaultValue={reportListData[0]?.id}
+              >
+                {reportListData.map((teamReport: TeamReport) => {
+                  console.log(teamReport.id, '!!!!');
+                  return (
+                    <Radio key={teamReport.id} value={teamReport.id}>
+                      {teamReport.title}
+                    </Radio>
+                  );
+                })}
+              </RadioGroup>
             </Heading>
           </aside>
 
@@ -128,14 +176,6 @@ function TeamDashboard(props: { team: any }) {
   );
 }
 
-interface Team {
-  email: string;
-  id: string;
-  members: string[];
-  name: string;
-  url: string;
-}
-
 function MyTeam() {
   //Vises kun hvis teamet du ser på er ditt.
   const { data: userData, isLoading } = useSWRImmutable(
@@ -144,7 +184,13 @@ function MyTeam() {
   );
 
   const [state, setState] = useState('mittTeam');
-  const [currentTeam, setCurrentTeam] = useState(userData.teams[0].id); //Hvilken team som sees
+  const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
+
+  const { data: teamReports, isLoading: isTeamReportsLoading } =
+    useSWRImmutable(
+      { url: `${apiUrl}/teams/${currentTeamId}/reports` },
+      fetcher,
+    );
 
   //console.log(data);
   //console.log(data?.author);
@@ -159,7 +205,7 @@ function MyTeam() {
       <header>
         <h1 className={styles.h1}>God dag {userData?.name}</h1>
         <BodyLong>
-          Denne teksten sjekker bare at team-selector funker: {currentTeam}
+          Denne teksten sjekker bare at team-selector funker: {currentTeamId}
         </BodyLong>
       </header>
 
@@ -173,8 +219,8 @@ function MyTeam() {
             <Select
               className={styles.selector}
               label="Velg team"
-              value={currentTeam}
-              onChange={(e) => setCurrentTeam(e.target.value)}
+              value={currentTeamId}
+              onChange={(e) => setCurrentTeamId(e.target.value)}
             >
               {userData?.teams.map((team: Team) => {
                 return (
@@ -187,7 +233,7 @@ function MyTeam() {
             <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
 
-          <TeamDashboard team="someTeam" />
+          <TeamDashboard teamId={currentTeamId} reportList={teamReports} />
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"
@@ -204,8 +250,8 @@ function MyTeam() {
               <Select
                 className={styles.selector}
                 label="Velg team"
-                value={currentTeam}
-                onChange={(e) => setCurrentTeam(e.target.value)}
+                value={currentTeamId}
+                onChange={(e) => setCurrentTeamId(e.target.value)}
               >
                 {userData?.teams.map((team: Team) => {
                   return (
@@ -233,7 +279,7 @@ function ConditionalTeamDashboard(props: { isMyTeam: boolean }) {
     return <MyTeam />;
   }
 
-  return <TeamDashboard team="someTeam" />;
+  //return <TeamDashboard teamId="someTeam" />;
 }
 
 export default ConditionalTeamDashboard;

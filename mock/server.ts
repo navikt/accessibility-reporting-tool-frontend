@@ -141,6 +141,42 @@ api.get('/api/reports/list', (c) => {
 });
 
 
+api.get('api/teams/team-messi/reports', (c) => {
+    return c.json([
+        
+        {
+        title: "Hmmm",
+        id: "rykutxyrhterg-89",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        },
+        {
+        title: "Messi > Ronaldo",
+        id: "rykutxyrhterg-80",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        }
+])
+})
+
+api.get('api/teams/team-nav/reports', (c) => {
+    return c.json([
+        
+        {
+        title: "Hmmm!",
+        id: "rykutxyrhterg-79",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        },
+        {
+        title: "Messi < Ronaldo",
+        id: "rykutxyrhterg-70",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        }
+])
+})
+
 
 api.post('/teams/new', (c) => {
     return c.text("oppretter")
