@@ -18,77 +18,66 @@ const teams = [
   {
     id: 'team-nav',
     name: 'Team Nav.no',
-    url: '/team/team-nav-no',
     email: 'teamnavno@example.com',
     members: ['medlem1', 'medlem2', 'medlem3'],
   },
   {
     id: 'team-min-side',
     name: 'Min side',
-    url: '/team/min-side',
     email: 'minside@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-test',
     name: 'Team test',
-    url: '/team/team-test',
     email: 'teamtest@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-imaginary',
     name: 'Team Imaginary',
-    url: '/team/team-imaginary',
     email: 'teamimaginary@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-super',
     name: 'Team Super',
-    url: '/team/team-super',
     email: 'teamsuper@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-loftet',
     name: 'Team Loftet',
-    url: '/team/team-loftet',
     email: 'teamloftet@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-masse-venner',
     name: 'Team Ensom',
-    url: '/team/team-ensom',
     email: 'teamensom@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
-    id: 'team-meeeessi',
+    id: 'team-messi',
     name: 'Team Messi',
-    url: '/team/team-messi',
     email: 'teammessi@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-ronaldo-better',
     name: 'Team Ronaldo',
-    url: '/team/team-ronaldo',
     email: 'teamronaldo@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-tull',
     name: 'Team tull',
-    url: '/team/team-tull',
     email: 'teamtull@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-ultratull',
     name: 'Team tull, men med lenger navn...',
-    url: '/team/team-tull-lenger-navn',
     email: 'teamtulllenger@example.com',
     members: ['mem1', 'mem2', 'mem3'],
   },
@@ -98,27 +87,53 @@ api.get('api/teams', (c) => {
   return c.json(teams);
 });
 
+api.get('api/users/details', (c) => {
+  return c.json({
+    email: 'my.user@nav.no',
+    name: 'JasMaNi Hakaurlander',
+    teams: teams,
+    reports: [
+      {
+        title: 'Ayyyy',
+        id: '12erh34',
+        teamId: 'team-ultratull',
+        date: '2024-07-15',
+      },
+      {
+        title: 'Heihei',
+        id: '12erh42',
+        teamId: 'team-tull',
+        date: '2024-08-19',
+      },
+    ],
+  });
+});
+
 api.get('/api/reports/list', (c) => {
   return c.json([
     {
-      navn: 'TestNavn',
-      url: 'https://www.nav.no/test-rapport',
-      dato: '2024-05-10',
+      title: 'TestNavn',
+      id: 'rykutjyrhterg-87',
+      teamId: 'team-tull',
+      date: '2024-05-10',
     },
     {
-      navn: 'Min Side',
-      url: 'https://www.nav.no/test-rapport',
-      dato: '2024-06-15',
+      title: 'Testy',
+      id: 'rykutjyrhtehg-67',
+      teamId: 'team-ultratull',
+      date: '2024-08-10',
     },
     {
-      navn: 'Aktivitetsplan',
-      url: 'https://www.nav.no/test-rapport',
-      dato: '2024-05-10',
+      title: 'Testttttt',
+      id: 'rykutjyrhqdwerg-12',
+      teamId: 'team-tull',
+      date: '2024-05-11',
     },
     {
-      navn: 'Barnebidrag',
-      url: 'https://www.nav.no/test-rapport',
-      dato: '2024-04-20',
+      title: 'Hmmm',
+      id: 'rykutxyrhterg-89',
+      teamId: 'team-messi',
+      date: '2024-06-10',
     },
   ]);
 });

@@ -23,6 +23,7 @@
     "@navikt/aksel-icons": "6.12.0",
     "@navikt/ds-react": "6.10.0",
     "astro": "4.3.6",
+    "@navikt/oasis": "3.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "swr": "^2.2.5"
