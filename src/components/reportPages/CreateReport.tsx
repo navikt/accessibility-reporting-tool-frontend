@@ -4,9 +4,8 @@ import type { CriterionType, Report } from '@src/types';
 import { getReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField } from '@navikt/ds-react';
-
 interface CreateReportProps {
-  id: string;
+  id: string | undefined;
 }
 
 const CreateReport = ({ id }: CreateReportProps) => {
@@ -19,19 +18,15 @@ const CreateReport = ({ id }: CreateReportProps) => {
   );
 
   const handleCriterionChange = (WCAGId: string, updatedData: string) => {
-    console.log('******', updatedData);
     setCriteriaData((prev) => {
       const index = prev.findIndex((criterion) => criterion.number === WCAGId);
-      console.log('index', index);
-      console.log('prev', prev);
-
+      console.log('WCAGId:', updatedData);
       if (index !== -1) {
         const newCriteriaData = [...prev];
         newCriteriaData[index] = {
           ...newCriteriaData[index],
           status: updatedData,
         };
-        console.log(newCriteriaData);
         return newCriteriaData;
       }
       return prev;
@@ -77,7 +72,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               <Criterion
                 key={criterion.number}
                 criterion={criterion}
-                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+                handleChange={handleCriterionChange}
               />
             ))}
         </Tabs.Panel>
@@ -88,7 +83,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               <Criterion
                 key={criterion.number}
                 criterion={criterion}
-                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+                handleChange={handleCriterionChange}
               />
             ))}
         </Tabs.Panel>
@@ -99,7 +94,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               <Criterion
                 key={criterion.number}
                 criterion={criterion}
-                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+                handleChange={handleCriterionChange}
               />
             ))}
         </Tabs.Panel>
@@ -110,7 +105,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               <Criterion
                 key={criterion.number}
                 criterion={criterion}
-                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+                handleChange={handleCriterionChange}
               />
             ))}
         </Tabs.Panel>

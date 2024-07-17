@@ -5,7 +5,7 @@ import styles from './Criterion.module.css';
 
 type CriterionProps = {
   criterion: CriterionType;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (WCAGId: string, updatedData: string) => void;
 };
 
 const Criterion = ({ criterion, handleChange }: CriterionProps) => {
@@ -15,7 +15,9 @@ const Criterion = ({ criterion, handleChange }: CriterionProps) => {
         <RadioGroup
           className={styles.radioGroup}
           legend={criterion.name}
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(criterion.number, e as string);
+          }}
           description={criterion.description}
           defaultValue={
             criterion.status !== 'NOT_TESTED' ? criterion.status : 'NOT_TESTED'
