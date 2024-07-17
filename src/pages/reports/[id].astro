@@ -1,0 +1,9 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CreateReport from '../../components/reportPages/CreateReport';
+const { id } = Astro.params;
+---
+
+<Layout>
+    <CreateReport client:only="react" id={id}/>
+</Layout>
