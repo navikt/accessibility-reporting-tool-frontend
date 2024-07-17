@@ -30,7 +30,6 @@ export const getReport = async (url: string): Promise<Report> => {
 
   if (response.ok) {
     const report = await response.json();
-    console.log('Report fetched', report, response.status);
     return report;
   } else {
     console.log('Failed to fetch report', response.status);

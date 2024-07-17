@@ -3,14 +3,21 @@ import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
 import { getReport } from '@src/services/reportServices';
 import useSWR from 'swr';
+import { Tabs, TextField } from '@navikt/ds-react';
 
-const CreateReport = ({ id }: string) => {
+interface CreateReportProps {
+  id: string;
+}
+
+const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
+  const [activeTab, setActiveTab] = useState('metadata');
+
   const { data: report, isLoading } = useSWR<Report>(
     `/reports/${id}`,
     getReport,
   );
-  console.log;
+
   const handleCriterionChange = (WCAGId: string, updatedData: string) => {
     console.log('******', updatedData);
     setCriteriaData((prev) => {
@@ -19,9 +26,7 @@ const CreateReport = ({ id }: string) => {
       console.log('prev', prev);
 
       if (index !== -1) {
-        // Clone the array for immutability
         const newCriteriaData = [...prev];
-        // Merge filtered updated data with the existing criterion data
         newCriteriaData[index] = {
           ...newCriteriaData[index],
           status: updatedData,
@@ -45,29 +50,71 @@ const CreateReport = ({ id }: string) => {
 
   return (
     <div>
-      <form>
-        <label htmlFor="report-name">
-          Rapportnavn
-          <input
-            type="text"
-            id="report-name"
-            name="report-name"
-            defaultValue={report?.descriptiveName}
-          />
-        </label>
-        <label htmlFor="report-url">
-          URL
-          <input type="text" id="report-url" name="report-url" />
-        </label>
-        {criteriaData?.map((criterion: CriterionType) => (
-          <Criterion
-            key={criterion.number}
-            criterion={criterion}
-            handleChange={(e) => handleCriterionChange(criterion.number, e)}
-          />
-        ))}
-        <button type="submit">Opprett Rapport</button>
-      </form>
+      <Tabs value={activeTab} onChange={setActiveTab}>
+        <Tabs.List>
+          <Tabs.Tab value="metadata" label="Metadata" />
+          <Tabs.Tab value="NOT_TESTED" label="Ikke testet" />
+          <Tabs.Tab value="NON_COMPLIANT" label="Ikke tilfredsstilt" />
+          <Tabs.Tab value="COMPLIANT" label="Tilfredsstilt" />
+          <Tabs.Tab value="NOT_APPLICABLE" label="Ikke aktuelt" />
+        </Tabs.List>
+        <Tabs.Panel value="metadata">
+          <div>
+            <TextField
+              label="Rapportnavn"
+              id="report-name"
+              name="report-name"
+              defaultValue={report?.descriptiveName}
+            />
+
+            <TextField label="URL" id="report-url" name="report-url" />
+          </div>
+        </Tabs.Panel>
+        <Tabs.Panel value="NOT_TESTED">
+          {criteriaData
+            ?.filter((criterion) => criterion.status === 'NOT_TESTED')
+            .map((criterion) => (
+              <Criterion
+                key={criterion.number}
+                criterion={criterion}
+                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+              />
+            ))}
+        </Tabs.Panel>
+        <Tabs.Panel value="NON_COMPLIANT">
+          {criteriaData
+            ?.filter((criterion) => criterion.status === 'NON_COMPLIANT')
+            .map((criterion) => (
+              <Criterion
+                key={criterion.number}
+                criterion={criterion}
+                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+              />
+            ))}
+        </Tabs.Panel>
+        <Tabs.Panel value="COMPLIANT">
+          {criteriaData
+            ?.filter((criterion) => criterion.status === 'COMPLIANT')
+            .map((criterion) => (
+              <Criterion
+                key={criterion.number}
+                criterion={criterion}
+                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+              />
+            ))}
+        </Tabs.Panel>
+        <Tabs.Panel value="NOT_APPLICABLE">
+          {criteriaData
+            ?.filter((criterion) => criterion.status === 'NOT_APPLICABLE')
+            .map((criterion) => (
+              <Criterion
+                key={criterion.number}
+                criterion={criterion}
+                handleChange={(e) => handleCriterionChange(criterion.number, e)}
+              />
+            ))}
+        </Tabs.Panel>
+      </Tabs>
     </div>
   );
 };
