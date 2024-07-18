@@ -40,7 +40,7 @@ function TeamDashboard(props: { teamId: string }) {
   const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
 
   const { data: reportData, isLoading: isLoadingReport } = useSWRImmutable(
-    { url: `${apiUrl}/testRapport` },
+    { url: `${apiUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
     fetcher,
   );
 

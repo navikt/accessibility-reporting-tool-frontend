@@ -251,7 +251,7 @@ api.get('/api/criteria', (c) => {
   ]);
 });
 
-api.get('api/testRapport', (c) => {
+api.get('api/reports/cf3f6442-afa1-4cf9-854f-48889157aeec', (c) => {
   return c.json(jsonFile);
 });
 api.post('/api/reports/new', (c) => {
