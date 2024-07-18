@@ -18,6 +18,7 @@ import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 import { createReport } from '@src/services/reportServices';
 import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
+import useSWR from 'swr';
 
 interface Team {
   email: string;
@@ -40,12 +41,12 @@ function TeamDashboard(props: { teamId: string }) {
   const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
   const [currentReportId, setCurrentReportId] = useState('');
 
-  const { data: reportData, isLoading: isLoadingReport } = useSWRImmutable(
+  const { data: reportData, isLoading: isLoadingReport } = useSWR(
     { url: `${apiUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
     fetcher,
   );
 
-  const { data: reportListData, isLoading: isLoadingList } = useSWRImmutable(
+  const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
@@ -72,6 +73,8 @@ function TeamDashboard(props: { teamId: string }) {
       NOT_COMPLIANT++;
     }
   }
+  console.log(currentTeamId)
+  console.log(reportListData)
   useEffect(() => {
     if (!isLoadingReport && !isLoadingList && reportListData[0]) {
       setCurrentReportId(reportListData[0].id);
@@ -82,6 +85,7 @@ function TeamDashboard(props: { teamId: string }) {
   if (isLoadingReport) {
     return <h1>Loading...</h1>;
   }
+
 
   return (
     <section className={styles.gridWrapper}>
