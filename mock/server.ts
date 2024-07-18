@@ -110,33 +110,71 @@ api.get('api/users/details', (c) => {
 });
 
 api.get('/api/reports/list', (c) => {
-  return c.json([
-    {
-      title: 'TestNavn',
-      id: 'rykutjyrhterg-87',
-      teamId: 'team-tull',
-      date: '2024-05-10',
-    },
-    {
-      title: 'Testy',
-      id: 'rykutjyrhtehg-67',
-      teamId: 'team-ultratull',
-      date: '2024-08-10',
-    },
-    {
-      title: 'Testttttt',
-      id: 'rykutjyrhqdwerg-12',
-      teamId: 'team-tull',
-      date: '2024-05-11',
-    },
-    {
-      title: 'Hmmm',
-      id: 'rykutxyrhterg-89',
-      teamId: 'team-messi',
-      date: '2024-06-10',
-    },
-  ]);
+    return c.json([
+        {
+            title: "TestNavn",
+            id: "rykutjyrhterg-87",
+            teamId: "team-tull",
+            date: "2024-05-10",
+        },
+        {
+            title: "Testy",
+            id: "rykutjyrhtehg-67",
+            teamId: "team-ultratull",
+            date: "2024-08-10",
+        },
+        {
+            title: "Testttttt",
+            id: "rykutjyrhqdwerg-12",
+            teamId: "team-tull",
+            date: "2024-05-11",
+        },
+        {
+            title: "Hmmm",
+            id: "rykutxyrhterg-89",
+            teamId: "team-messi",
+            date: "2024-06-10",
+        },
+    ]);
 });
+
+
+api.get('api/teams/team-messi/reports', (c) => {
+    return c.json([
+        
+        {
+        title: "Hmmm",
+        id: "rykutxyrhterg-89",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        },
+        {
+        title: "Messi > Ronaldo",
+        id: "rykutxyrhterg-80",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        }
+])
+})
+
+api.get('api/teams/team-nav/reports', (c) => {
+    return c.json([
+        
+        {
+        title: "Hmmm!",
+        id: "rykutxyrhterg-79",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        },
+        {
+        title: "Messi < Ronaldo",
+        id: "rykutxyrhterg-70",         
+        teamId: "team-messi",
+        date: "2024-06-10",
+        }
+])
+})
+
 
 api.post('/teams/new', (c) => {
   return c.text('oppretter');
