@@ -1,4 +1,4 @@
-import { getToken, validateToken, parseAzureUserToken } from '@navikt/oasis';
+import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
 
@@ -15,6 +15,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
   if (!token) {
     console.log('No token');
+    console.log("context.request.headers.get(authorization):",context.request.headers.get("authorization"));
+    console.log("context.cookies.headers():",context.cookies.headers());
+    console.log("context.request:",context.request);
+    console.log("context:", context);
+    const obo = await requestOboToken(token, 'api://dev-gcp.a11y-statement.a11y-statement/.default');
+
+
     return next(); //context.redirect('/oauth2/login');
   }
   const validation = await validateToken(token);
