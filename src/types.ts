@@ -1,12 +1,23 @@
-export type CriterionProps = {
-  title: string;
+export type CriterionType = {
+  name: string;
   description: string;
-  WCAGId: string;
-  state: string;
+  guideline: string;
+  tools: string;
+  number: string;
+  breakingTheLaw: string;
+  lawDoesNotApply: string;
+  tooHardToComply: string;
+  contentGroup: string;
+  status: string;
+  wcagUrl: string;
+  helpUrl: string;
+  wcagVersion: string;
+  wcagLevel: string;
 };
-export type CriteriaProps = CriterionProps[];
 
-export type OrganizationUnit = {
+export type CriteriaProps = CriterionType[];
+
+export type Team = {
   id: string;
   name: string;
   email: string;
@@ -20,21 +31,20 @@ export type UserProps = {
 
 export type Author = {
   email: string;
-  oid: string; // Ask Rannveig what this is?
 };
 
 export type Report = {
   reportId: string;
   url: string;
   descriptiveName: string;
-  organizationUnit: OrganizationUnit;
+  team: Team;
   version: string; // Ask Rannveig what this is?
   testData: string; // Ask Rannveig what this is?
   author: Author;
-  criteria: CriteriaProps;
   filters: string[];
-  created: Date; // Ask Rannveig why string?
-  lastChanged: Date; // Ask Rannveig why string?
+  created: number[]; // Ask Rannveig why string?
+  successCriteria: CriterionType[];
+  lastChanged: number[]; // Ask Rannveig why string?
   contributers: string[]; // Ask Rannveig what this is?
   lastUpdatedBy: string;
   reportType: string;

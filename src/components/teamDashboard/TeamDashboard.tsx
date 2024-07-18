@@ -16,6 +16,8 @@ import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
+import { createReport } from '@src/services/reportServices';
+import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 
 interface Team {
   email: string;
@@ -226,7 +228,7 @@ function MyTeam() {
                 );
               })}
             </Select>
-            <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
+            <CreateReportModal />
           </header>
 
           <TeamDashboard teamId={currentTeamId} />
@@ -236,9 +238,7 @@ function MyTeam() {
           className="h-24 w-full bg-gray-50 p-4"
         >
           <header className={styles.myReportsHeader}>
-            <Button icon={<FilePlusIcon />} className={styles.addStatementBtn}>
-              Lag ny erklæring
-            </Button>
+            <CreateReportModal />
           </header>
           <section className={styles.myReportsContainer}>
             <section>
