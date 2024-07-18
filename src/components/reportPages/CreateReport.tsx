@@ -11,13 +11,18 @@ interface CreateReportProps {
 const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('metadata');
+  const [reportData, setReportData] = useState<Report | null>(null);
 
   const { data: report, isLoading } = useSWR<Report>(
     `/reports/${id}`,
     getReport,
   );
 
-  const handleCriterionChange = (WCAGId: string, updatedData: string) => {
+  const handleCriterionChange = (
+    WCAGId: string,
+    fieldToUpdate: string,
+    updatedData: string,
+  ) => {
     setCriteriaData((prev) => {
       const index = prev.findIndex((criterion) => criterion.number === WCAGId);
       console.log('WCAGId:', updatedData);
@@ -25,8 +30,9 @@ const CreateReport = ({ id }: CreateReportProps) => {
         const newCriteriaData = [...prev];
         newCriteriaData[index] = {
           ...newCriteriaData[index],
-          status: updatedData,
+          [fieldToUpdate]: updatedData,
         };
+        console.log(newCriteriaData);
         return newCriteriaData;
       }
       return prev;
@@ -36,6 +42,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
   useEffect(() => {
     if (!isLoading && report) {
       setCriteriaData(report.successCriteria);
+      setReportData(report);
     }
   }, [isLoading, report]);
 

@@ -36,3 +36,17 @@ export const getReport = async (url: string): Promise<Report> => {
     throw new Error('Failed to fetch report');
   }
 };
+
+export const updateReport = async (id: string, updatedReport: Report) => {
+  const response = await fetch(`${apiUrl}/reports/${id}`, {
+    method: 'POST',
+    body: JSON.stringify(updatedReport),
+    credentials: 'include',
+  });
+  if (response.ok) {
+    console.log('Report updated', response.status);
+  } else {
+    console.log('Failed to update report', response.status);
+    throw new Error('Failed to update report');
+  }
+};
