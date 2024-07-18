@@ -35,10 +35,13 @@ interface TeamReport {
   date: string;
 }
 
-function TeamDashboard(props: { teamId: string }) {
+interface TeamDashboardProps {
+  teamId: String;
+}
+
+function TeamDashboard({ teamId }: TeamDashboardProps) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
   const [currentReportId, setCurrentReportId] = useState('');
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
@@ -47,11 +50,12 @@ function TeamDashboard(props: { teamId: string }) {
   );
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
+    { url: `${apiUrl}/teams/${teamId}/reports` },
     fetcher,
   );
 
   const handleChange = (val: string) => setCurrentReportId(val);
+  const hasReport = reportListData && reportListData.length > 0;
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -73,14 +77,11 @@ function TeamDashboard(props: { teamId: string }) {
       NOT_COMPLIANT++;
     }
   }
-  console.log(currentTeamId);
-  console.log(reportListData);
   useEffect(() => {
-    if (!isLoadingReport && !isLoadingList && reportListData[0]) {
+    if (!isLoadingList && hasReport) {
       setCurrentReportId(reportListData[0].id);
-      setCurrentTeamId(props.teamId);
     }
-  }, [reportListData, props.teamId]);
+  }, [isLoadingList, teamId]);
 
   if (isLoadingReport) {
     return <h1>Loading...</h1>;
@@ -97,61 +98,62 @@ function TeamDashboard(props: { teamId: string }) {
         <Heading level="2" size="large">
           Tilgjengelighetsstatus
         </Heading>
-        <section className={styles.accessibilityStatusInner}>
-          <aside className={styles.selectReportContainer}>
-            <Heading level="3" size="medium">
-              Rapporter
-              <RadioGroup
-                legend="Velg rapport"
-                onChange={handleChange}
-                defaultValue={reportListData[0]?.id}
-              >
-                {reportListData.map((teamReport: TeamReport) => {
-                  console.log(teamReport.id, '!!!!');
-                  return (
-                    <Radio key={teamReport.id} value={teamReport.id}>
-                      {teamReport.title}
-                    </Radio>
-                  );
-                })}
-              </RadioGroup>
-            </Heading>
-          </aside>
+        {hasReport && (
+          <section className={styles.accessibilityStatusInner}>
+            <aside className={styles.selectReportContainer}>
+              <Heading level="3" size="medium">
+                Rapporter
+                <RadioGroup
+                  legend="Velg rapport"
+                  onChange={handleChange}
+                  defaultValue={reportListData[0]?.id}
+                >
+                  {reportListData.map((teamReport: TeamReport) => {
+                    return (
+                      <Radio key={teamReport.id} value={teamReport.id}>
+                        {teamReport.title}
+                      </Radio>
+                    );
+                  })}
+                </RadioGroup>
+              </Heading>
+            </aside>
 
-          <PieChart
-            colors={['red', 'gray', 'green', 'yellow']}
-            series={[
-              {
-                data: [
-                  { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
-                  {
-                    value: NOT_COMPLIANT,
-                    color: 'red',
-                    label: 'Ikke oppfylt',
-                  },
-                  {
-                    value: NOT_APPLICABLE,
-                    color: 'gray',
-                    label: 'Ikke aktuelt',
-                  },
-                  {
-                    value: NOT_TESTED,
-                    color: '#FFB703',
-                    label: 'Ikke testet',
-                  },
-                ],
-                innerRadius: 30,
-                outerRadius: 150,
-                paddingAngle: 2,
-                cornerRadius: 5,
-                startAngle: 0,
-                endAngle: 360,
-              },
-            ]}
-            width={550}
-            height={300}
-          />
-        </section>
+            <PieChart
+              colors={['red', 'gray', 'green', 'yellow']}
+              series={[
+                {
+                  data: [
+                    { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
+                    {
+                      value: NOT_COMPLIANT,
+                      color: 'red',
+                      label: 'Ikke oppfylt',
+                    },
+                    {
+                      value: NOT_APPLICABLE,
+                      color: 'gray',
+                      label: 'Ikke aktuelt',
+                    },
+                    {
+                      value: NOT_TESTED,
+                      color: '#FFB703',
+                      label: 'Ikke testet',
+                    },
+                  ],
+                  innerRadius: 30,
+                  outerRadius: 150,
+                  paddingAngle: 2,
+                  cornerRadius: 5,
+                  startAngle: 0,
+                  endAngle: 360,
+                },
+              ]}
+              width={550}
+              height={300}
+            />
+          </section>
+        )}
       </article>
       <article className={styles.membersContainer}>
         <Heading level="3" size="medium">
@@ -191,9 +193,6 @@ function MyTeam() {
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
-
-  console.log(currentTeamId);
-  console.log(reportList);
 
   useEffect(() => {
     if (!isTeamReportsLoading) setReportList(teamReports);
