@@ -73,8 +73,8 @@ function TeamDashboard(props: { teamId: string }) {
       NOT_COMPLIANT++;
     }
   }
-  console.log(currentTeamId)
-  console.log(reportListData)
+  console.log(currentTeamId);
+  console.log(reportListData);
   useEffect(() => {
     if (!isLoadingReport && !isLoadingList && reportListData[0]) {
       setCurrentReportId(reportListData[0].id);
@@ -85,7 +85,6 @@ function TeamDashboard(props: { teamId: string }) {
   if (isLoadingReport) {
     return <h1>Loading...</h1>;
   }
-
 
   return (
     <section className={styles.gridWrapper}>
