@@ -55,6 +55,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
   );
 
   const handleChange = (val: string) => setCurrentReportId(val);
+  const hasReport = reportListData && reportListData.length > 0;
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -77,10 +78,10 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     }
   }
   useEffect(() => {
-    if (!isLoadingReport && !isLoadingList && reportListData[0]) {
+    if (!isLoadingList && hasReport) {
       setCurrentReportId(reportListData[0].id);
     }
-  }, [reportListData, teamId]);
+  }, [isLoadingList, teamId]);
 
   if (isLoadingReport) {
     return <h1>Loading...</h1>;
@@ -97,60 +98,62 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="2" size="large">
           Tilgjengelighetsstatus
         </Heading>
-        <section className={styles.accessibilityStatusInner}>
-          <aside className={styles.selectReportContainer}>
-            <Heading level="3" size="medium">
-              Rapporter
-              <RadioGroup
-                legend="Velg rapport"
-                onChange={handleChange}
-                defaultValue={reportListData[0]?.id}
-              >
-                {reportListData.map((teamReport: TeamReport) => {
-                  return (
-                    <Radio key={teamReport.id} value={teamReport.id}>
-                      {teamReport.title}
-                    </Radio>
-                  );
-                })}
-              </RadioGroup>
-            </Heading>
-          </aside>
+        {hasReport && (
+          <section className={styles.accessibilityStatusInner}>
+            <aside className={styles.selectReportContainer}>
+              <Heading level="3" size="medium">
+                Rapporter
+                <RadioGroup
+                  legend="Velg rapport"
+                  onChange={handleChange}
+                  defaultValue={reportListData[0]?.id}
+                >
+                  {reportListData.map((teamReport: TeamReport) => {
+                    return (
+                      <Radio key={teamReport.id} value={teamReport.id}>
+                        {teamReport.title}
+                      </Radio>
+                    );
+                  })}
+                </RadioGroup>
+              </Heading>
+            </aside>
 
-          <PieChart
-            colors={['red', 'gray', 'green', 'yellow']}
-            series={[
-              {
-                data: [
-                  { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
-                  {
-                    value: NOT_COMPLIANT,
-                    color: 'red',
-                    label: 'Ikke oppfylt',
-                  },
-                  {
-                    value: NOT_APPLICABLE,
-                    color: 'gray',
-                    label: 'Ikke aktuelt',
-                  },
-                  {
-                    value: NOT_TESTED,
-                    color: '#FFB703',
-                    label: 'Ikke testet',
-                  },
-                ],
-                innerRadius: 30,
-                outerRadius: 150,
-                paddingAngle: 2,
-                cornerRadius: 5,
-                startAngle: 0,
-                endAngle: 360,
-              },
-            ]}
-            width={550}
-            height={300}
-          />
-        </section>
+            <PieChart
+              colors={['red', 'gray', 'green', 'yellow']}
+              series={[
+                {
+                  data: [
+                    { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
+                    {
+                      value: NOT_COMPLIANT,
+                      color: 'red',
+                      label: 'Ikke oppfylt',
+                    },
+                    {
+                      value: NOT_APPLICABLE,
+                      color: 'gray',
+                      label: 'Ikke aktuelt',
+                    },
+                    {
+                      value: NOT_TESTED,
+                      color: '#FFB703',
+                      label: 'Ikke testet',
+                    },
+                  ],
+                  innerRadius: 30,
+                  outerRadius: 150,
+                  paddingAngle: 2,
+                  cornerRadius: 5,
+                  startAngle: 0,
+                  endAngle: 360,
+                },
+              ]}
+              width={550}
+              height={300}
+            />
+          </section>
+        )}
       </article>
       <article className={styles.membersContainer}>
         <Heading level="3" size="medium">
@@ -179,7 +182,7 @@ function MyTeam() {
   //Vises kun hvis teamet du ser på er ditt.
   const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
-    fetcher
+    fetcher,
   );
 
   const [state, setState] = useState('mittTeam');
