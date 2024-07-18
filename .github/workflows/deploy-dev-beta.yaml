@@ -1,8 +1,5 @@
 name: 'Deploy dev beta'
-on:
-  push:
-    branches:
-      - 'main'
+on: workflow_dispatch
 
 permissions:
   contents: 'read'
