@@ -73,7 +73,7 @@ function TeamDashboard(props: { teamId: string }) {
     }
   }
   useEffect(() => {
-    if (!isLoadingReport && !isLoadingList) {
+    if (!isLoadingReport && !isLoadingList && reportListData[0]) {
       setCurrentReportId(reportListData[0].id);
       setCurrentTeamId(props.teamId);
     }
