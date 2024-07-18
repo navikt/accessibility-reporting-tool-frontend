@@ -32,7 +32,7 @@ interface TeamReport {
   date: string;
 }
 
-function TeamDashboard(props: { teamId: string; reportList: TeamReport[] }) {
+function TeamDashboard(props: { teamId: string }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
   const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
@@ -46,7 +46,6 @@ function TeamDashboard(props: { teamId: string; reportList: TeamReport[] }) {
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
-
   const [currentReportId, setCurrentReportId] = useState('');
 
   const handleChange = (val: string) => setCurrentReportId(val);
@@ -72,17 +71,16 @@ function TeamDashboard(props: { teamId: string; reportList: TeamReport[] }) {
     }
   }
   useEffect(() => {
-    if (!isLoadingReport || !isLoadingList) {
+    if (!isLoadingReport && !isLoadingList) {
       setCurrentReportId(reportListData[0].id);
-      console.log(reportListData[0].id, '***');
+      setCurrentTeamId(props.teamId);
     }
-  }, [isLoadingList, reportListData]);
+  }, [reportListData, props.teamId]);
 
-  if (isLoadingReport || isLoadingList) {
+  if (isLoadingReport) {
     return <h1>Loading...</h1>;
   }
 
-  console.log(currentReportId, 10000000);
   return (
     <section className={styles.gridWrapper}>
       <section className={styles.lastChanges}>
@@ -162,11 +160,8 @@ function TeamDashboard(props: { teamId: string; reportList: TeamReport[] }) {
         <Heading level="2" size="large" spacing>
           Rapporter
         </Heading>
-        {isLoadingList ? (
-          <p>Loading...</p>
-        ) : (
-          <ReportList reports={reportListData} />
-        )}
+
+        <ReportList reports={reportListData} />
 
         <Heading level="2" size="large" spacing>
           Samlerapporter
@@ -186,17 +181,18 @@ function MyTeam() {
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
 
-  const { data: teamReports, isLoading: isTeamReportsLoading } =
-    useSWRImmutable(
-      { url: `${apiUrl}/teams/${currentTeamId}/reports` },
-      fetcher,
-    );
+  let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
+    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
+    fetcher,
+  );
 
-  //console.log(data);
-  //console.log(data?.author);
-  //console.log(NOT_COMPLIANT);
+  const [reportList, setReportList] = useState(teamReports);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (!isTeamReportsLoading) setReportList(teamReports);
+  }, [isTeamReportsLoading, currentTeamId]);
+
+  if (isLoading || isTeamReportsLoading) {
     return null;
   }
 
@@ -233,7 +229,7 @@ function MyTeam() {
             <Button icon={<FilePlusIcon />}>Lag ny erklæring</Button>
           </header>
 
-          <TeamDashboard teamId={currentTeamId} reportList={teamReports} />
+          <TeamDashboard teamId={currentTeamId} />
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"
