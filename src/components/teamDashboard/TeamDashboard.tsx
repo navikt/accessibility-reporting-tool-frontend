@@ -38,6 +38,8 @@ function TeamDashboard(props: { teamId: string }) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
   const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
+  const [currentReportId, setCurrentReportId] = useState('');
+
 
   const { data: reportData, isLoading: isLoadingReport } = useSWRImmutable(
     { url: `${apiUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
@@ -48,9 +50,9 @@ function TeamDashboard(props: { teamId: string }) {
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
-  const [currentReportId, setCurrentReportId] = useState('');
 
   const handleChange = (val: string) => setCurrentReportId(val);
+  
 
   let successCriteriaCount = 0;
   successCriteriaCount = reportData?.successCriteria.length - 1;
@@ -182,13 +184,17 @@ function MyTeam() {
 
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
+  const [reportList, setReportList] = useState("");
+
 
   let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
 
-  const [reportList, setReportList] = useState(teamReports);
+  console.log(currentTeamId)
+  console.log(reportList)
+
 
   useEffect(() => {
     if (!isTeamReportsLoading) setReportList(teamReports);
