@@ -35,10 +35,13 @@ interface TeamReport {
   date: string;
 }
 
-function TeamDashboard(props: { teamId: string }) {
+interface TeamDashboardProps {
+  teamId: String;
+}
+
+function TeamDashboard({ teamId }: TeamDashboardProps) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const [currentTeamId, setCurrentTeamId] = useState(props.teamId); //Hvilket team som sees. Brukes ikke per nå, men nyttig når vi skal vise andre teams
   const [currentReportId, setCurrentReportId] = useState('');
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
@@ -47,7 +50,7 @@ function TeamDashboard(props: { teamId: string }) {
   );
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
+    { url: `${apiUrl}/teams/${teamId}/reports` },
     fetcher,
   );
 
@@ -73,14 +76,11 @@ function TeamDashboard(props: { teamId: string }) {
       NOT_COMPLIANT++;
     }
   }
-  console.log(currentTeamId);
-  console.log(reportListData);
   useEffect(() => {
     if (!isLoadingReport && !isLoadingList && reportListData[0]) {
       setCurrentReportId(reportListData[0].id);
-      setCurrentTeamId(props.teamId);
     }
-  }, [reportListData, props.teamId]);
+  }, [reportListData, teamId]);
 
   if (isLoadingReport) {
     return <h1>Loading...</h1>;
@@ -107,7 +107,6 @@ function TeamDashboard(props: { teamId: string }) {
                 defaultValue={reportListData[0]?.id}
               >
                 {reportListData.map((teamReport: TeamReport) => {
-                  console.log(teamReport.id, '!!!!');
                   return (
                     <Radio key={teamReport.id} value={teamReport.id}>
                       {teamReport.title}
@@ -180,7 +179,7 @@ function MyTeam() {
   //Vises kun hvis teamet du ser på er ditt.
   const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
-    fetcher,
+    fetcher
   );
 
   const [state, setState] = useState('mittTeam');
@@ -191,9 +190,6 @@ function MyTeam() {
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
-
-  console.log(currentTeamId);
-  console.log(reportList);
 
   useEffect(() => {
     if (!isTeamReportsLoading) setReportList(teamReports);
