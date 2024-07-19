@@ -19,4 +19,4 @@ const SERVER_URL = {
 };
 
 export const loginUrl = (redirectUrl: string) =>
-  `${SERVER_URL[getEnvironment()]}/oauth2/login?redirect=${redirectUrl}`;
+  `/oauth2/login?redirect=${redirectUrl}`;

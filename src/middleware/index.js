@@ -15,13 +15,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
   if (!token) {
+    console.log("Token not found");
     console.log(loginUrl(context.url.toString()));
     return context.redirect(loginUrl(context.url.toString())
     );
   }
   const validation = await validateToken(token);
   if (!validation.ok) {
-    console.log(loginUrl(context.url.toString()));
+    console.log("Validation failed!");
     return context.redirect(loginUrl(context.url.toString()));
   }
 
