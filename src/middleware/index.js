@@ -32,4 +32,5 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const name = await parse.name;
     console.log(`name: ${name}`);
   }
+  return next
 });
