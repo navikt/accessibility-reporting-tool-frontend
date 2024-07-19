@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
 import * as teamsJson from '../teams.json';
+import * as jsonFile2 from './report2.json';
 
 const api = new Hono();
 
@@ -270,7 +271,7 @@ api.get('/api/criteria', (c) => {
 });
 
 api.get('api/reports/rykutxyrhterg-79', (c) => {
-  return c.json(jsonFile);
+  return c.json(jsonFile2);
 });
 
 api.get('api/reports/rykutxyrhterg-80', (c) => {

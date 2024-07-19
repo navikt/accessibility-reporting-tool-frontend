@@ -88,13 +88,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
       setCurrentReportId(reportListData[0].id);
       console.log(currentReportId);
     }
-  }, [
-    isLoadingList,
-    teamId,
-    isLoadingTeamData,
-    isLoadingReport,
-    reportListData,
-  ]);
+  }, [isLoadingList, teamId, isLoadingTeamData, reportListData]);
 
   if (isLoadingReport || isLoadingTeamData || isLoadingList) {
     return <h1>Loading...</h1>;
