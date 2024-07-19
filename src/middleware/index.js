@@ -1,4 +1,4 @@
-import { getToken, validateToken, parseAzureUserToken } from '@navikt/oasis';
+import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
 import { loginUrl } from './urls';
@@ -25,6 +25,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     console.log("Validation failed!");
     return context.redirect(loginUrl(context.url.toString()));
   }
+
+  const obo = await requestOboToken(token, `${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`);
+  if(!obo.ok){
+    console.log("Fail on-behalf-of token for api")
+  }
+
 
   const parse = parseAzureUserToken(token);
   if (parse.ok) {
