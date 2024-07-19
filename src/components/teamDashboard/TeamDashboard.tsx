@@ -54,6 +54,11 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     fetcher,
   );
 
+  const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
+    { url: `${apiUrl}/teams/${teamId}/details` },
+    fetcher,
+  );
+
   const handleChange = (val: string) => setCurrentReportId(val);
   const hasReport = reportListData && reportListData.length > 0;
 
@@ -78,12 +83,12 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     }
   }
   useEffect(() => {
-    if (!isLoadingList && hasReport) {
+    if (!isLoadingList && !isLoadingTeamData && hasReport) {
       setCurrentReportId(reportListData[0].id);
     }
   }, [isLoadingList, teamId]);
 
-  if (isLoadingReport) {
+  if (isLoadingReport || isLoadingTeamData) {
     return <h1>Loading...</h1>;
   }
 
@@ -159,9 +164,19 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="3" size="medium">
           Admin
         </Heading>
+        <p>{teamData.email}</p>
         <Heading level="3" size="medium">
           Medlemmer
         </Heading>
+        <ul className={styles.membersList}>
+          {teamData.members.map((members: string) => {
+            return (
+              <li key={members} value={members}>
+                {members}
+              </li>
+            );
+          })}
+        </ul>
       </article>
       <section className={styles.reportsContainer}>
         <Heading level="2" size="large" spacing>
