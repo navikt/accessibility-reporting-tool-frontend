@@ -45,7 +45,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
   const [currentReportId, setCurrentReportId] = useState('');
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
-    { url: `${apiUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
+    { url: `${apiUrl}/reports/${currentReportId}` }, //For testing i dev
     fetcher,
   );
 

@@ -144,7 +144,7 @@ api.get('api/teams/team-messi/reports', (c) => {
         
         {
         title: "Hmmm",
-        id: "rykutxyrhterg-89",         
+        id: "rykutxyrhterg-79",         
         teamId: "team-messi",
         date: "2024-06-10",
         },
@@ -251,7 +251,7 @@ api.get('/api/criteria', (c) => {
   ]);
 });
 
-api.get('api/reports/cf3f6442-afa1-4cf9-854f-48889157aeec', (c) => {
+api.get('api/reports/rykutxyrhterg-79', (c) => {
   return c.json(jsonFile);
 });
 api.post('/api/reports/new', (c) => {
