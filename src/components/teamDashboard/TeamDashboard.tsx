@@ -189,7 +189,8 @@ function MyTeam() {
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
   const [reportList, setReportList] = useState('');
 
-  {/*
+  {
+    /*
     ###THIS CODE IS NOT USED AS OF NOW
   let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
     { url: `${apiUrl}/teams/${currentTeamId}/reports` },
@@ -204,12 +205,12 @@ function MyTeam() {
     return null;
   }
 
-  */}
+  */
+  }
 
   if (isLoading) {
     return null;
   }
-
 
   return (
     <main className={styles.teamContent}>
