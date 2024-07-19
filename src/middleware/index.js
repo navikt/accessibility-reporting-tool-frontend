@@ -4,10 +4,7 @@ import { defineMiddleware } from 'astro/middleware';
 import { loginUrl } from './urls';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  console.log('Running middleware');
-
   const token = getToken(context.request.headers);
-  console.log(`Token: ${token}`);
   if (isLocal) {
     return next();
   }
@@ -16,7 +13,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
   if (!token) {
     console.log("Token not found");
-    console.log(loginUrl(context.url.toString()));
     return context.redirect(loginUrl(context.url.toString())
     );
   }
@@ -34,7 +30,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const parse = parseAzureUserToken(token);
   if (parse.ok) {
-    console.log(`name: ${parse.preferred_username} (${parse.NAVident})`);
+    console.log(`name: ${parse.preferred_username}`);
     const name = await parse.name;
     console.log(`name: ${name}`);
   }
