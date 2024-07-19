@@ -28,6 +28,9 @@ spec:
       claims:
         groups:
           - id: '07bca51b-e5dc-484a-ac09-685e61244b6b' #admins
+      sidecar:
+        enabled: true
+        autoLogin: true
   resources:
     limits:
       memory: 768Mi
