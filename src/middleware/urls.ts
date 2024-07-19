@@ -1,20 +1,15 @@
 enum ENV {
-  local = 'local',
   development = 'development',
-  production = 'production',
 }
 
 const isDevelopment = process.env.NAIS_CLUSTER_NAME === 'dev-gcp';
 export const isLocal = process.env.NODE_ENV === 'development';
 
 export const getEnvironment = () => {
-  if (isDevelopment) {
-    return 'dev';
-  }
-
   if (isLocal) {
-    return 'dev';
+    return 'local';
   }
+  return 'development';
 };
 
 const SERVER_URL = {
@@ -24,4 +19,4 @@ const SERVER_URL = {
 };
 
 export const loginUrl = (redirectUrl: string) =>
-  `${SERVER_URL}/oauth2/login?redirect=${redirectUrl}`;
+  `${SERVER_URL[getEnvironment()]}/oauth2/login?redirect=${redirectUrl}`;

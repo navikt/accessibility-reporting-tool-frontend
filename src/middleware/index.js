@@ -1,7 +1,7 @@
-import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
+import { getToken, validateToken, parseAzureUserToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
-import { loginUrl } from '@src/middleware/urls.js';
+import { loginUrl } from './urls';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   console.log('Running middleware');
