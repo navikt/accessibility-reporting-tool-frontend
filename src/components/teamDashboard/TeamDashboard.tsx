@@ -86,7 +86,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     if (!isLoadingList && !isLoadingTeamData && hasReport) {
       setCurrentReportId(reportListData[0].id);
     }
-  }, [isLoadingList, teamId]);
+  }, [isLoadingList, teamId, isLoadingTeamData]);
 
   if (isLoadingReport || isLoadingTeamData) {
     return <h1>Loading...</h1>;
@@ -164,12 +164,12 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="3" size="medium">
           Admin
         </Heading>
-        <p>{teamData.email}</p>
+        <p>{teamData?.email}</p>
         <Heading level="3" size="medium">
           Medlemmer
         </Heading>
         <ul className={styles.membersList}>
-          {teamData.members.map((members: string) => {
+          {teamData?.members.map((members: string) => {
             return (
               <li key={members} value={members}>
                 {members}
