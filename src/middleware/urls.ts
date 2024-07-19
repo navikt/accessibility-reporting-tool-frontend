@@ -1,0 +1,27 @@
+enum ENV {
+  local = 'local',
+  development = 'development',
+  production = 'production',
+}
+
+const isDevelopment = process.env.NAIS_CLUSTER_NAME === 'dev-gcp';
+export const isLocal = process.env.NODE_ENV === 'development';
+
+export const getEnvironment = () => {
+  if (isDevelopment) {
+    return 'dev';
+  }
+
+  if (isLocal) {
+    return 'dev';
+  }
+};
+
+const SERVER_URL = {
+  local: 'http://localhost:8787',
+  development: 'https://a11y-statement.ansatt.dev.nav.no',
+  production: 'https://a11y-statement.ansatt.dev.nav.no',
+};
+
+export const loginUrl = (redirectUrl: string) =>
+  `${SERVER_URL}/oauth2/login?redirect=${redirectUrl}`;
