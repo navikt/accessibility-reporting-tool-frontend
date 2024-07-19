@@ -109,6 +109,24 @@ api.get('api/users/details', (c) => {
   });
 });
 
+api.get('api/teams/team-nav/details', (c) => {
+  return c.json({
+    id: "team-nav",
+    name: "Team Nav",
+    email: 'team.nav@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  })
+} )
+
+api.get('api/teams/team-messi/details', (c) => {
+  return c.json({
+    id: "team-messi",
+    name: "Team Messi",
+    email: 'teammessi@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  })
+} )
+
 api.get('/api/reports/list', (c) => {
     return c.json([
         {
