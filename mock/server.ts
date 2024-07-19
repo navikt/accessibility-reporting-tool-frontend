@@ -272,6 +272,19 @@ api.get('/api/criteria', (c) => {
 api.get('api/reports/rykutxyrhterg-79', (c) => {
   return c.json(jsonFile);
 });
+
+api.get('api/reports/rykutxyrhterg-80', (c) => {
+    return c.json(jsonFile);
+  }
+
+);
+
+api.get('api/reports/rykutxyrhterg-70', (c) => {
+  return c.json(jsonFile);
+}
+
+);
+
 api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });

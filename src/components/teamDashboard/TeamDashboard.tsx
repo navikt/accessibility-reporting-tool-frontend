@@ -42,12 +42,7 @@ interface TeamDashboardProps {
 function TeamDashboard({ teamId }: TeamDashboardProps) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const [currentReportId, setCurrentReportId] = useState('');
-
-  const { data: reportData, isLoading: isLoadingReport } = useSWR(
-    { url: `${apiUrl}/reports/${currentReportId}` }, //For testing i dev
-    fetcher,
-  );
+  const [currentReportId, setCurrentReportId] = useState<string>();
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/reports` },
@@ -56,6 +51,11 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/details` },
+    fetcher,
+  );
+
+  const { data: reportData, isLoading: isLoadingReport } = useSWR(
+    { url: `${apiUrl}/reports/${currentReportId}` },
     fetcher,
   );
 
@@ -83,12 +83,20 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     }
   }
   useEffect(() => {
-    if (!isLoadingList && !isLoadingTeamData && hasReport) {
+    if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
+      console.log(currentReportId);
       setCurrentReportId(reportListData[0].id);
+      console.log(currentReportId);
     }
-  }, [isLoadingList, teamId, isLoadingTeamData]);
+  }, [
+    isLoadingList,
+    teamId,
+    isLoadingTeamData,
+    isLoadingReport,
+    reportListData,
+  ]);
 
-  if (isLoadingReport || isLoadingTeamData) {
+  if (isLoadingReport || isLoadingTeamData || isLoadingList) {
     return <h1>Loading...</h1>;
   }
 
@@ -111,7 +119,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 <RadioGroup
                   legend="Velg rapport"
                   onChange={handleChange}
-                  defaultValue={reportListData[0]?.id}
+                  defaultValue={currentReportId}
                 >
                   {reportListData.map((teamReport: TeamReport) => {
                     return (
@@ -202,7 +210,7 @@ function MyTeam() {
 
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
-  const [reportList, setReportList] = useState('');
+  //const [reportList, setReportList] = useState('');
 
   {
     /*
