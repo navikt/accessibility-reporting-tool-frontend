@@ -5,7 +5,7 @@ import { loginUrl } from './urls';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const token = getToken(context.request.headers);
-  const apiScope = `${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statementwefew`
+  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`
   if (isLocal) {
     return next();
   }
@@ -24,7 +24,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const obo = await requestOboToken(token, apiScope);
-  console.log(`${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`)
+  console.log(apiScope)
   if(!obo.ok){
     console.log("Fail on-behalf-of token for api")
     console.log(obo.error)
