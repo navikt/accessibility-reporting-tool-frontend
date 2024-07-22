@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Skeleton,
   Tabs,
 } from '@navikt/ds-react';
 import { FilePlusIcon } from '@navikt/aksel-icons';
@@ -89,10 +90,6 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
       console.log(currentReportId);
     }
   }, [isLoadingList, teamId, isLoadingTeamData, reportListData]);
-
-  if (isLoadingReport || isLoadingTeamData || isLoadingList) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <section className={styles.gridWrapper}>
@@ -228,6 +225,8 @@ function MyTeam() {
   if (isLoading) {
     return null;
   }
+
+  console.log('render');
 
   return (
     <main className={styles.teamContent}>
