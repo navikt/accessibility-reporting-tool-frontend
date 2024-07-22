@@ -42,12 +42,12 @@ interface TeamDashboardProps {
 function TeamDashboard({ teamId }: TeamDashboardProps) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
 
-  const [currentReportId, setCurrentReportId] = useState<string>();
-
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/reports` },
     fetcher,
   );
+
+  const [currentReportId, setCurrentReportId] = useState<string>("");
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/details` },
@@ -59,7 +59,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     fetcher,
   );
 
-  const handleChange = (val: string) => setCurrentReportId(val);
+  //const handleChange = (val: string) => setCurrentReportId(val);
   const hasReport = reportListData && reportListData.length > 0;
 
   let successCriteriaCount = 0;
@@ -85,7 +85,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
   useEffect(() => {
     if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
       console.log(currentReportId);
-      setCurrentReportId(reportListData[0].id);
+      setCurrentReportId(reportListData[0]?.id);
       console.log(currentReportId);
     }
   }, [isLoadingList, teamId, isLoadingTeamData, reportListData]);
@@ -112,8 +112,8 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 Rapporter
                 <RadioGroup
                   legend="Velg rapport"
-                  onChange={handleChange}
-                  defaultValue={currentReportId}
+                  onChange={setCurrentReportId}
+                  value={currentReportId}
                 >
                   {reportListData.map((teamReport: TeamReport) => {
                     return (
