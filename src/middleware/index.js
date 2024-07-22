@@ -23,7 +23,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const obo = await requestOboToken(token, `${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`);
-  console.log(`${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`)
+  console.log(`${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statementasda`)
   if(!obo.ok){
     console.log("Fail on-behalf-of token for api")
     console.log(obo.error)
