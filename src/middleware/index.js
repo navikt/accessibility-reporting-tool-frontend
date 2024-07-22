@@ -5,7 +5,7 @@ import { loginUrl } from './urls';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const token = getToken(context.request.headers);
-  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}:a11y-statement:a11y-statement`
+  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`
   if (isLocal) {
     return next();
   }
