@@ -1,36 +1,9 @@
-.teamContent{
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
 
-}
-
-.h1 {
-    color: var(--a-blue-800);
-}
-
-
-.selector, .selector2{
-    width: 20%;
-}
-
-.selector{margin-top: 20px;}
-
-.myTeamHeader{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-}
 
 .membersList{
     list-style: none;
 }
 
-.myReportsHeader{
-    display: flex;
-    justify-content: right;
-}
 
 .addStatementBtn{
     margin-top: 52px;
@@ -92,16 +65,4 @@
 .reportsContainer{
     min-height: 120px;
     grid-area: bot;
-}
-
-.myReportsContainer{
-    background-color: white;
-    padding: 16px;
-    border-radius: 10px;
-}
-
-.myReportsContainer>section{
-    display: flex;
-    justify-content: space-between;
-
 }

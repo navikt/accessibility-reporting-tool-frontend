@@ -1,0 +1,7 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TeamDashboard from "@components/teamDashboard/TeamDashboard";
+---
+<Layout>
+    <TeamDashboard teamId={Astro.params.teamId as string} client:only/>
+</Layout>

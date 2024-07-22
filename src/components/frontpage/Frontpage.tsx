@@ -1,7 +1,7 @@
 import { Button, Heading, Link } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
-import ConditionalTeamDashboard from '@components/teamDashboard/TeamDashboard';
+import ConditionalTeamDashboard from '@components/teamDashboard/ConditionalTeamDashboard';
 import useSWRImmutable from 'swr/immutable';
 import { apiUrl } from '@src/urls';
 import { fetcher } from '@src/utils/api.client';

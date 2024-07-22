@@ -1,33 +1,11 @@
-import type { UserProps } from '@src/types';
 import { apiUrl } from '@src/urls';
-import { useEffect, useState, type SetStateAction } from 'react';
-import useSWRImmutable from 'swr/immutable';
+import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import {
-  BodyLong,
-  Button,
-  Heading,
-  Radio,
-  RadioGroup,
-  Select,
-  Skeleton,
-  Tabs,
-} from '@navikt/ds-react';
-import { FilePlusIcon } from '@navikt/aksel-icons';
+import { Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
-import { createReport } from '@src/services/reportServices';
-import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 import useSWR from 'swr';
-
-interface Team {
-  email: string;
-  id: string;
-  members: string[];
-  name: string;
-  url: string;
-}
 
 interface TeamReport {
   title: string;
@@ -192,120 +170,4 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
   );
 }
 
-function MyTeam() {
-  //Vises kun hvis teamet du ser på er ditt.
-  const { data: userData, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
-    fetcher,
-  );
-
-  const [state, setState] = useState('mittTeam');
-  const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
-  //const [reportList, setReportList] = useState('');
-
-  {
-    /*
-    ###THIS CODE IS NOT USED AS OF NOW
-  let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
-    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
-    fetcher,
-  );
-
-  useEffect(() => {
-    if (!isTeamReportsLoading) setReportList(teamReports);
-  }, [isTeamReportsLoading, currentTeamId]);
-
-    if (isLoading || isTeamReportsLoading) {
-    return null;
-  }
-
-  */
-  }
-
-  if (isLoading) {
-    return null;
-  }
-
-  console.log('render');
-
-  return (
-    <main className={styles.teamContent}>
-      <header>
-        <h1 className={styles.h1}>God dag {userData?.name}</h1>
-        <BodyLong>
-          Denne teksten sjekker bare at team-selector funker: {currentTeamId}
-        </BodyLong>
-      </header>
-
-      <Tabs value={state} onChange={setState}>
-        <Tabs.List>
-          <Tabs.Tab value="mittTeam" label="Mitt team" />
-          <Tabs.Tab value="mineRapporter" label="Mine rapporter" />
-        </Tabs.List>
-        <Tabs.Panel value="mittTeam" className="h-24 w-full bg-gray-50 p-4">
-          <header className={styles.myTeamHeader}>
-            <Select
-              className={styles.selector}
-              label="Velg team"
-              value={currentTeamId}
-              onChange={(e) => setCurrentTeamId(e.target.value)}
-            >
-              {userData?.teams.map((team: Team) => {
-                return (
-                  <option key={team.id} value={team.id}>
-                    {team.name}
-                  </option>
-                );
-              })}
-            </Select>
-            <CreateReportModal />
-          </header>
-
-          <TeamDashboard teamId={currentTeamId} />
-        </Tabs.Panel>
-        <Tabs.Panel
-          value="mineRapporter"
-          className="h-24 w-full bg-gray-50 p-4"
-        >
-          <header className={styles.myReportsHeader}>
-            <CreateReportModal />
-          </header>
-          <section className={styles.myReportsContainer}>
-            <section>
-              <Heading size="large">Mine rapporter</Heading>
-              <Select
-                className={styles.selector}
-                label="Velg team"
-                value={currentTeamId}
-                onChange={(e) => setCurrentTeamId(e.target.value)}
-              >
-                {userData?.teams.map((team: Team) => {
-                  return (
-                    <option key={team.id} value={team.id}>
-                      {team.name}
-                    </option>
-                  );
-                })}
-              </Select>
-            </section>
-            <ReportList reports={userData?.reports} />
-          </section>
-        </Tabs.Panel>
-      </Tabs>
-    </main>
-  );
-}
-
-function ConditionalTeamDashboard(props: { isMyTeam: boolean }) {
-  //Vises hvis du ikke er en del av teamet du vil se på.
-
-  const [isMyTeam, setIsMyTeam] = useState(props.isMyTeam); //Sjekk om brukeren er en del av teamet som vises
-
-  if (isMyTeam) {
-    return <MyTeam />;
-  }
-
-  //return <TeamDashboard teamId="someTeam" />;
-}
-
-export default ConditionalTeamDashboard;
+export default TeamDashboard;
