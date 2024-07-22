@@ -19,7 +19,8 @@ interface TeamDashboardProps {
 }
 
 function TeamDashboard({ teamId }: TeamDashboardProps) {
-  //"Generisk kode for team-dashboard. Selvstendig komponent."
+  //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
+  //samt tilgjengelighetsstatusen deres.
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/reports` },
@@ -38,7 +39,6 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     fetcher,
   );
 
-  //const handleChange = (val: string) => setCurrentReportId(val);
   const hasReport = reportListData && reportListData.length > 0;
 
   let successCriteriaCount = 0;
@@ -71,11 +71,6 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
 
   return (
     <section className={styles.gridWrapper}>
-      <section className={styles.lastChanges}>
-        <Heading level="3" size="medium">
-          Siste endringer
-        </Heading>
-      </section>
       <article className={styles.accessibilityStatusContainer}>
         <Heading level="2" size="large">
           Tilgjengelighetsstatus

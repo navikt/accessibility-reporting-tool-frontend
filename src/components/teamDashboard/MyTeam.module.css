@@ -25,6 +25,8 @@
 .myReportsHeader{
     display: flex;
     justify-content: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .myReportsContainer{

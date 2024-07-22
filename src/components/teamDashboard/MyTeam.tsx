@@ -17,7 +17,10 @@ interface Team {
 }
 
 function MyTeam() {
-  //Vises kun hvis teamet du ser på er ditt.
+  //Vises kun hvis teamet du ser på er ditt. Er det første du ser på forsiden, dersom
+  //du er med i minst ett team. Her har du muligheten til å velge hvilket team du vil se
+  //dashboard for. Dashboardet vises i henhold til teamet som er valgt i drop-down menyen.
+
   const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
     fetcher,
@@ -36,9 +39,6 @@ function MyTeam() {
     <main className={styles.teamContent}>
       <header>
         <h1 className={styles.h1}>God dag {userData?.name}</h1>
-        <BodyLong>
-          Denne teksten sjekker bare at team-selector funker: {currentTeamId}
-        </BodyLong>
       </header>
 
       <Tabs value={state} onChange={setState}>
@@ -77,20 +77,6 @@ function MyTeam() {
           <section className={styles.myReportsContainer}>
             <section>
               <Heading size="large">Mine rapporter</Heading>
-              <Select
-                className={styles.selector}
-                label="Velg team"
-                value={currentTeamId}
-                onChange={(e) => setCurrentTeamId(e.target.value)}
-              >
-                {userData?.teams.map((team: Team) => {
-                  return (
-                    <option key={team.id} value={team.id}>
-                      {team.name}
-                    </option>
-                  );
-                })}
-              </Select>
             </section>
             <ReportList reports={userData?.reports} />
           </section>

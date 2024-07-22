@@ -4,12 +4,6 @@
     list-style: none;
 }
 
-
-.addStatementBtn{
-    margin-top: 52px;
-    margin-bottom: 20px;
-}
-
 .gridWrapper{
     margin-top: 20px;
     margin-bottom: 20px;
@@ -17,7 +11,6 @@
     display: grid;
     gap: 16px;
     grid-template-areas: 
-    'top top top top top'
     'mid mid mid mid mid2'
     'bot bot bot bot bot'
     ;
@@ -28,11 +21,6 @@
     border-radius: 10px;
     padding: 16px;
     box-shadow: var(--a-shadow-small);
-}
-
-.lastChanges{
-    min-height: 80px;
-    grid-area: top;
 }
 
 .accessibilityStatusContainer{
