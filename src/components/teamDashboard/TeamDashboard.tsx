@@ -47,7 +47,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     fetcher,
   );
 
-  const [currentReportId, setCurrentReportId] = useState<string>("");
+  const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/details` },
