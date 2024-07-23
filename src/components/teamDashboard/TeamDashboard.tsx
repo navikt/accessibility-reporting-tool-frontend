@@ -1,11 +1,12 @@
 import { apiUrl } from '@src/urls';
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import { Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
+import { PersonPencilIcon } from '@navikt/aksel-icons';
 
 interface TeamReport {
   title: string;
@@ -16,11 +17,14 @@ interface TeamReport {
 
 interface TeamDashboardProps {
   teamId: String;
+  isMyTeam: boolean;
 }
 
-function TeamDashboard({ teamId }: TeamDashboardProps) {
+function TeamDashboard({ teamId }: TeamDashboardProps, isMyTeam: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
+
+  const thisIsMyTeam = isMyTeam;
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${teamId}/reports` },
@@ -95,6 +99,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 </RadioGroup>
               </Heading>
             </aside>
+            <section className={styles.chartContainer}>
             <PieChart
               colors={['red', 'gray', 'green', 'yellow']}
               series={[
@@ -135,6 +140,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
               width={600}
               height={300}
             />
+            </section>
           </section>
         ) : (
           <>
@@ -145,6 +151,11 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         )}
       </article>
       <article className={styles.membersContainer}>
+        <div className={styles.editTeamBtn}>
+      {thisIsMyTeam && 
+          <Button variant="secondary" icon={<PersonPencilIcon/>}>Endre</Button>
+        }
+        </div>
         <Heading level="3" size="medium">
           Admin
         </Heading>
