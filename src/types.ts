@@ -48,4 +48,5 @@ export type Report = {
   contributers: string[]; // Ask Rannveig what this is?
   lastUpdatedBy: string;
   reportType: string;
+  hasWriteAccess: boolean;
 };

@@ -18,7 +18,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
     data: report,
     isLoading,
     mutate,
-  } = useSWR(`/reports/${id}`, getReport);
+  } = useSWR<Report>(`/reports/${id}`, getReport);
 
   const updateReportData = async (updates: Partial<Report>) => {
     try {
@@ -90,6 +90,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               id="report-name"
               name="report-name"
               defaultValue={report?.descriptiveName}
+              disabled={!report?.hasWriteAccess}
               onChange={(e) =>
                 handleMetadataChange('descriptiveName', e.target.value)
               }
@@ -100,6 +101,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
               id="report-url"
               name="report-url"
               defaultValue={report?.url}
+              disabled={!report?.hasWriteAccess}
               onChange={(e) => handleMetadataChange('url', e.target.value)}
             />
           </div>
@@ -112,6 +114,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
                 key={criterion.number}
                 criterion={criterion}
                 handleChange={handleCriterionChange}
+                hasWriteAccess={report?.hasWriteAccess as boolean}
               />
             ))}
         </Tabs.Panel>
@@ -123,6 +126,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
                 key={criterion.number}
                 criterion={criterion}
                 handleChange={handleCriterionChange}
+                hasWriteAccess={report?.hasWriteAccess as boolean}
               />
             ))}
         </Tabs.Panel>
@@ -134,6 +138,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
                 key={criterion.number}
                 criterion={criterion}
                 handleChange={handleCriterionChange}
+                hasWriteAccess={report?.hasWriteAccess as boolean}
               />
             ))}
         </Tabs.Panel>
@@ -145,6 +150,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
                 key={criterion.number}
                 criterion={criterion}
                 handleChange={handleCriterionChange}
+                hasWriteAccess={report?.hasWriteAccess as boolean}
               />
             ))}
         </Tabs.Panel>
