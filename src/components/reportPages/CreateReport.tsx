@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
-import { getReport } from '@src/services/reportServices';
+import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField } from '@navikt/ds-react';
+import _ from 'lodash';
+
 interface CreateReportProps {
   id: string | undefined;
 }
@@ -11,12 +13,22 @@ interface CreateReportProps {
 const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('metadata');
-  const [reportData, setReportData] = useState<Report | null>(null);
 
-  const { data: report, isLoading } = useSWR<Report>(
-    `/reports/${id}`,
-    getReport,
-  );
+  const {
+    data: report,
+    isLoading,
+    mutate,
+  } = useSWR(`/reports/${id}`, getReport);
+
+  const updateReportData = async (updates: Partial<Report>) => {
+    try {
+      await updateReport(id as string, updates);
+      mutate();
+    } catch (error) {
+      console.error('Failed to update report', error);
+      console.error(error);
+    }
+  };
 
   const handleCriterionChange = (
     WCAGId: string,
@@ -25,7 +37,6 @@ const CreateReport = ({ id }: CreateReportProps) => {
   ) => {
     setCriteriaData((prev) => {
       const index = prev.findIndex((criterion) => criterion.number === WCAGId);
-      console.log('WCAGId:', updatedData);
       if (index !== -1) {
         const newCriteriaData = [...prev];
         newCriteriaData[index] = {
@@ -33,16 +44,30 @@ const CreateReport = ({ id }: CreateReportProps) => {
           [fieldToUpdate]: updatedData,
         };
         console.log(newCriteriaData);
+        updateReportData({
+          successCriteria: [
+            {
+              ...newCriteriaData[index],
+              [fieldToUpdate]: updatedData,
+            },
+          ],
+        });
         return newCriteriaData;
       }
       return prev;
     });
   };
 
+  const handleMetadataChange = _.debounce(
+    (fieldToUpdate: string, updatedData: string) => {
+      updateReportData({ [fieldToUpdate]: updatedData });
+    },
+    500,
+  );
+
   useEffect(() => {
     if (!isLoading && report) {
       setCriteriaData(report.successCriteria);
-      setReportData(report);
     }
   }, [isLoading, report]);
 
@@ -67,9 +92,18 @@ const CreateReport = ({ id }: CreateReportProps) => {
               id="report-name"
               name="report-name"
               defaultValue={report?.descriptiveName}
+              onChange={(e) =>
+                handleMetadataChange('descriptiveName', e.target.value)
+              }
             />
 
-            <TextField label="URL" id="report-url" name="report-url" />
+            <TextField
+              label="URL"
+              id="report-url"
+              name="report-url"
+              defaultValue={report?.url}
+              onChange={(e) => handleMetadataChange('url', e.target.value)}
+            />
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="NOT_TESTED">

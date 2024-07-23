@@ -37,16 +37,16 @@ export const getReport = async (url: string): Promise<Report> => {
   }
 };
 
-export const updateReport = async (id: string, updatedReport: Report) => {
+export const updateReport = async (id: string, updates: Partial<Report>) => {
   const response = await fetch(`${apiUrl}/reports/${id}`, {
-    method: 'POST',
-    body: JSON.stringify(updatedReport),
+    method: 'PATCH',
+    body: JSON.stringify(updates),
     credentials: 'include',
   });
   if (response.ok) {
     console.log('Report updated', response.status);
   } else {
-    console.log('Failed to update report', response.status);
+    console.log('Failed to update report-', response.status);
     throw new Error('Failed to update report');
   }
 };

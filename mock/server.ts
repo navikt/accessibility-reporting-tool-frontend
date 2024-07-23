@@ -216,9 +216,14 @@ api.get('/api/criteria', (c) => {
 api.get('api/testRapport', (c) => {
   return c.json(jsonFile);
 });
-api.post('/api/reports/new', (c) => {
+api.post('api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
+
+api.patch('/api/reports/123456789', (c) => {
+  return c.json({ messge: 'Report updated' });
+});
+
 api.get('/api/reports/123456789', (c) => {
   const initializedReport = {
     reportId: '123456789',
