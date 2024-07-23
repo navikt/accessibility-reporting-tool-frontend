@@ -101,23 +101,28 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
               series={[
                 {
                   data: [
-                    { value: COMPLIANT, color: 'green', label: 'Oppfylt' },
+                    { value: COMPLIANT, 
+                      color: 'green', 
+                      label: `${COMPLIANT} krav oppfylt` },
                     {
                       value: NOT_COMPLIANT,
                       color: 'red',
-                      label: 'Ikke oppfylt',
+                      label: `${NOT_COMPLIANT} krav ikke oppfylt`,
                     },
                     {
                       value: NOT_APPLICABLE,
                       color: 'gray',
-                      label: 'Ikke aktuelt',
+                      label: `${NOT_APPLICABLE} krav ikke aktuelle`,
                     },
                     {
                       value: NOT_TESTED,
                       color: '#FFB703',
-                      label: 'Ikke testet',
+                      label: `${NOT_TESTED} krav ikke testet`,
                     },
                   ],
+                  valueFormatter: () => {
+                    return '' //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
+                  },
                   innerRadius: 30,
                   outerRadius: 150,
                   paddingAngle: 2,
@@ -126,7 +131,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                   endAngle: 360,
                 },
               ]}
-              width={550}
+              width={600}
               height={300}
             />
           </section>
