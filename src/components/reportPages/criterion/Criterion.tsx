@@ -5,7 +5,11 @@ import styles from './Criterion.module.css';
 
 type CriterionProps = {
   criterion: CriterionType;
-  handleChange: (WCAGId: string, updatedData: string) => void;
+  handleChange: (
+    WCAGId: string,
+    fieldToUpdate: string,
+    updatedData: string,
+  ) => void;
 };
 
 const Criterion = ({ criterion, handleChange }: CriterionProps) => {
@@ -16,7 +20,7 @@ const Criterion = ({ criterion, handleChange }: CriterionProps) => {
           className={styles.radioGroup}
           legend={criterion.name}
           onChange={(e) => {
-            handleChange(criterion.number, e as string);
+            handleChange(criterion.number, 'status', e as string);
           }}
           description={criterion.description}
           defaultValue={
@@ -36,6 +40,9 @@ const Criterion = ({ criterion, handleChange }: CriterionProps) => {
               label="Det er innhold på siden som bryter kravet."
               description="Beskriv kort hvilket innhold som bryter kravet, hvorfor og konsekvensene dette får for brukeren."
               defaultValue={criterion.breakingTheLaw}
+              onChange={(e) =>
+                handleChange(criterion.number, 'breakingTheLaw', e.target.value)
+              }
             />
             <Textarea
               className={styles.textarea}
@@ -43,12 +50,26 @@ const Criterion = ({ criterion, handleChange }: CriterionProps) => {
               description="Hvilket innhold er ikke underlagt kravet?
 "
               defaultValue={criterion.lawDoesNotApply}
+              onChange={(e) =>
+                handleChange(
+                  criterion.number,
+                  'lawDoesNotApply',
+                  e.target.value,
+                )
+              }
             />
             <Textarea
               className={styles.textarea}
               label="Innholdet er unntatt fordi det er en uforholdsmessig stor byrde å følge kravet."
               description="Hvorfor mener vi at det er en uforholdsmessig stor byrde for innholdet å følge kravet?"
               defaultValue={criterion.tooHardToComply}
+              onChange={(e) =>
+                handleChange(
+                  criterion.number,
+                  'tooHardToComply',
+                  e.target.value,
+                )
+              }
             />
           </div>
         ) : null}
