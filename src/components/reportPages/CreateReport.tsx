@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
-import { getReport } from '@src/services/reportServices';
+import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField } from '@navikt/ds-react';
+import _ from 'lodash';
+
 interface CreateReportProps {
   id: string | undefined;
 }
@@ -12,26 +14,54 @@ const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('metadata');
 
-  const { data: report, isLoading } = useSWR<Report>(
-    `/reports/${id}`,
-    getReport,
-  );
+  const {
+    data: report,
+    isLoading,
+    mutate,
+  } = useSWR(`/reports/${id}`, getReport);
 
-  const handleCriterionChange = (WCAGId: string, updatedData: string) => {
+  const updateReportData = async (updates: Partial<Report>) => {
+    try {
+      await updateReport(id as string, updates);
+      mutate();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCriterionChange = (
+    WCAGId: string,
+    fieldToUpdate: string,
+    updatedData: string,
+  ) => {
     setCriteriaData((prev) => {
       const index = prev.findIndex((criterion) => criterion.number === WCAGId);
-      console.log('WCAGId:', updatedData);
       if (index !== -1) {
         const newCriteriaData = [...prev];
         newCriteriaData[index] = {
           ...newCriteriaData[index],
-          status: updatedData,
+          [fieldToUpdate]: updatedData,
         };
+        updateReportData({
+          successCriteria: [
+            {
+              ...newCriteriaData[index],
+              [fieldToUpdate]: updatedData,
+            },
+          ],
+        });
         return newCriteriaData;
       }
       return prev;
     });
   };
+
+  const handleMetadataChange = _.debounce(
+    (fieldToUpdate: string, updatedData: string) => {
+      updateReportData({ [fieldToUpdate]: updatedData });
+    },
+    500,
+  );
 
   useEffect(() => {
     if (!isLoading && report) {
@@ -60,9 +90,18 @@ const CreateReport = ({ id }: CreateReportProps) => {
               id="report-name"
               name="report-name"
               defaultValue={report?.descriptiveName}
+              onChange={(e) =>
+                handleMetadataChange('descriptiveName', e.target.value)
+              }
             />
 
-            <TextField label="URL" id="report-url" name="report-url" />
+            <TextField
+              label="URL"
+              id="report-url"
+              name="report-url"
+              defaultValue={report?.url}
+              onChange={(e) => handleMetadataChange('url', e.target.value)}
+            />
           </div>
         </Tabs.Panel>
         <Tabs.Panel value="NOT_TESTED">
