@@ -65,7 +65,7 @@ function MyTeam() {
             <CreateReportModal />
           </header>
 
-          <TeamDashboard teamId={currentTeamId} isMyTeam={true}/>
+          <TeamDashboard teamId={currentTeamId} isMyTeam={true} />
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"

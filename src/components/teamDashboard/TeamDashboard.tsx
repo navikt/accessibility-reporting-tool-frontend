@@ -20,7 +20,10 @@ interface TeamDashboardProps {
   isMyTeam: boolean;
 }
 
-function TeamDashboard({ teamId }: TeamDashboardProps, isMyTeam: TeamDashboardProps) {
+function TeamDashboard(
+  { teamId }: TeamDashboardProps,
+  isMyTeam: TeamDashboardProps,
+) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
 
@@ -100,46 +103,46 @@ function TeamDashboard({ teamId }: TeamDashboardProps, isMyTeam: TeamDashboardPr
               </Heading>
             </aside>
             <section className={styles.chartContainer}>
-            <PieChart
-              colors={['red', 'gray', 'green', 'yellow']}
-              series={[
-                {
-                  data: [
-                    {
-                      value: COMPLIANT,
-                      color: 'green',
-                      label: `${COMPLIANT} krav oppfylt`,
+              <PieChart
+                colors={['red', 'gray', 'green', 'yellow']}
+                series={[
+                  {
+                    data: [
+                      {
+                        value: COMPLIANT,
+                        color: 'green',
+                        label: `${COMPLIANT} krav oppfylt`,
+                      },
+                      {
+                        value: NOT_COMPLIANT,
+                        color: 'red',
+                        label: `${NOT_COMPLIANT} krav ikke oppfylt`,
+                      },
+                      {
+                        value: NOT_APPLICABLE,
+                        color: 'gray',
+                        label: `${NOT_APPLICABLE} krav ikke aktuelle`,
+                      },
+                      {
+                        value: NOT_TESTED,
+                        color: '#FFB703',
+                        label: `${NOT_TESTED} krav ikke testet`,
+                      },
+                    ],
+                    valueFormatter: () => {
+                      return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
                     },
-                    {
-                      value: NOT_COMPLIANT,
-                      color: 'red',
-                      label: `${NOT_COMPLIANT} krav ikke oppfylt`,
-                    },
-                    {
-                      value: NOT_APPLICABLE,
-                      color: 'gray',
-                      label: `${NOT_APPLICABLE} krav ikke aktuelle`,
-                    },
-                    {
-                      value: NOT_TESTED,
-                      color: '#FFB703',
-                      label: `${NOT_TESTED} krav ikke testet`,
-                    },
-                  ],
-                  valueFormatter: () => {
-                    return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
+                    innerRadius: 30,
+                    outerRadius: 150,
+                    paddingAngle: 2,
+                    cornerRadius: 5,
+                    startAngle: 0,
+                    endAngle: 360,
                   },
-                  innerRadius: 30,
-                  outerRadius: 150,
-                  paddingAngle: 2,
-                  cornerRadius: 5,
-                  startAngle: 0,
-                  endAngle: 360,
-                },
-              ]}
-              width={600}
-              height={300}
-            />
+                ]}
+                width={600}
+                height={300}
+              />
             </section>
           </section>
         ) : (
@@ -152,9 +155,11 @@ function TeamDashboard({ teamId }: TeamDashboardProps, isMyTeam: TeamDashboardPr
       </article>
       <article className={styles.membersContainer}>
         <div className={styles.editTeamBtn}>
-      {thisIsMyTeam && 
-          <Button variant="secondary" icon={<PersonPencilIcon/>}>Endre</Button>
-        }
+          {thisIsMyTeam && (
+            <Button variant="secondary" icon={<PersonPencilIcon />}>
+              Endre
+            </Button>
+          )}
         </div>
         <Heading level="3" size="medium">
           Admin
