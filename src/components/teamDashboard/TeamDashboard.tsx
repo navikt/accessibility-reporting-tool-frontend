@@ -75,7 +75,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="2" size="large">
           Tilgjengelighetsstatus for {teamData?.name}
         </Heading>
-        {hasReport && (
+        {hasReport ? (
           <section className={styles.accessibilityStatusInner}>
             <aside className={styles.selectReportContainer}>
               <Heading level="3" size="medium">
@@ -95,7 +95,6 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 </RadioGroup>
               </Heading>
             </aside>
-
             <PieChart
               colors={['red', 'gray', 'green', 'yellow']}
               series={[
@@ -137,6 +136,12 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
               height={300}
             />
           </section>
+        ) : (
+          <>
+            <h2>
+              Her var det tomt, da teamet du har valgt ikke har noen rapporter!
+            </h2>
+          </>
         )}
       </article>
       <article className={styles.membersContainer}>

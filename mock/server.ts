@@ -128,6 +128,15 @@ api.get('api/teams/team-messi/details', (c) => {
   })
 } )
 
+api.get('api/teams/team-test/details', (c) => {
+  return c.json({
+    id: "team-test",
+    name: "Team Test",
+    email: "team.test@nav.no",
+    members: ["Finnes ikke", "Ikke en ekte dude", "Skybert"]
+  })
+})
+
 api.get('/api/reports/list', (c) => {
     return c.json([
         {
@@ -192,6 +201,10 @@ api.get('api/teams/team-nav/reports', (c) => {
         date: "2024-06-10",
         }
 ])
+})
+
+api.get('api/teams/team-test/reports', (c) => {
+  return c.json([])
 })
 
 
