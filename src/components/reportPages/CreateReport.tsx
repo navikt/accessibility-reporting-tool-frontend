@@ -25,7 +25,6 @@ const CreateReport = ({ id }: CreateReportProps) => {
       await updateReport(id as string, updates);
       mutate();
     } catch (error) {
-      console.error('Failed to update report', error);
       console.error(error);
     }
   };
@@ -43,7 +42,6 @@ const CreateReport = ({ id }: CreateReportProps) => {
           ...newCriteriaData[index],
           [fieldToUpdate]: updatedData,
         };
-        console.log(newCriteriaData);
         updateReportData({
           successCriteria: [
             {
