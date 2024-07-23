@@ -73,7 +73,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     <section className={styles.gridWrapper}>
       <article className={styles.accessibilityStatusContainer}>
         <Heading level="2" size="large">
-          Tilgjengelighetsstatus
+          Tilgjengelighetsstatus for {teamData?.name}
         </Heading>
         {hasReport && (
           <section className={styles.accessibilityStatusInner}>
@@ -101,9 +101,11 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
               series={[
                 {
                   data: [
-                    { value: COMPLIANT, 
-                      color: 'green', 
-                      label: `${COMPLIANT} krav oppfylt` },
+                    {
+                      value: COMPLIANT,
+                      color: 'green',
+                      label: `${COMPLIANT} krav oppfylt`,
+                    },
                     {
                       value: NOT_COMPLIANT,
                       color: 'red',
@@ -121,7 +123,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                     },
                   ],
                   valueFormatter: () => {
-                    return '' //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
+                    return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
                   },
                   innerRadius: 30,
                   outerRadius: 150,

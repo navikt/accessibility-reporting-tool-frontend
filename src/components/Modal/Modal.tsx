@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
+import { apiUrl } from '@src/urls';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
@@ -40,7 +41,7 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     };
 
     try {
-      const response = await fetch('http://localhost:8787/teams/new', {
+      const response = await fetch(`${apiUrl}/teams/new`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
