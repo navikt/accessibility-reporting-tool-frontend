@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
 import * as teamsJson from '../teams.json';
+import * as jsonFile2 from './report2.json';
 
 const api = new Hono();
 
@@ -109,6 +110,33 @@ api.get('api/users/details', (c) => {
   });
 });
 
+api.get('api/teams/team-nav/details', (c) => {
+  return c.json({
+    id: 'team-nav',
+    name: 'Team Nav',
+    email: 'team.nav@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  });
+});
+
+api.get('api/teams/team-messi/details', (c) => {
+  return c.json({
+    id: 'team-messi',
+    name: 'Team Messi',
+    email: 'teammessi@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  });
+});
+
+api.get('api/teams/team-test/details', (c) => {
+  return c.json({
+    id: 'team-test',
+    name: 'Team Test',
+    email: 'team.test@nav.no',
+    members: ['Finnes ikke', 'Ikke en ekte dude', 'Skybert'],
+  });
+});
+
 api.get('/api/reports/list', (c) => {
   return c.json([
     {
@@ -136,6 +164,44 @@ api.get('/api/reports/list', (c) => {
       date: '2024-06-10',
     },
   ]);
+});
+
+api.get('api/teams/team-messi/reports', (c) => {
+  return c.json([
+    {
+      title: 'Hmmm',
+      id: 'rykutxyrhterg-79',
+      teamId: 'team-messi',
+      date: '2024-06-10',
+    },
+    {
+      title: 'Messi > Ronaldo',
+      id: 'rykutxyrhterg-80',
+      teamId: 'team-messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
+
+api.get('api/teams/team-nav/reports', (c) => {
+  return c.json([
+    {
+      title: 'Hmmm!',
+      id: 'rykutxyrhterg-79',
+      teamId: 'team-messi',
+      date: '2024-06-10',
+    },
+    {
+      title: 'Messi < Ronaldo',
+      id: 'rykutxyrhterg-70',
+      teamId: 'team-messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
+
+api.get('api/teams/team-test/reports', (c) => {
+  return c.json([]);
 });
 
 api.post('/teams/new', (c) => {
@@ -213,10 +279,19 @@ api.get('/api/criteria', (c) => {
   ]);
 });
 
-api.get('api/testRapport', (c) => {
+api.get('api/reports/rykutxyrhterg-79', (c) => {
+  return c.json(jsonFile2);
+});
+
+api.get('api/reports/rykutxyrhterg-80', (c) => {
   return c.json(jsonFile);
 });
-api.post('api/reports/new', (c) => {
+
+api.get('api/reports/rykutxyrhterg-70', (c) => {
+  return c.json(jsonFile);
+});
+
+api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
 

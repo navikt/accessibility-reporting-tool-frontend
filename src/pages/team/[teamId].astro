@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TeamDashboard from "@components/teamDashboard/TeamDashboard";
+import styles from "./_[teamId].module.css";
+import { Heading } from "@navikt/ds-react";
+---
+<Layout>
+    <article class={styles.content}>
+        <TeamDashboard teamId={Astro.params.teamId as string} client:only/>
+    </article>
+</Layout>

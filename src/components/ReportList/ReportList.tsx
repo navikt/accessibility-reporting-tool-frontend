@@ -1,5 +1,5 @@
 import { Link, Table } from '@navikt/ds-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { SortState } from '@navikt/ds-react';
 
 interface Rapport {
@@ -71,6 +71,9 @@ const ReportList = ({ reports }: ReportListProps) => {
   };
 
   // if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setData(reports);
+  }, [reports]);
 
   return (
     <div>

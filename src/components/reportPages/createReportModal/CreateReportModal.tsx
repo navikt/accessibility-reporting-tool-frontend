@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
+import { FilePlusIcon } from '@navikt/aksel-icons';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -33,12 +34,13 @@ const CreateReportModal = () => {
     <div>
       <Button
         type="button"
+        icon={<FilePlusIcon />}
         onClick={() => {
           ref.current?.showModal();
           console.log('Modal opened');
         }}
       >
-        Opprett en ny erklæring
+        Opprett en ny rapport
       </Button>
       <Modal ref={ref} header={{ heading: 'Opprett rapport' }}>
         <Modal.Body>

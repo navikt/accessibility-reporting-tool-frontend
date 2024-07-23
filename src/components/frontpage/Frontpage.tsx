@@ -1,11 +1,11 @@
 import { Button, Heading, Link } from '@navikt/ds-react';
 import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
-import ConditionalTeamDashboard from '@components/teamDashboard/TeamDashboard';
 import useSWRImmutable from 'swr/immutable';
 import { apiUrl } from '@src/urls';
 import { fetcher } from '@src/utils/api.client';
 import { useEffect, useState } from 'react';
+import MyTeam from '@components/teamDashboard/MyTeam';
 
 function FrontpageWithoutTeam() {
   return (
@@ -55,24 +55,28 @@ function FrontpageWithoutTeam() {
 }
 
 function ConditionalFrontpage() {
-  const { data, isLoading } = useSWRImmutable(
+  const { data: userData, isLoading } = useSWRImmutable(
     { url: `${apiUrl}/users/details` },
     fetcher,
   );
 
-  const [userInTeam, setUserInTeam] = useState(false);
+  const [userInTeam, setUserInTeam] = useState(true);
 
   useEffect(() => {
-    if (data?.teams.length > 0) {
+    if (userData?.teams.length > 0) {
+      //Sjekker om innlogget bruker er del av et team
       setUserInTeam(true);
+    } else {
+      setUserInTeam(false);
     }
-  }, [data]);
+  }, [userData]);
 
   if (userInTeam) {
-    return <ConditionalTeamDashboard isMyTeam={userInTeam} />;
+    //Hvis ja; vis forside der du kan velge hvilket team du vil se dashboard for
+    return <MyTeam />;
   }
   {
-    return <FrontpageWithoutTeam />;
+    return <FrontpageWithoutTeam />; //Hvis nei; vis generisk, statisk side, som er deklarert i den funksjonelle komponenten over.
   }
 }
 

@@ -1,7 +1,7 @@
 apiVersion: 'nais.io/v1alpha1'
 kind: 'Application'
 metadata:
-  name: accessibility-reporting-tool-frontend
+  name: accessibility-reporting-tool-frontend-beta
   namespace: a11y-statement
   labels:
     team: a11y-statement
@@ -19,7 +19,7 @@ spec:
     min: 2
     max: 4
   ingresses:
-    - 'https://a11y-statement-ny.ansatt.dev.nav.no'
+    - 'https://a11y-statement-ny-beta.ansatt.dev.nav.no'
   azure:
     application:
       enabled: true
