@@ -1,19 +1,24 @@
 enum ENV {
-  local = 'local',
   development = 'development',
-  production = 'production',
 }
 
-const getEnvironment = (): ENV => {
-  if (window.location.href.includes('dev.nav.no')) {
-    return ENV.development;
+const isDevelopment = process.env.NAIS_CLUSTER_NAME === 'dev-gcp';
+export const isLocal = process.env.NODE_ENV === 'development';
+
+export const getEnvironment = () => {
+  if (isLocal) {
+    return 'local';
   }
-  return ENV.local;
+  return 'development';
 };
 
-const API_URL: { [key in ENV]: string } = {
+const API_URL = {
   local: 'http://localhost:8787/api',
   development: 'https://a11y-statement.ansatt.dev.nav.no/api',
   production: 'https://a11y-statement.ansatt.dev.nav.no/api',
 };
+
+export const loginUrl = (redirectUrl: string = '') =>
+  `/oauth2/login?redirect=${redirectUrl}`;
+
 export const apiUrl = API_URL[getEnvironment()];

@@ -1,11 +1,10 @@
 import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
-import { loginUrl } from './urls';
+import { loginUrl } from '../urls.ts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const token = getToken(context.request.headers);
-  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`
   if (isLocal) {
     return next();
   }
@@ -23,13 +22,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(loginUrl(context.url.toString()));
   }
 
+  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`
   const obo = await requestOboToken(token, apiScope);
-  console.log(apiScope)
   if(!obo.ok){
     console.log("Fail on-behalf-of token for api")
     console.log(obo.error)
   }
-
 
   const parse = parseAzureUserToken(token);
   if (parse.ok) {

@@ -1,4 +1,4 @@
-import { apiUrl } from '@src/urls';
+import { apiProxyUrl } from '@src/urls.client.ts';
 import type { Report } from '@src/types';
 
 export const createReport = async (
@@ -6,7 +6,7 @@ export const createReport = async (
   url: string,
   teamId: string,
 ) => {
-  const response = await fetch(`${apiUrl}/reports/new`, {
+  const response = await fetch(`${apiProxyUrl}/reports/new`, {
     method: 'POST',
     body: JSON.stringify({ title, url, teamId }),
     credentials: 'include',
@@ -23,7 +23,7 @@ export const createReport = async (
 };
 
 export const getReport = async (url: string): Promise<Report> => {
-  const response = await fetch(`${apiUrl}${url}`, {
+  const response = await fetch(`${apiProxyUrl}${url}`, {
     method: 'GET',
     credentials: 'include',
   });

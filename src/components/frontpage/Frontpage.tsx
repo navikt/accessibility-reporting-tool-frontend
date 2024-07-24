@@ -3,7 +3,7 @@ import styles from './Frontpage.module.css';
 import { ComponentIcon, FigureIcon, WrenchIcon } from '@navikt/aksel-icons';
 import ConditionalTeamDashboard from '@components/teamDashboard/TeamDashboard';
 import useSWRImmutable from 'swr/immutable';
-import { apiUrl } from '@src/urls';
+import { apiProxyUrl } from '@src/urls.client.ts';
 import { fetcher } from '@src/utils/api.client';
 import { useEffect, useState } from 'react';
 
@@ -56,7 +56,7 @@ function FrontpageWithoutTeam() {
 
 function ConditionalFrontpage() {
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 

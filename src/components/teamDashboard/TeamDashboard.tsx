@@ -1,5 +1,5 @@
 import type { UserProps } from '@src/types';
-import { apiUrl } from '@src/urls';
+import { apiProxyUrl } from '@src/urls.client.ts';
 import { useEffect, useState, type SetStateAction } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import styles from './TeamDashboard.module.css';
@@ -45,12 +45,12 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
   const [currentReportId, setCurrentReportId] = useState('');
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
-    { url: `${apiUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
+    { url: `${apiProxyUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
     fetcher,
   );
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${teamId}/reports` },
+    { url: `${apiProxyUrl}/teams/${teamId}/reports` },
     fetcher,
   );
 
@@ -181,7 +181,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
 function MyTeam() {
   //Vises kun hvis teamet du ser på er ditt.
   const { data: userData, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 
@@ -190,7 +190,7 @@ function MyTeam() {
   const [reportList, setReportList] = useState('');
 
   let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
-    { url: `${apiUrl}/teams/${currentTeamId}/reports` },
+    { url: `${apiProxyUrl}/teams/${currentTeamId}/reports` },
     fetcher,
   );
 
