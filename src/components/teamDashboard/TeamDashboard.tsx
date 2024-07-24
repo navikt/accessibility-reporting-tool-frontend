@@ -6,7 +6,7 @@ import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
-import { PersonPencilIcon } from '@navikt/aksel-icons';
+import EditTeamModal from '@components/Modal/EditTeamModal';
 
 interface TeamReport {
   title: string;
@@ -17,27 +17,21 @@ interface TeamReport {
 
 interface TeamDashboardProps {
   teamId: String;
-  isMyTeam: boolean;
+  isMyTeam: Boolean;
 }
 
-function TeamDashboard(
-  { teamId }: TeamDashboardProps,
-  isMyTeam: TeamDashboardProps,
-) {
+function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
-
-  const thisIsMyTeam = isMyTeam;
-
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${teamId}/reports` },
+    { url: `${apiUrl}/teams/${props.teamId}/reports` },
     fetcher,
   );
 
   const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
-    { url: `${apiUrl}/teams/${teamId}/details` },
+    { url: `${apiUrl}/teams/${props.teamId}/details` },
     fetcher,
   );
 
@@ -74,7 +68,11 @@ function TeamDashboard(
       setCurrentReportId(reportListData[0]?.id);
       console.log(currentReportId);
     }
-  }, [isLoadingList, teamId, isLoadingTeamData, reportListData]);
+  }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
+
+  if (props.isMyTeam == undefined) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className={styles.gridWrapper}>
@@ -155,11 +153,7 @@ function TeamDashboard(
       </article>
       <article className={styles.membersContainer}>
         <div className={styles.editTeamBtn}>
-          {thisIsMyTeam && (
-            <Button variant="secondary" icon={<PersonPencilIcon />}>
-              Endre
-            </Button>
-          )}
+          {props.isMyTeam ? <EditTeamModal team={teamData} /> : <></>}
         </div>
         <Heading level="3" size="medium">
           Admin

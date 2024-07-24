@@ -1,65 +1,64 @@
-import { useRef, useState } from 'react';
-import { Button, Modal, TextField } from '@navikt/ds-react';
-import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
+import { useEffect, useRef, useState } from 'react';
+import { Button, List, Modal, TextField } from '@navikt/ds-react';
 import { apiUrl } from '@src/urls';
+import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
+import styles from './EditTeamModal.module.css';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
 }
 
-interface Team {
+type Team = {
   id: string;
   name: string;
   //url: string
   email: string;
-  members?: string[];
+  members: string[];
+};
+
+interface EditTeamModalProps {
+  team: Team;
 }
 
-const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+function EditTeamModal(props: EditTeamModalProps) {
+  let team = props.team;
   const ref = useRef<HTMLDialogElement>(null);
-  const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
-  const [members, setMembers] = useState<string[]>(['']);
+  const [members, setMembers] = useState<string[]>([]);
+  const [currentMembers, setCurrentMembers] = useState<string[]>([]);
 
   const addMemberField = () => {
-    setMembers([...members, '']);
+    setMembers(['']);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Team Name:', teamName);
     console.log('Email:', teamEmail);
     console.log('Members:', members);
 
-    const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
-    const newTeam: Team = {
-      id: teamName + teamName.length, //lol dette får endres
-      name: teamName,
-      //url: `/team/${urlFriendlyName}`,
+    const editedTeam: Team = {
+      id: team.id,
+      name: team.name,
       email: teamEmail,
-      members: members.filter((member) => member),
+      members: members,
     };
 
     try {
-      const response = await fetch(`${apiUrl}/teams/new`, {
-        method: 'POST',
+      const response = await fetch(`${apiUrl}/teams/editTeam/${team.id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newTeam),
+        body: JSON.stringify(editedTeam),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create team');
+        throw new Error('Failed to edit team');
       }
 
       const responseData = await response.json();
-      console.log('Created Team:', responseData.team);
-      if (onAddTeam) {
-        onAddTeam(responseData.team);
-      }
+      console.log('Edited Team:', responseData.team);
 
-      setTeamName('');
       setTeamEmail('');
       setMembers(['']);
       ref.current?.close();
@@ -68,33 +67,46 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     }
   };
 
+  useEffect(() => {
+    setCurrentMembers(props.team?.members);
+  });
+
   return (
     <div className="py-12">
-      <AddOrgBtn onClick={() => ref.current?.showModal()} />
-
-      <Modal
-        ref={ref}
-        header={{ heading: 'Legg Til Organisasjonsenhet' }}
-        width={400}
+      <Button
+        variant="secondary"
+        onClick={() => ref.current?.showModal()}
+        icon={<PersonPencilIcon />}
       >
+        Rediger
+      </Button>
+
+      <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400}>
         <Modal.Body>
           <form id="teamForm" onSubmit={handleSubmit}>
             <TextField
-              label="Skriv inn navnet på teamet ditt."
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
-            />
-            <TextField
-              label="Skriv inn din epost."
-              value={teamEmail}
+              label="Sett ny emailadresse for teameier"
+              defaultValue={team?.email}
               onChange={(e) => setTeamEmail(e.target.value)}
             />
 
-            {members.map((member, index) => (
+            <List className={styles.currentMembersList}>
+              {currentMembers?.map((member: string) => {
+                return (
+                  <List.Item
+                    key={member}
+                    icon={<XMarkIcon />}
+                    className={styles.currentMembersListItem}
+                  >
+                    Fjern {member}
+                  </List.Item>
+                );
+              })}
+            </List>
+            {members?.map((member, index) => (
               <TextField
                 key={index}
-                label={`Medlem ${index + 1}`}
-                value={member}
+                label={`Nytt medlem`}
                 onChange={(e) => {
                   const newMembers = [...members];
                   newMembers[index] = e.target.value;
@@ -123,15 +135,14 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
                             ref.current?.close();
                         }}*/
           >
-            Send
+            Lagre
           </Button>
           <Button
             type="button"
-            variant="secondary"
+            variant="danger"
             onClick={() => {
-              setTeamName('');
               setTeamEmail('');
-              setMembers(['']);
+              setMembers([]);
               ref.current?.close();
             }}
           >
@@ -141,6 +152,6 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
       </Modal>
     </div>
   );
-};
+}
 
-export default ModalElement;
+export default EditTeamModal;
