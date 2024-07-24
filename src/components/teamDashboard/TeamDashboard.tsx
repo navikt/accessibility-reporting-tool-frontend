@@ -148,7 +148,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="3" size="medium">
           Admin
         </Heading>
-        <p>{teamData?.email}</p>
+        <p className={styles.adminMail}>{teamData?.email}</p>
         <Heading level="3" size="medium">
           Medlemmer
         </Heading>
