@@ -33,6 +33,7 @@
     background-color: white;
     padding: 16px;
     border-radius: 10px;
+    box-shadow: var(--a-shadow-xsmall);
 }
 
 .myReportsContainer>section{

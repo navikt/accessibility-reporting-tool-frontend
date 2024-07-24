@@ -11,7 +11,6 @@ interface ModalElementProps {
 type Team = {
   id: string;
   name: string;
-  //url: string
   email: string;
   members: string[];
 };

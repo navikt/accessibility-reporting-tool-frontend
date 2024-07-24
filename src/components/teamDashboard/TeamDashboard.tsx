@@ -70,10 +70,6 @@ function TeamDashboard(props: TeamDashboardProps) {
     }
   }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
 
-  if (props.isMyTeam == undefined) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <section className={styles.gridWrapper}>
       <article className={styles.accessibilityStatusContainer}>
