@@ -2,13 +2,13 @@ import { apiUrl } from '@src/urls';
 import type { Report } from '@src/types';
 
 export const createReport = async (
-  title: string,
-  url: string,
+  name: string,
+  urlTilSiden: string,
   teamId: string,
 ) => {
   const response = await fetch(`${apiUrl}/reports/new`, {
     method: 'POST',
-    body: JSON.stringify({ title, url, teamId }),
+    body: JSON.stringify({ name, urlTilSiden, teamId }),
     credentials: 'include',
   });
 

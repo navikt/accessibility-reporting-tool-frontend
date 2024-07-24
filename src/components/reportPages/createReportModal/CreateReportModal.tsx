@@ -10,15 +10,15 @@ import type { Team, UserProps } from '@src/types';
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
   const [reportDetails, setReportDetails] = useState({
-    title: '',
-    url: '',
-    team: '',
+    name: '',
+    urlTilSiden: '',
+    teamId: '',
   });
   const handleSubmit = () => {
     const reportId = createReport(
-      reportDetails.title,
-      reportDetails.url,
-      reportDetails.team,
+      reportDetails.name,
+      reportDetails.urlTilSiden,
+      reportDetails.teamId,
     );
     console.log(reportId);
     ref.current?.close();
@@ -57,19 +57,19 @@ const CreateReportModal = () => {
             label="Tittel"
             type="text"
             id="title"
-            name="title"
+            name="name"
             onChange={handleChange}
           />
           <TextField
             label="URL"
             type="text"
             id="url"
-            name="url"
+            name="urlTilSiden"
             onChange={handleChange}
           />
           <Select
             label="Hilket team er ansvarlig for løsningen?"
-            name="team"
+            name="teamId"
             onChange={handleChange}
           >
             {userDetails?.teams.map((team: Team) => (
