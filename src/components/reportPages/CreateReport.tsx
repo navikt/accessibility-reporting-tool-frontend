@@ -4,9 +4,7 @@ import type { CriterionType, Report } from '@src/types';
 import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips } from '@navikt/ds-react';
-import _, { filter } from 'lodash';
-import { fileRejectionReason } from 'node_modules/@navikt/ds-react/esm/form/file-upload/FileUpload.types';
-
+import _ from 'lodash';
 interface CreateReportProps {
   id: string | undefined;
 }
