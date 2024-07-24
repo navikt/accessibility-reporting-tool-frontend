@@ -2,6 +2,10 @@ import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
+import { fetcher } from '@src/utils/api.client';
+import useSWRImmutable from 'swr/immutable';
+import { apiUrl } from '@src/urls';
+import type { Team, UserProps } from '@src/types';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -19,6 +23,11 @@ const CreateReportModal = () => {
     console.log(reportId);
     ref.current?.close();
   };
+
+  const { data: userDetails, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/users/details` },
+    fetcher,
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -63,10 +72,11 @@ const CreateReportModal = () => {
             name="team"
             onChange={handleChange}
           >
-            <option value="">Velg land</option>
-            <option value="norge">Norge</option>
-            <option value="sverige">Sverige</option>
-            <option value="danmark">Danmark</option>
+            {userDetails?.teams.map((team: Team) => (
+              <option key={team.id} value={team.id}>
+                {team.name}
+              </option>
+            ))}
           </Select>
         </Modal.Body>
         <Modal.Footer>

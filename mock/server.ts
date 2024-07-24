@@ -4,7 +4,6 @@ import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
 import * as teamsJson from '../teams.json';
 import * as jsonFile2 from './report2.json';
-import { has } from 'lodash';
 
 const api = new Hono();
 

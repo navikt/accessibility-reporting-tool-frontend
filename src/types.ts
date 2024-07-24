@@ -25,8 +25,10 @@ export type Team = {
 };
 
 export type UserProps = {
-  //Må utvides kraftig
-  userName: String;
+  name: String;
+  email: String;
+  reports: Report[];
+  teams: Team[];
 };
 
 export type Author = {
