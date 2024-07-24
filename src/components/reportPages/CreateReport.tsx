@@ -3,8 +3,9 @@ import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
 import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
-import { Tabs, TextField } from '@navikt/ds-react';
-import _ from 'lodash';
+import { Tabs, TextField, Chips } from '@navikt/ds-react';
+import _, { filter } from 'lodash';
+import { fileRejectionReason } from 'node_modules/@navikt/ds-react/esm/form/file-upload/FileUpload.types';
 
 interface CreateReportProps {
   id: string | undefined;
@@ -12,7 +13,15 @@ interface CreateReportProps {
 
 const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
-  const [activeTab, setActiveTab] = useState('metadata');
+  const [activeTab, setActiveTab] = useState('criteria');
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  const filterOptions: Record<string, string> = {
+    COMPLIANT: 'Tilfredsstilt',
+    NON_COMPLIANT: 'Ikke tilfredsstilt',
+    NOT_TESTED: 'Ikke testet',
+    NOT_APPLICABLE: 'Ikke aktuelt',
+  };
 
   const {
     data: report,
@@ -77,12 +86,50 @@ const CreateReport = ({ id }: CreateReportProps) => {
     <div>
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
+          <Tabs.Tab value="criteria" label="Rettningslinjer" />
           <Tabs.Tab value="metadata" label="Metadata" />
-          <Tabs.Tab value="NOT_TESTED" label="Ikke testet" />
-          <Tabs.Tab value="NON_COMPLIANT" label="Ikke tilfredsstilt" />
-          <Tabs.Tab value="COMPLIANT" label="Tilfredsstilt" />
-          <Tabs.Tab value="NOT_APPLICABLE" label="Ikke aktuelt" />
         </Tabs.List>
+
+        <Tabs.Panel value="criteria">
+          <Chips>
+            {Object.keys(filterOptions).map((option) => (
+              <Chips.Toggle
+                key={option}
+                selected={selectedFilters.includes(option)}
+                onClick={() => {
+                  setSelectedFilters((prev) =>
+                    prev.includes(option)
+                      ? prev.filter((filter) => filter !== option)
+                      : [...prev, option],
+                  );
+                }}
+              >
+                {filterOptions[option]}
+              </Chips.Toggle>
+            ))}
+          </Chips>
+          {selectedFilters.length === 0
+            ? criteriaData.map((criterion) => (
+                <Criterion
+                  key={criterion.number}
+                  criterion={criterion}
+                  handleChange={handleCriterionChange}
+                  hasWriteAccess={report?.hasWriteAccess as boolean}
+                />
+              ))
+            : criteriaData
+                .filter((criterion) =>
+                  selectedFilters.includes(criterion.status),
+                )
+                .map((criterion) => (
+                  <Criterion
+                    key={criterion.number}
+                    criterion={criterion}
+                    handleChange={handleCriterionChange}
+                    hasWriteAccess={report?.hasWriteAccess as boolean}
+                  />
+                ))}
+        </Tabs.Panel>
         <Tabs.Panel value="metadata">
           <div>
             <TextField
@@ -105,54 +152,6 @@ const CreateReport = ({ id }: CreateReportProps) => {
               onChange={(e) => handleMetadataChange('url', e.target.value)}
             />
           </div>
-        </Tabs.Panel>
-        <Tabs.Panel value="NOT_TESTED">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NOT_TESTED')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-                hasWriteAccess={report?.hasWriteAccess as boolean}
-              />
-            ))}
-        </Tabs.Panel>
-        <Tabs.Panel value="NON_COMPLIANT">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NON_COMPLIANT')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-                hasWriteAccess={report?.hasWriteAccess as boolean}
-              />
-            ))}
-        </Tabs.Panel>
-        <Tabs.Panel value="COMPLIANT">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'COMPLIANT')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-                hasWriteAccess={report?.hasWriteAccess as boolean}
-              />
-            ))}
-        </Tabs.Panel>
-        <Tabs.Panel value="NOT_APPLICABLE">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NOT_APPLICABLE')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-                hasWriteAccess={report?.hasWriteAccess as boolean}
-              />
-            ))}
         </Tabs.Panel>
       </Tabs>
     </div>
