@@ -12,7 +12,7 @@ const getEnvironment = (): ENV => {
 };
 
 const getDevBaseUrl = () => {
-  if (window.location.href.includes('beta.ansatt.dev.no')) {
+  if (window.location.href.includes('beta.ansatt.dev.nav.no')) {
     return 'https://a11y-statement-ny-beta.ansatt.dev.nav.no';
   }
   return 'https://a11y-statement-ny.ansatt.dev.nav.no';
