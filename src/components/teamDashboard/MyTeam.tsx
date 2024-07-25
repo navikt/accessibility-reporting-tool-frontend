@@ -33,8 +33,6 @@ function MyTeam() {
     return null;
   }
 
-  console.log('render');
-
   return (
     <main className={styles.teamContent}>
       <header>
@@ -65,7 +63,7 @@ function MyTeam() {
             <CreateReportModal />
           </header>
 
-          <TeamDashboard teamId={currentTeamId} />
+          <TeamDashboard teamId={currentTeamId} isMyTeam />
         </Tabs.Panel>
         <Tabs.Panel
           value="mineRapporter"

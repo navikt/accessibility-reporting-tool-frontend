@@ -1,0 +1,14 @@
+.currentMembersList{
+    list-style: none;
+    font-size: 20px;
+}
+
+.currentMembersListItem{
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.currentMembersListItem:hover{
+    background-color: lightgray;
+}

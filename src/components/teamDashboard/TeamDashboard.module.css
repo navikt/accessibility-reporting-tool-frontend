@@ -40,6 +40,11 @@
     min-height: 80%;
     display: flex;
     flex-direction: row;
+    text-align: left;
+}
+
+.chartContainer{
+    margin: auto;
 }
 
 .selectReportContainer{
@@ -56,6 +61,14 @@
 .membersContainer{
     min-height: 400px;
     grid-area: mid2;
+    display: flex;
+    flex-direction: column;
+}
+
+.editTeamBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
 }
 
 .reportsContainer{

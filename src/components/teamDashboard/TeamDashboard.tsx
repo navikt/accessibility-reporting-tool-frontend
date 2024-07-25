@@ -1,11 +1,12 @@
 import { apiUrl } from '@src/urls';
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import { Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
+import EditTeamModal from '@components/Modal/EditTeamModal';
 
 interface TeamReport {
   title: string;
@@ -16,21 +17,21 @@ interface TeamReport {
 
 interface TeamDashboardProps {
   teamId: String;
+  isMyTeam: Boolean;
 }
 
-function TeamDashboard({ teamId }: TeamDashboardProps) {
+function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
-
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${teamId}/reports` },
+    { url: `${apiUrl}/teams/${props.teamId}/reports` },
     fetcher,
   );
 
   const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
-    { url: `${apiUrl}/teams/${teamId}/details` },
+    { url: `${apiUrl}/teams/${props.teamId}/details` },
     fetcher,
   );
 
@@ -67,7 +68,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
       setCurrentReportId(reportListData[0]?.id);
       console.log(currentReportId);
     }
-  }, [isLoadingList, teamId, isLoadingTeamData, reportListData]);
+  }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
 
   return (
     <section className={styles.gridWrapper}>
@@ -95,46 +96,48 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 </RadioGroup>
               </Heading>
             </aside>
-            <PieChart
-              colors={['red', 'gray', 'green', 'yellow']}
-              series={[
-                {
-                  data: [
-                    {
-                      value: COMPLIANT,
-                      color: 'green',
-                      label: `${COMPLIANT} krav oppfylt`,
+            <section className={styles.chartContainer}>
+              <PieChart
+                colors={['red', 'gray', 'green', 'yellow']}
+                series={[
+                  {
+                    data: [
+                      {
+                        value: COMPLIANT,
+                        color: 'green',
+                        label: `${COMPLIANT} krav oppfylt`,
+                      },
+                      {
+                        value: NOT_COMPLIANT,
+                        color: 'red',
+                        label: `${NOT_COMPLIANT} krav ikke oppfylt`,
+                      },
+                      {
+                        value: NOT_APPLICABLE,
+                        color: 'gray',
+                        label: `${NOT_APPLICABLE} krav ikke aktuelle`,
+                      },
+                      {
+                        value: NOT_TESTED,
+                        color: '#FFB703',
+                        label: `${NOT_TESTED} krav ikke testet`,
+                      },
+                    ],
+                    valueFormatter: () => {
+                      return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
                     },
-                    {
-                      value: NOT_COMPLIANT,
-                      color: 'red',
-                      label: `${NOT_COMPLIANT} krav ikke oppfylt`,
-                    },
-                    {
-                      value: NOT_APPLICABLE,
-                      color: 'gray',
-                      label: `${NOT_APPLICABLE} krav ikke aktuelle`,
-                    },
-                    {
-                      value: NOT_TESTED,
-                      color: '#FFB703',
-                      label: `${NOT_TESTED} krav ikke testet`,
-                    },
-                  ],
-                  valueFormatter: () => {
-                    return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
+                    innerRadius: 30,
+                    outerRadius: 150,
+                    paddingAngle: 2,
+                    cornerRadius: 5,
+                    startAngle: 0,
+                    endAngle: 360,
                   },
-                  innerRadius: 30,
-                  outerRadius: 150,
-                  paddingAngle: 2,
-                  cornerRadius: 5,
-                  startAngle: 0,
-                  endAngle: 360,
-                },
-              ]}
-              width={600}
-              height={300}
-            />
+                ]}
+                width={600}
+                height={300}
+              />
+            </section>
           </section>
         ) : (
           <>
@@ -145,6 +148,9 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         )}
       </article>
       <article className={styles.membersContainer}>
+        <div className={styles.editTeamBtn}>
+          {props.isMyTeam ? <EditTeamModal team={teamData} /> : <></>}
+        </div>
         <Heading level="3" size="medium">
           Admin
         </Heading>

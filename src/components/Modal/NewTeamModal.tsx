@@ -15,7 +15,7 @@ interface Team {
   members?: string[];
 }
 
-const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
   const ref = useRef<HTMLDialogElement>(null);
   const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
@@ -143,4 +143,4 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
   );
 };
 
-export default ModalElement;
+export default NewTeamModal;
