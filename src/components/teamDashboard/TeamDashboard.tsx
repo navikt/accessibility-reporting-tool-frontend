@@ -24,7 +24,6 @@ function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
 
-  
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiUrl}/teams/${props.teamId}/reports` },
     fetcher,
