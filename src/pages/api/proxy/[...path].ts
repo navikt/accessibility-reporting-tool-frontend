@@ -9,16 +9,13 @@ const getProxyUrl = (request: Request) => {
 
 export const ALL: APIRoute = async ({ request }) => {
   const proxyUrl = getProxyUrl(request);
-  let response;
+  const response = await fetch('https://a11y-statement.ansatt.dev.nav.no/api/users/details', {
+      method: 'GET',
+      credentials: 'include'
+    }
+  );
 
-  try {
-    console.log('fetch-url: ' + proxyUrl);
-    console.log('request :' + request);
-    response = await fetch(proxyUrl.href, request);
-    console.log('response status: ' + response);
-    console.log('response: ' + (await response.json()));
-  } catch (e) {
-    console.log('error:     ' + e);
-  }
-  return response?.json();
+  console.log("--------", response.body, response.status);
+
+  return new Response("response.body", { status: response.status });
 };
