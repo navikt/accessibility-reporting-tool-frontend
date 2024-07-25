@@ -99,10 +99,10 @@ function EditTeamModal(props: EditTeamModalProps) {
                     onClick={() => {
                       let membersCopy = [...currentMembers];
                       let index = membersCopy.indexOf(member);
-                      membersCopy.splice(index, 1)
+                      membersCopy.splice(index, 1);
                       setCurrentMembers(membersCopy);
-        
-                      console.log(currentMembers)
+
+                      console.log(currentMembers);
                     }}
                   >
                     Fjern {member}
@@ -114,7 +114,7 @@ function EditTeamModal(props: EditTeamModalProps) {
               <TextField
                 key={index}
                 label={`Mailadresse til nytt medlem`}
-                placeholder='ola.nordmann@nav.no'
+                placeholder="ola.nordmann@nav.no"
                 onChange={(e) => {
                   const newGuys = [...newMembers];
                   newGuys[index] = e.target.value;
