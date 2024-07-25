@@ -2,23 +2,32 @@ import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
+import { fetcher } from '@src/utils/api.client';
+import useSWRImmutable from 'swr/immutable';
+import { apiUrl } from '@src/urls';
+import type { Team } from '@src/types';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
   const [reportDetails, setReportDetails] = useState({
-    title: '',
-    url: '',
-    team: '',
+    name: '',
+    urlTilSiden: '',
+    teamId: '',
   });
   const handleSubmit = () => {
     const reportId = createReport(
-      reportDetails.title,
-      reportDetails.url,
-      reportDetails.team,
+      reportDetails.name,
+      reportDetails.urlTilSiden,
+      reportDetails.teamId,
     );
     console.log(reportId);
     ref.current?.close();
   };
+
+  const { data: userDetails, isLoading } = useSWRImmutable(
+    { url: `${apiUrl}/users/details` },
+    fetcher,
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -48,25 +57,27 @@ const CreateReportModal = () => {
             label="Tittel"
             type="text"
             id="title"
-            name="title"
+            name="name"
             onChange={handleChange}
           />
           <TextField
             label="URL"
             type="text"
             id="url"
-            name="url"
+            name="urlTilSiden"
             onChange={handleChange}
           />
           <Select
             label="Hilket team er ansvarlig for løsningen?"
-            name="team"
+            name="teamId"
             onChange={handleChange}
           >
-            <option value="">Velg land</option>
-            <option value="norge">Norge</option>
-            <option value="sverige">Sverige</option>
-            <option value="danmark">Danmark</option>
+            <option value="">Velg team</option>
+            {userDetails?.teams.map((team: Team) => (
+              <option key={team.id} value={team.id}>
+                {team.name}
+              </option>
+            ))}
           </Select>
         </Modal.Body>
         <Modal.Footer>

@@ -3,17 +3,11 @@ import { Button, List, Modal, TextField } from '@navikt/ds-react';
 import { apiUrl } from '@src/urls';
 import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
+import type { Team } from '@src/types';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
 }
-
-type Team = {
-  id: string;
-  name: string;
-  email: string;
-  members: string[];
-};
 
 interface EditTeamModalProps {
   team: Team;
