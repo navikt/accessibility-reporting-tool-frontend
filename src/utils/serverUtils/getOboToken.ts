@@ -3,9 +3,9 @@ import { loginUrl } from '@src/utils/serverUtils/urls.ts';
 import type { APIContext } from 'astro';
 import { isLocal } from '@src/utils/environment.ts';
 
-
-export const getOboToken = async (request: APIContext['request']): Promise<string> => {
-
+export const getOboToken = async (
+  request: APIContext['request'],
+): Promise<string> => {
   const token = getToken(request.headers);
   const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`;
   const url = request.url;
