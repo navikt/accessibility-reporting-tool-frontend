@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { apiUrl } from '@src/urls.ts';
+import { apiUrl } from '@src/utils/serverUtils/urls.ts';
+import { fetchFromApi } from '@src/utils/serverUtils/fetchFromApi.ts';
 
 const getProxyUrl = (request: Request) => {
   const proxyUrl = new URL(apiUrl);
@@ -7,15 +8,8 @@ const getProxyUrl = (request: Request) => {
   return new URL(requestUrl.pathname, proxyUrl);
 };
 
-export const ALL: APIRoute = async ({ request }) => {
-  const proxyUrl = getProxyUrl(request);
-  const response = await fetch('https://a11y-statement.ansatt.dev.nav.no/api/users/details', {
-      method: 'GET',
-      credentials: 'include'
-    }
-  );
-
-  console.log("--------", response.body, response.status);
-
-  return new Response("response.body", { status: response.status });
+export const ALL: APIRoute = async (context) => {
+  const proxyUrl = getProxyUrl(context.request);
+  console.log(proxyUrl);
+  return fetchFromApi(context, proxyUrl);
 };

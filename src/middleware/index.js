@@ -1,10 +1,12 @@
 import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
-import { loginUrl } from '../urls.ts';
+import { loginUrl } from '../utils/serverUtils/urls.ts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const token = getToken(context.request.headers);
+
+
   if (isLocal) {
     return next();
   }
