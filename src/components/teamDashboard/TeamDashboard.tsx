@@ -150,7 +150,7 @@ function TeamDashboard(props: TeamDashboardProps) {
       <article className={styles.membersContainer}>
         <div className={styles.editTeamBtn}>
           {props.isMyTeam && !isLoadingTeamData ? (
-            <EditTeamModal teamId={teamData.id} />
+            <EditTeamModal teamId={teamData?.id} />
           ) : (
             <></>
           )}

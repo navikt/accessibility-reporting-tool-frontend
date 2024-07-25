@@ -33,59 +33,29 @@ function EditTeamModal(props: EditTeamModalProps) {
     mutate,
   } = useSWR({ url: `${apiUrl}/teams/${props.teamId}/details` }, fetcher);
 
-  const updateTeamData = async (updates: Team) => {
+  const updateTeamData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const editedTeam: Team = {
+      id: teamData.id,
+      name: teamName,
+      email: teamEmail,
+      members: currentMembers,
+    };
+
     try {
-      await updateTeam(props.teamId as string, updates);
+      await updateTeam(props.teamId as string, editedTeam);
       mutate();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Email:', teamEmail);
-    console.log('Members:', currentMembers);
-
-    const editedTeam: Team = {
-      id: teamData.id,
-      name: teamData.id,
-      email: teamEmail,
-      members: currentMembers,
-    };
-
-    {
-      /*
-    try {
-      const response = await fetch(`${apiUrl}/teams/editTeam/${team.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedTeam),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to edit team');
-      }
-
-      const responseData = await response.json();
-      console.log('Edited Team:', responseData.team);
-
-      setTeamEmail('');
-      setNewMembers(['']);
-      ref.current?.close();
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-*/
-    }
-  };
   useEffect(() => {
+    setTeamEmail(teamData?.email);
     setCurrentMembers(teamData?.members);
     setTeamName(teamData?.name);
-  }, []);
+  }, [props.teamId]);
 
   return (
     <div className="py-12">
@@ -99,7 +69,7 @@ function EditTeamModal(props: EditTeamModalProps) {
 
       <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400}>
         <Modal.Body>
-          <form id="teamForm" onSubmit={handleSubmit}>
+          <form id="teamForm" onSubmit={updateTeamData}>
             <TextField
               label="Sett navn for team"
               defaultValue={teamName}
@@ -108,12 +78,12 @@ function EditTeamModal(props: EditTeamModalProps) {
 
             <TextField
               label="Sett emailadresse for teameier"
-              defaultValue={teamData?.email}
+              defaultValue={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
             />
 
             <List className={styles.currentMembersList}>
-              {currentMembers?.map((member: string, index) => {
+              {currentMembers?.map((member: string) => {
                 return (
                   <List.Item
                     key={member}
@@ -167,6 +137,7 @@ function EditTeamModal(props: EditTeamModalProps) {
             onClick={() => {
               updateTeamData;
               ref.current?.close();
+              setNewMembers([]);
             }}
           >
             Lagre
