@@ -12,31 +12,13 @@ export const ALL: APIRoute = async ({ request }) => {
   let response;
 
   try {
-    response = await fetch(proxyUrl.href, request).then((response) => {
-      const response1 = response.text
-      console.log(response)
-      return response1
-    }).then((body) => {
-      console.log(body)
-    });
-    console.log(
-      "\n Fetch-url: "+proxyUrl,
-      'proxy status: ',
-      response?.status,
-      response?.body,
-      '\n',
-      response,
-    );
+    response = await fetch(proxyUrl.href, request);
+    console.log('fetch-url: ' + proxyUrl);
+    console.log('response status: ' + response);
+    console.log('response status: ' + response.status);
+    console.log('response: ' + (await response.json()));
   } catch (e) {
-    console.log(
-      "Fetch-url: "+proxyUrl,
-      'proxy status: ',
-      response?.status,
-      response?.body,
-      '\n',
-      response,
-    );
+    console.log('error:     ' + e);
   }
-
-  return new Response(response?.body);
+  return response?.json();
 };
