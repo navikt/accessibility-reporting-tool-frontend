@@ -4,24 +4,42 @@ import { apiUrl } from '@src/urls';
 import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
 import type { Team } from '@src/types';
+import { updateTeam } from '@src/services/teamServices';
+import useSWR, { mutate } from 'swr';
+import { fetcher } from '@src/utils/api.client';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
 }
 
 interface EditTeamModalProps {
-  team: Team;
+  teamId: string;
 }
 
 function EditTeamModal(props: EditTeamModalProps) {
-  let team = props.team;
   const ref = useRef<HTMLDialogElement>(null);
   const [teamEmail, setTeamEmail] = useState('');
   const [newMembers, setNewMembers] = useState<string[]>([]);
   const [currentMembers, setCurrentMembers] = useState<string[]>([]);
+  const [teamName, setTeamName] = useState('');
 
   const addMemberField = () => {
     setNewMembers(['']);
+  };
+
+  const {
+    data: teamData,
+    isLoading: isLoadingTeamData,
+    mutate,
+  } = useSWR({ url: `${apiUrl}/teams/${props.teamId}/details` }, fetcher);
+
+  const updateTeamData = async (updates: Team) => {
+    try {
+      await updateTeam(props.teamId as string, updates);
+      mutate();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,12 +48,14 @@ function EditTeamModal(props: EditTeamModalProps) {
     console.log('Members:', currentMembers);
 
     const editedTeam: Team = {
-      id: team.id,
-      name: team.name,
+      id: teamData.id,
+      name: teamData.id,
       email: teamEmail,
       members: currentMembers,
     };
 
+    {
+      /*
     try {
       const response = await fetch(`${apiUrl}/teams/editTeam/${team.id}`, {
         method: 'PATCH',
@@ -59,10 +79,13 @@ function EditTeamModal(props: EditTeamModalProps) {
       console.error('Error:', error);
     }
   };
-
+*/
+    }
+  };
   useEffect(() => {
-    setCurrentMembers(team?.members);
-  });
+    setCurrentMembers(teamData?.members);
+    setTeamName(teamData?.name);
+  }, []);
 
   return (
     <div className="py-12">
@@ -78,8 +101,14 @@ function EditTeamModal(props: EditTeamModalProps) {
         <Modal.Body>
           <form id="teamForm" onSubmit={handleSubmit}>
             <TextField
+              label="Sett navn for team"
+              defaultValue={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+            />
+
+            <TextField
               label="Sett emailadresse for teameier"
-              defaultValue={team?.email}
+              defaultValue={teamData?.email}
               onChange={(e) => setTeamEmail(e.target.value)}
             />
 
@@ -93,10 +122,12 @@ function EditTeamModal(props: EditTeamModalProps) {
                     onClick={() => {
                       let membersCopy = [...currentMembers];
                       let index = membersCopy.indexOf(member);
+                      console.log(membersCopy, '********1111');
                       membersCopy.splice(index, 1);
+                      console.log(membersCopy, '*********2222');
                       setCurrentMembers(membersCopy);
 
-                      console.log(currentMembers);
+                      console.log(membersCopy);
                     }}
                   >
                     Fjern {member}
@@ -133,9 +164,10 @@ function EditTeamModal(props: EditTeamModalProps) {
           <Button
             type="submit"
             form="teamForm"
-            /*onClick={() => {
-                            ref.current?.close();
-                        }}*/
+            onClick={() => {
+              updateTeamData;
+              ref.current?.close();
+            }}
           >
             Lagre
           </Button>
