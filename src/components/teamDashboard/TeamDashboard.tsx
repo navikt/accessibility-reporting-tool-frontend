@@ -178,10 +178,11 @@ function TeamDashboard(props: TeamDashboardProps) {
         </Heading>
 
         <ReportList reports={reportListData} />
-
+        {/*
         <Heading level="2" size="large" spacing>
           Samlerapporter
         </Heading>
+        */}
       </section>
     </section>
   );
