@@ -4,6 +4,7 @@ import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
 import * as teamsJson from '../teams.json';
 import * as jsonFile2 from './report2.json';
+import { has } from 'lodash';
 
 const api = new Hono();
 
@@ -436,6 +437,7 @@ api.get('/api/reports/123456789', (c) => {
     ],
     created: [2024, 7, 15, 10, 59, 38],
     lastChanged: [2024, 7, 15, 11, 0, 37],
+    hasWriteAccess: false,
   };
 
   return c.json(initializedReport); // Send the custom object as the response

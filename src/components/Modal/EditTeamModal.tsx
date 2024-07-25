@@ -23,23 +23,23 @@ function EditTeamModal(props: EditTeamModalProps) {
   let team = props.team;
   const ref = useRef<HTMLDialogElement>(null);
   const [teamEmail, setTeamEmail] = useState('');
-  const [members, setMembers] = useState<string[]>([]);
+  const [newMembers, setNewMembers] = useState<string[]>([]);
   const [currentMembers, setCurrentMembers] = useState<string[]>([]);
 
   const addMemberField = () => {
-    setMembers(['']);
+    setNewMembers(['']);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Email:', teamEmail);
-    console.log('Members:', members);
+    console.log('Members:', currentMembers);
 
     const editedTeam: Team = {
       id: team.id,
       name: team.name,
       email: teamEmail,
-      members: members,
+      members: currentMembers,
     };
 
     try {
@@ -59,7 +59,7 @@ function EditTeamModal(props: EditTeamModalProps) {
       console.log('Edited Team:', responseData.team);
 
       setTeamEmail('');
-      setMembers(['']);
+      setNewMembers(['']);
       ref.current?.close();
     } catch (error) {
       console.error('Error:', error);
@@ -67,7 +67,7 @@ function EditTeamModal(props: EditTeamModalProps) {
   };
 
   useEffect(() => {
-    setCurrentMembers(props.team?.members);
+    setCurrentMembers(team?.members);
   });
 
   return (
@@ -84,32 +84,41 @@ function EditTeamModal(props: EditTeamModalProps) {
         <Modal.Body>
           <form id="teamForm" onSubmit={handleSubmit}>
             <TextField
-              label="Sett ny emailadresse for teameier"
+              label="Sett emailadresse for teameier"
               defaultValue={team?.email}
               onChange={(e) => setTeamEmail(e.target.value)}
             />
 
             <List className={styles.currentMembersList}>
-              {currentMembers?.map((member: string) => {
+              {currentMembers?.map((member: string, index) => {
                 return (
                   <List.Item
                     key={member}
                     icon={<XMarkIcon />}
                     className={styles.currentMembersListItem}
+                    onClick={() => {
+                      let membersCopy = [...currentMembers];
+                      let index = membersCopy.indexOf(member);
+                      membersCopy.splice(index, 1)
+                      setCurrentMembers(membersCopy);
+        
+                      console.log(currentMembers)
+                    }}
                   >
                     Fjern {member}
                   </List.Item>
                 );
               })}
             </List>
-            {members?.map((member, index) => (
+            {newMembers?.map((member, index) => (
               <TextField
                 key={index}
-                label={`Nytt medlem`}
+                label={`Mailadresse til nytt medlem`}
+                placeholder='ola.nordmann@nav.no'
                 onChange={(e) => {
-                  const newMembers = [...members];
-                  newMembers[index] = e.target.value;
-                  setMembers(newMembers);
+                  const newGuys = [...newMembers];
+                  newGuys[index] = e.target.value;
+                  setNewMembers(newMembers);
                 }}
               />
             ))}
@@ -141,7 +150,7 @@ function EditTeamModal(props: EditTeamModalProps) {
             variant="danger"
             onClick={() => {
               setTeamEmail('');
-              setMembers([]);
+              setNewMembers([]);
               ref.current?.close();
             }}
           >
