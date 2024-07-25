@@ -5,7 +5,7 @@ import { FilePlusIcon } from '@navikt/aksel-icons';
 import { fetcher } from '@src/utils/api.client';
 import useSWRImmutable from 'swr/immutable';
 import { apiUrl } from '@src/urls';
-import type { Team, UserProps } from '@src/types';
+import type { Team } from '@src/types';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -72,6 +72,7 @@ const CreateReportModal = () => {
             name="teamId"
             onChange={handleChange}
           >
+            <option value="">Velg team</option>
             {userDetails?.teams.map((team: Team) => (
               <option key={team.id} value={team.id}>
                 {team.name}
