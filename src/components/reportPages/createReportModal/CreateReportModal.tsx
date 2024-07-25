@@ -5,21 +5,17 @@ import { FilePlusIcon } from '@navikt/aksel-icons';
 import { fetcher } from '@src/utils/api.client';
 import useSWRImmutable from 'swr/immutable';
 import { apiUrl } from '@src/urls';
-import type { Team } from '@src/types';
+import type { InitialReport, Team } from '@src/types';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
-  const [reportDetails, setReportDetails] = useState({
+  const [reportDetails, setReportDetails] = useState<InitialReport>({
     name: '',
     urlTilSiden: '',
     teamId: '',
   });
   const handleSubmit = () => {
-    const reportId = createReport(
-      reportDetails.name,
-      reportDetails.urlTilSiden,
-      reportDetails.teamId,
-    );
+    const reportId = createReport(reportDetails);
     console.log(reportId);
     ref.current?.close();
   };

@@ -5,6 +5,7 @@ import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips } from '@navikt/ds-react';
 import _ from 'lodash';
+
 interface CreateReportProps {
   id: string | undefined;
 }
