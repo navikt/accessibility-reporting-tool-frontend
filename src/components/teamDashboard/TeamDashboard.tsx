@@ -5,7 +5,7 @@ import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import EditTeamModal from '@components/Modal/EditTeamModal';
 
 interface TeamReport {
@@ -149,7 +149,11 @@ function TeamDashboard(props: TeamDashboardProps) {
       </article>
       <article className={styles.membersContainer}>
         <div className={styles.editTeamBtn}>
-          {props.isMyTeam ? <EditTeamModal team={teamData} /> : <></>}
+          {props.isMyTeam && !isLoadingTeamData ? (
+            <EditTeamModal teamId={teamData?.id} />
+          ) : (
+            <></>
+          )}
         </div>
         <Heading level="3" size="medium">
           Admin
