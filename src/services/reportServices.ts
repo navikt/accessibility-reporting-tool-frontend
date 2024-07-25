@@ -3,6 +3,9 @@ import type { Report, InitialReport } from '@src/types';
 
 export const createReport = async (initReport: InitialReport) => {
   const response = await fetch(`${apiUrl}/reports/new`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
     body: JSON.stringify(initReport),
     credentials: 'include',
