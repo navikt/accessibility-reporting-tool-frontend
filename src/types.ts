@@ -52,3 +52,9 @@ export type Report = {
   reportType: string;
   hasWriteAccess: boolean;
 };
+
+export type InitialReport = {
+  name: string;
+  urlTilSiden: string;
+  teamId: string;
+};
