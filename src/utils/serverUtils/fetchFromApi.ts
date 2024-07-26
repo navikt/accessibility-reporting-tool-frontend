@@ -7,11 +7,13 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const method = context.request.method;
   const requestBody = JSON.stringify(await context.request.json());
   console.log(
+    'method',
     method,
-    '*****************',
-    method,
+    '#context.request.body:',
     context.request.body,
+    '#await context.request.json(): ',
     await context.request.json(),
+    '#JSON.stringify(context.request):',
     JSON.stringify(context.request),
   );
 
