@@ -8,6 +8,8 @@ const getProxyUrl = (request: Request) => {
   return new URL(requestUrl.pathname, proxyUrl);
 };
 
+
+
 export const ALL: APIRoute = async (context) => {
   const proxyUrl = getProxyUrl(context.request);
   return fetchFromApi(context, proxyUrl);
