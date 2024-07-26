@@ -87,13 +87,13 @@ const CreateReport = ({ id }: CreateReportProps) => {
       <Heading level="1" size="xlarge">
         {report?.descriptiveName}
       </Heading>
-      <Tabs value={activeTab} onChange={setActiveTab}>
+      <Tabs value={activeTab} onChange={setActiveTab} className={styles.tabs}>
         <Tabs.List>
           <Tabs.Tab value="criteria" label="Rettningslinjer" />
           <Tabs.Tab value="metadata" label="Metadata" />
         </Tabs.List>
 
-        <Tabs.Panel value="criteria">
+        <Tabs.Panel value="criteria" className={styles.tabContent}>
           <Chips className={styles.reportFilters}>
             {Object.keys(filterOptions).map((option) => (
               <Chips.Toggle
@@ -111,50 +111,53 @@ const CreateReport = ({ id }: CreateReportProps) => {
               </Chips.Toggle>
             ))}
           </Chips>
-          {selectedFilters.length === 0
-            ? criteriaData.map((criterion) => (
-                <Criterion
-                  key={criterion.number}
-                  criterion={criterion}
-                  handleChange={handleCriterionChange}
-                  hasWriteAccess={report?.hasWriteAccess as boolean}
-                />
-              ))
-            : criteriaData
-                .filter((criterion) =>
-                  selectedFilters.includes(criterion.status),
-                )
-                .map((criterion) => (
-                  <Criterion
-                    key={criterion.number}
-                    criterion={criterion}
-                    handleChange={handleCriterionChange}
-                    hasWriteAccess={report?.hasWriteAccess as boolean}
-                  />
-                ))}
+          <ul className={styles.criteriaList}>
+            {selectedFilters.length === 0
+              ? criteriaData.map((criterion) => (
+                  <li key={criterion.number}>
+                    <Criterion
+                      key={criterion.number}
+                      criterion={criterion}
+                      handleChange={handleCriterionChange}
+                      hasWriteAccess={report?.hasWriteAccess as boolean}
+                    />
+                  </li>
+                ))
+              : criteriaData
+                  .filter((criterion) =>
+                    selectedFilters.includes(criterion.status),
+                  )
+                  .map((criterion) => (
+                    <li key={criterion.number}>
+                      <Criterion
+                        key={criterion.number}
+                        criterion={criterion}
+                        handleChange={handleCriterionChange}
+                        hasWriteAccess={report?.hasWriteAccess as boolean}
+                      />
+                    </li>
+                  ))}
+          </ul>
         </Tabs.Panel>
-        <Tabs.Panel value="metadata">
-          <div>
-            <TextField
-              label="Rapportnavn"
-              id="report-name"
-              name="report-name"
-              defaultValue={report?.descriptiveName}
-              disabled={!report?.hasWriteAccess}
-              onChange={(e) =>
-                handleMetadataChange('descriptiveName', e.target.value)
-              }
-            />
-
-            <TextField
-              label="URL"
-              id="report-url"
-              name="report-url"
-              defaultValue={report?.url}
-              disabled={!report?.hasWriteAccess}
-              onChange={(e) => handleMetadataChange('url', e.target.value)}
-            />
-          </div>
+        <Tabs.Panel value="metadata" className={styles.tabContent}>
+          <TextField
+            label="Rapportnavn"
+            id="report-name"
+            name="report-name"
+            defaultValue={report?.descriptiveName}
+            disabled={!report?.hasWriteAccess}
+            onChange={(e) =>
+              handleMetadataChange('descriptiveName', e.target.value)
+            }
+          />
+          <TextField
+            label="URL"
+            id="report-url"
+            name="report-url"
+            defaultValue={report?.url}
+            disabled={!report?.hasWriteAccess}
+            onChange={(e) => handleMetadataChange('url', e.target.value)}
+          />
         </Tabs.Panel>
       </Tabs>
     </div>
