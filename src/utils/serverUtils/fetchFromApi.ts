@@ -14,19 +14,24 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
 
   const response = await fetch(apiURL.href, {
     method: method,
-    headers: requestHeaders,
+    headers: requestHeaders
   });
 
   const contentType = response.headers.get('content-type');
+  console.log('Request----------:', {
+    method: method,
+    headers: requestHeaders
+  }, '######## Request end');
 
-  console.log(response);
+
+  console.log('Response********:', response, '+++++++++++ Response end');
   if (!response.ok) {
     console.log(
-      `Failed to fetch data from api ${apiUrl} status code ${response.status}`,
+      `Failed to fetch data from api ${apiUrl} status code ${response.status}`
     );
     return new Response(JSON.stringify({}), {
       status: response.status,
-      headers: response.headers,
+      headers: response.headers
     });
   }
 
