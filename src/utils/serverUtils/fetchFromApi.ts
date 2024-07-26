@@ -7,10 +7,7 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const method = context.request.method;
   const requestBody = context.request.body;
   const requestHeaders = context.request.headers;
-
   requestHeaders.append('Authorization', `Bearer ${oboToken}`);
-
-  console.log(oboToken.substring(0, 6));
 
   const response = await fetch(apiURL.href, {
     method: method,
@@ -19,23 +16,11 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
       Accept: 'application/json',
       Authorization: `Bearer ${oboToken}`,
     },
+    body: requestBody
   });
 
   const contentType = response.headers.get('content-type');
-  console.log(
-    'Request----------:',
-    {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${oboToken}`,
-      },
-    },
-    '######## Request end',
-  );
 
-  console.log('Response********:', response, '+++++++++++ Response end');
   if (!response.ok) {
     console.log(
       `Failed to fetch data from api ${apiUrl} status code ${response.status}`,

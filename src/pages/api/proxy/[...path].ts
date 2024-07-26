@@ -10,6 +10,5 @@ const getProxyUrl = (request: Request) => {
 
 export const ALL: APIRoute = async (context) => {
   const proxyUrl = getProxyUrl(context.request);
-  console.log(proxyUrl);
   return fetchFromApi(context, proxyUrl);
 };
