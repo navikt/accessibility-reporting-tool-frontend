@@ -8,6 +8,7 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const requestBody = context.request.body;
   const requestHeaders = context.request.headers;
   requestHeaders.append('Authorization', `Bearer ${oboToken}`);
+  console.log(method,"*****************", method, JSON.stringify(context.request));
 
   const requestInit: RequestInit = {
     method: method,
@@ -18,9 +19,9 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
     },
   };
 
-  console.log(method)
+  console.log(method);
 
-  if (method != '`GET' && requestBody) {
+  if (method != "GET" && requestBody) {
     requestInit.body = JSON.stringify(requestBody);
   }
 
