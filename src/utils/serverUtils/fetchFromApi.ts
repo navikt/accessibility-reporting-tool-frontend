@@ -14,7 +14,6 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
 
   const response = await fetch(apiURL.href, {
     method: method,
-    body: requestBody,
     headers: requestHeaders,
   });
 
