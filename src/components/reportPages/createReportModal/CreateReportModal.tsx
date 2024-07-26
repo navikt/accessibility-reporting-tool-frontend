@@ -4,9 +4,9 @@ import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { fetcher } from '@src/utils/api.client';
 import useSWRImmutable from 'swr/immutable';
-import { apiUrl } from '@src/urls';
 import type { InitialReport, Team } from '@src/types';
 import styles from './CreateReportModal.module.css';
+import { apiProxyUrl } from '@src/urls.client.ts';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -22,7 +22,7 @@ const CreateReportModal = () => {
   };
 
   const { data: userDetails, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 

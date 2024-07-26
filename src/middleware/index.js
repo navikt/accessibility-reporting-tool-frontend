@@ -1,12 +1,10 @@
-import { getToken, validateToken, parseAzureUserToken } from '@navikt/oasis';
+import { getToken, validateToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
+import { loginUrl } from '../utils/serverUtils/urls.ts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  console.log('Running middleware');
-
   const token = getToken(context.request.headers);
-  console.log(`Token: ${token}`);
   if (isLocal) {
     return next();
   }
@@ -14,25 +12,30 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
   if (!token) {
-    console.log('No token');
-    return next(); //context.redirect('/oauth2/login');
+    console.log("Token not found");
+    return context.redirect(loginUrl(context.url.toString())
+    );
   }
   const validation = await validateToken(token);
   if (!validation.ok) {
-    console.log('Token is not valid');
-    return context.redirect('/oauth2/login');
+    console.log("Validation failed!");
+    return context.redirect(loginUrl(context.url.toString()));
   }
-  // const obo = await requestOboToken(token, 'an:example:audience');
-  // if (!obo.ok) {
-  // }
-  // fetch('https://a11y-statement.ansatt.dev.nav.no/api', {
-  //   headers: { Authorization: `Bearer ${obo.token}` },
-  // });
+
+  //Obo-token trengs ikke med mindre kall skal gjennom proxy
+  /*
+  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`
+  const obo = await requestOboToken(token, apiScope);
+  if(!obo.ok){
+    console.log("Fail on-behalf-of token for api")
+    console.log(obo.error)
+  }
 
   const parse = parseAzureUserToken(token);
   if (parse.ok) {
-    console.log(`name: ${parse.preferred_username} (${parse.NAVident})`);
+    console.log(`name: ${parse.preferred_username}`);
     const name = await parse.name;
     console.log(`name: ${name}`);
-  }
+  }*/
+  return next()
 });

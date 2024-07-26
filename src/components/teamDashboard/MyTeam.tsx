@@ -1,12 +1,12 @@
 import ReportList from '@components/ReportList/ReportList';
 import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 import { Tabs, Select, Heading } from '@navikt/ds-react';
-import { apiUrl } from '@src/urls';
 import { fetcher } from '@src/utils/api.client';
 import { useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import TeamDashboard from './TeamDashboard';
 import styles from './MyTeam.module.css';
+import { apiProxyUrl } from '@src/urls.client.ts';
 
 interface Team {
   email: string;
@@ -22,7 +22,7 @@ function MyTeam() {
   //dashboard for. Dashboardet vises i henhold til teamet som er valgt i drop-down menyen.
 
   const { data: userData, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 
