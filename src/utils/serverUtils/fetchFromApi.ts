@@ -5,8 +5,7 @@ import type { APIContext } from 'astro';
 export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const oboToken = isLocal ? 'fake token' : await getOboToken(context.request);
   const method = context.request.method;
-  const requestBody =  context.request.body;
-
+  const requestBody = context.request.body;
 
   const requestInit: RequestInit = {
     body: context.request.body ?? undefined,
@@ -14,12 +13,11 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${oboToken}`
+      Authorization: `Bearer ${oboToken}`,
     },
     // @ts-expect-error - This is a valid option
-    duplex: "half",
+    duplex: 'half',
   };
-
 
   if (method != 'GET' && requestBody) {
     requestInit.body = JSON.stringify(requestBody);
@@ -30,11 +28,11 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
 
   if (!response.ok) {
     console.log(
-      `Failed to fetch data from api ${apiUrl} status code ${response.status}`
+      `Failed to fetch data from api ${apiUrl} status code ${response.status}`,
     );
     return new Response(JSON.stringify({}), {
       status: response.status,
-      headers: response.headers
+      headers: response.headers,
     });
   }
   if (contentType && contentType.includes('text')) {

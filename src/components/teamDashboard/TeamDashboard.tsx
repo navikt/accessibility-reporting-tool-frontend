@@ -1,4 +1,3 @@
-import type { UserProps } from '@src/types';
 import { apiProxyUrl } from '@src/urls.client.ts';
 import { useEffect, useState, type SetStateAction } from 'react';
 import useSWRImmutable from 'swr/immutable';
@@ -12,11 +11,9 @@ import {
   Select,
   Tabs,
 } from '@navikt/ds-react';
-import { FilePlusIcon } from '@navikt/aksel-icons';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/api.client';
 import ReportList from '@components/ReportList/ReportList';
-import { createReport } from '@src/services/reportServices';
 import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 import useSWR from 'swr';
 
@@ -41,16 +38,20 @@ interface TeamDashboardProps {
 
 function TeamDashboard({ teamId }: TeamDashboardProps) {
   //"Generisk kode for team-dashboard. Selvstendig komponent."
-
-  const [currentReportId, setCurrentReportId] = useState('');
-
-  const { data: reportData, isLoading: isLoadingReport } = useSWR(
-    { url: `${apiProxyUrl}/reports/cf3f6442-afa1-4cf9-854f-48889157aeec` }, //For testing i dev
-    fetcher,
-  );
+  const [currentReportId, setCurrentReportId] = useState<string>();
 
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiProxyUrl}/teams/${teamId}/reports` },
+    fetcher,
+  );
+
+  const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
+    { url: `${apiProxyUrl}/teams/${teamId}/details` },
+    fetcher,
+  );
+
+  const { data: reportData, isLoading: isLoadingReport } = useSWR(
+    { url: `${apiProxyUrl}/reports/${currentReportId}` },
     fetcher,
   );
 
@@ -78,12 +79,20 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
     }
   }
   useEffect(() => {
-    if (!isLoadingList && hasReport) {
+    if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
+      console.log(currentReportId);
       setCurrentReportId(reportListData[0].id);
+      console.log(currentReportId);
     }
-  }, [isLoadingList, teamId]);
+  }, [
+    isLoadingList,
+    teamId,
+    isLoadingTeamData,
+    isLoadingReport,
+    reportListData,
+  ]);
 
-  if (isLoadingReport) {
+  if (isLoadingReport || isLoadingTeamData || isLoadingList) {
     return <h1>Loading...</h1>;
   }
 
@@ -106,7 +115,7 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
                 <RadioGroup
                   legend="Velg rapport"
                   onChange={handleChange}
-                  defaultValue={reportListData[0]?.id}
+                  defaultValue={currentReportId}
                 >
                   {reportListData.map((teamReport: TeamReport) => {
                     return (
@@ -159,9 +168,19 @@ function TeamDashboard({ teamId }: TeamDashboardProps) {
         <Heading level="3" size="medium">
           Admin
         </Heading>
+        <p>{teamData?.email}</p>
         <Heading level="3" size="medium">
           Medlemmer
         </Heading>
+        <ul className={styles.membersList}>
+          {teamData?.members.map((members: string) => {
+            return (
+              <li key={members} value={members}>
+                {members}
+              </li>
+            );
+          })}
+        </ul>
       </article>
       <section className={styles.reportsContainer}>
         <Heading level="2" size="large" spacing>
@@ -187,8 +206,11 @@ function MyTeam() {
 
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
-  const [reportList, setReportList] = useState('');
+  //const [reportList, setReportList] = useState('');
 
+  {
+    /*
+    ###THIS CODE IS NOT USED AS OF NOW
   let { data: teamReports, isLoading: isTeamReportsLoading } = useSWRImmutable(
     { url: `${apiProxyUrl}/teams/${currentTeamId}/reports` },
     fetcher,
@@ -198,7 +220,14 @@ function MyTeam() {
     if (!isTeamReportsLoading) setReportList(teamReports);
   }, [isTeamReportsLoading, currentTeamId]);
 
-  if (isLoading || isTeamReportsLoading) {
+    if (isLoading || isTeamReportsLoading) {
+    return null;
+  }
+
+  */
+  }
+
+  if (isLoading) {
     return null;
   }
 

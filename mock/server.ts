@@ -109,6 +109,24 @@ api.get('api/users/details', (c) => {
   });
 });
 
+api.get('api/teams/team-nav/details', (c) => {
+  return c.json({
+    id: "team-nav",
+    name: "Team Nav",
+    email: 'team.nav@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  })
+} )
+
+api.get('api/teams/team-messi/details', (c) => {
+  return c.json({
+    id: "team-messi",
+    name: "Team Messi",
+    email: 'teammessi@example.com',
+    members: ['mem1', 'mem2', 'mem3'],
+  })
+} )
+
 api.get('/api/reports/list', (c) => {
     return c.json([
         {
@@ -144,7 +162,7 @@ api.get('api/teams/team-messi/reports', (c) => {
         
         {
         title: "Hmmm",
-        id: "rykutxyrhterg-89",         
+        id: "rykutxyrhterg-79",         
         teamId: "team-messi",
         date: "2024-06-10",
         },
@@ -251,9 +269,22 @@ api.get('/api/criteria', (c) => {
   ]);
 });
 
-api.get('api/reports/cf3f6442-afa1-4cf9-854f-48889157aeec', (c) => {
+api.get('api/reports/rykutxyrhterg-79', (c) => {
   return c.json(jsonFile);
 });
+
+api.get('api/reports/rykutxyrhterg-80', (c) => {
+    return c.json(jsonFile);
+  }
+
+);
+
+api.get('api/reports/rykutxyrhterg-70', (c) => {
+  return c.json(jsonFile);
+}
+
+);
+
 api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
