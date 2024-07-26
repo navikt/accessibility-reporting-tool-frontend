@@ -19,7 +19,6 @@ export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
   };
 
   const response = await fetch(apiUrl.href, requestInit);
-  const contentType = response.headers.get('content-type');
 
   if (!response.ok) {
     console.log(
