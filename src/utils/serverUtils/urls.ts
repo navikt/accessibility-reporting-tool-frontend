@@ -14,8 +14,8 @@ export const getEnvironment = () => {
 
 const API_URL = {
   local: 'http://localhost:8787/api',
-  development: 'https://a11y-statement.ansatt.dev.nav.no/api',
-  production: 'https://a11y-statement.ansatt.dev.nav.no/api',
+  development: 'http://a11y-statement',
+  production: 'http://a11y-statement',
 };
 
 export const loginUrl = (redirectUrl: string = '') =>
