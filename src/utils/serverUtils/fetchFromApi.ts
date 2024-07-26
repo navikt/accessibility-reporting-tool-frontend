@@ -9,14 +9,14 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const requestBody = context.request.body;
 
   console.log(apiURL.href);
-  const response = await fetch(apiURL.href); /*, {
+  const response = await fetch(apiURL.href, {
     method: method,
     headers: {
       Authorization: `Bearer ${oboToken}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  });*/
+  });
 
   const contentType = response.headers.get('content-type');
 
