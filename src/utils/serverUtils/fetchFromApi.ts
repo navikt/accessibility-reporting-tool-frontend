@@ -4,20 +4,18 @@ import type { APIContext } from 'astro';
 
 export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const oboToken = isLocal ? 'fake token' : await getOboToken(context.request);
-  const url = context.request.url;
   const method = context.request.method;
   const requestBody = context.request.body;
-  context.request.headers;
+  const requestHeaders = context.request.headers;
 
-  console.log(apiURL.href);
+  requestHeaders.append('Authorization', `Bearer ${oboToken}`);
+
+  console.log(oboToken.substring(0, 6));
+
   const response = await fetch(apiURL.href, {
     method: method,
-    headers: {
-      ...context.request.headers,
-      Authorization: `Bearer ${oboToken}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    body: requestBody,
+    headers: requestHeaders,
   });
 
   const contentType = response.headers.get('content-type');
