@@ -5,8 +5,6 @@ import { loginUrl } from '../utils/serverUtils/urls.ts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const token = getToken(context.request.headers);
-
-
   if (isLocal) {
     return next();
   }
@@ -24,6 +22,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(loginUrl(context.url.toString()));
   }
 
+  //Obo-token trengs ikke med mindre kall skal gjennom proxy
+  /*
   const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`
   const obo = await requestOboToken(token, apiScope);
   if(!obo.ok){
@@ -36,6 +36,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     console.log(`name: ${parse.preferred_username}`);
     const name = await parse.name;
     console.log(`name: ${name}`);
-  }
+  }*/
   return next()
 });

@@ -1,4 +1,3 @@
-
 import type { Report, InitialReport } from '@src/types';
 import { apiProxyUrl } from '@src/urls.client.ts';
 

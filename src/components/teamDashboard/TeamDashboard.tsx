@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
 import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
@@ -25,21 +24,19 @@ function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-      { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
-      fetcher
-    )
-  ;
-
+    { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
+    fetcher,
+  );
   const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
     { url: `${apiProxyUrl}/teams/${props.teamId}/details` },
-    fetcher
+    fetcher,
   );
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
     { url: `${apiProxyUrl}/reports/${currentReportId}` },
-    fetcher
+    fetcher,
   );
 
   const hasReport = reportListData && reportListData.length > 0;
@@ -107,23 +104,23 @@ function TeamDashboard(props: TeamDashboardProps) {
                       {
                         value: COMPLIANT,
                         color: 'green',
-                        label: `${COMPLIANT} krav oppfylt`
+                        label: `${COMPLIANT} krav oppfylt`,
                       },
                       {
                         value: NOT_COMPLIANT,
                         color: 'red',
-                        label: `${NOT_COMPLIANT} krav ikke oppfylt`
+                        label: `${NOT_COMPLIANT} krav ikke oppfylt`,
                       },
                       {
                         value: NOT_APPLICABLE,
                         color: 'gray',
-                        label: `${NOT_APPLICABLE} krav ikke aktuelle`
+                        label: `${NOT_APPLICABLE} krav ikke aktuelle`,
                       },
                       {
                         value: NOT_TESTED,
                         color: '#FFB703',
-                        label: `${NOT_TESTED} krav ikke testet`
-                      }
+                        label: `${NOT_TESTED} krav ikke testet`,
+                      },
                     ],
                     valueFormatter: () => {
                       return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
@@ -133,8 +130,8 @@ function TeamDashboard(props: TeamDashboardProps) {
                     paddingAngle: 2,
                     cornerRadius: 5,
                     startAngle: 0,
-                    endAngle: 360
-                  }
+                    endAngle: 360,
+                  },
                 ]}
                 width={600}
                 height={300}
@@ -188,6 +185,6 @@ function TeamDashboard(props: TeamDashboardProps) {
       </section>
     </section>
   );
-};
+}
 
 export default TeamDashboard;

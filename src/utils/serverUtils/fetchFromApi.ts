@@ -12,28 +12,25 @@ export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: `Bearer ${oboToken}`
+      Authorization: `Bearer ${oboToken}`,
     },
     // @ts-expect-error - This is a valid option
-    duplex: 'half'
+    duplex: 'half',
   };
-
-  console.log('----requestInit------', requestInit, '#######requestInit###### End');
 
   const response = await fetch(apiUrl.href, requestInit);
   const contentType = response.headers.get('content-type');
 
   if (!response.ok) {
-    console.log("Not ok --------", response)
     console.log(
-      `Failed to fetch data from api ${apiUrl.href} status text: ${response.statusText} and status code: ${response.status}`
+      `Failed to fetch data from api ${apiUrl.href} status text: ${response.statusText} and status code: ${response.status}`,
     );
     return new Response(JSON.stringify({}), {
       status: response.status,
-      headers: response.headers
+      headers: response.headers,
     });
   }
 
-  const jsonData =  await response.text()
+  const jsonData = await response.text();
   return new Response(jsonData);
 };
