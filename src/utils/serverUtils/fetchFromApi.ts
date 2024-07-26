@@ -5,7 +5,6 @@ import type { APIContext } from 'astro';
 export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
   const oboToken = isLocal ? 'fake token' : await getOboToken(context.request);
   const method = context.request.method;
-  const requestBody = context.request.body;
 
   const requestInit: RequestInit = {
     body: context.request.body ?? undefined,
@@ -19,7 +18,7 @@ export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
     duplex: 'half'
   };
 
-  console.log('----ResponseInit------', requestInit, '#######ResponseInit###### End');
+  console.log('----requestInit------', requestInit, '#######requestInit###### End');
 
   const response = await fetch(apiUrl.href, requestInit);
   const contentType = response.headers.get('content-type');
@@ -34,9 +33,7 @@ export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
       headers: response.headers
     });
   }
-  if (contentType && contentType.includes('text')) {
-    return new Response(JSON.stringify(await response.text()));
-  }
 
-  return new Response(JSON.stringify(await response.json()));
+  const jsonData =  await response.text()
+  return new Response(jsonData);
 };
