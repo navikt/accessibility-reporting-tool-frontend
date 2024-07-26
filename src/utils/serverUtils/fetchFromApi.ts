@@ -7,11 +7,13 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
   const url = context.request.url;
   const method = context.request.method;
   const requestBody = context.request.body;
+  context.request.headers;
 
   console.log(apiURL.href);
   const response = await fetch(apiURL.href, {
     method: method,
     headers: {
+      ...context.request.headers,
       Authorization: `Bearer ${oboToken}`,
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -20,6 +22,7 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
 
   const contentType = response.headers.get('content-type');
 
+  console.log(response);
   if (!response.ok) {
     console.log(
       `Failed to fetch data from api ${apiUrl} status code ${response.status}`,
