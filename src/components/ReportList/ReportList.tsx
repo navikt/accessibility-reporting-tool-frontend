@@ -5,6 +5,7 @@ import type { SortState } from '@navikt/ds-react';
 interface Rapport {
   title: string;
   id: string;
+  teamName: string;
   teamId: string;
   date: string;
 }
@@ -89,7 +90,7 @@ const ReportList = ({ reports }: ReportListProps) => {
             </Table.ColumnHeader>
             <Table.ColumnHeader>Team</Table.ColumnHeader>
             <Table.ColumnHeader sortKey="dato" sortable>
-              Dato
+              Sist endret
             </Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
@@ -98,11 +99,11 @@ const ReportList = ({ reports }: ReportListProps) => {
             return (
               <Table.Row key={rapport.title}>
                 <Table.HeaderCell>
-                  <Link href={rapport.teamId} variant="action">
+                  <Link href={`reports/${rapport.id}`} variant="action">
                     {rapport.title}
                   </Link>
                 </Table.HeaderCell>
-                <Table.DataCell>{rapport.teamId}</Table.DataCell>
+                <Table.DataCell>{rapport.teamName}</Table.DataCell>
                 <Table.DataCell>{format(rapport.date)}</Table.DataCell>
               </Table.Row>
             );

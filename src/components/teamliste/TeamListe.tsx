@@ -1,9 +1,9 @@
-import React from 'react';
 import { Link } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/api.client.ts';
 import styles from './TeamListe.module.css';
-import ModalElement from '@components/Modal/Modal.tsx';
+import ModalElement from '@components/Modal/NewTeamModal';
+import NewTeamModal from '@components/Modal/NewTeamModal';
 import { apiProxyUrl } from '@src/urls.client.ts';
 
 interface Team {
@@ -37,12 +37,12 @@ const TeamListe = () => {
 
   return (
     <section className={styles.wrapper}>
-      <ModalElement onAddTeam={handleAddTeam} />
+      <NewTeamModal onAddTeam={handleAddTeam} />
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (
             <li key={team.id} className={styles.listItem}>
-              <Link href="/team" variant="neutral">
+              <Link href={`/team/${team.id}`} variant="neutral">
                 {team.name}
               </Link>
             </li>

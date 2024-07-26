@@ -1,23 +1,30 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
+import { FilePlusIcon } from '@navikt/aksel-icons';
+import { fetcher } from '@src/utils/api.client';
+import useSWRImmutable from 'swr/immutable';
+import type { InitialReport, Team } from '@src/types';
+import styles from './CreateReportModal.module.css';
+import { apiProxyUrl } from '@src/urls.client.ts';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
-  const [reportDetails, setReportDetails] = useState({
-    title: '',
-    url: '',
-    team: '',
+  const [reportDetails, setReportDetails] = useState<InitialReport>({
+    name: '',
+    urlTilSiden: '',
+    teamId: '',
   });
   const handleSubmit = () => {
-    const reportId = createReport(
-      reportDetails.title,
-      reportDetails.url,
-      reportDetails.team,
-    );
+    const reportId = createReport(reportDetails);
     console.log(reportId);
     ref.current?.close();
   };
+
+  const { data: userDetails, isLoading } = useSWRImmutable(
+    { url: `${apiProxyUrl}/users/details` },
+    fetcher,
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -33,38 +40,41 @@ const CreateReportModal = () => {
     <div>
       <Button
         type="button"
+        icon={<FilePlusIcon />}
         onClick={() => {
           ref.current?.showModal();
           console.log('Modal opened');
         }}
       >
-        Opprett en ny erklæring
+        Opprett en ny rapport
       </Button>
       <Modal ref={ref} header={{ heading: 'Opprett rapport' }}>
-        <Modal.Body>
+        <Modal.Body className={styles.modalBody}>
           <TextField
             label="Tittel"
             type="text"
             id="title"
-            name="title"
+            name="name"
             onChange={handleChange}
           />
           <TextField
             label="URL"
             type="text"
             id="url"
-            name="url"
+            name="urlTilSiden"
             onChange={handleChange}
           />
           <Select
             label="Hilket team er ansvarlig for løsningen?"
-            name="team"
+            name="teamId"
             onChange={handleChange}
           >
-            <option value="">Velg land</option>
-            <option value="norge">Norge</option>
-            <option value="sverige">Sverige</option>
-            <option value="danmark">Danmark</option>
+            <option value="">Velg team</option>
+            {userDetails?.teams.map((team: Team) => (
+              <option key={team.id} value={team.id}>
+                {team.name}
+              </option>
+            ))}
           </Select>
         </Modal.Body>
         <Modal.Footer>

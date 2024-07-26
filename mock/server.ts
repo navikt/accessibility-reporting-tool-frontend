@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
 import * as teamsJson from '../teams.json';
+import * as jsonFile2 from './report2.json';
 
 const api = new Hono();
 
@@ -97,12 +98,14 @@ api.get('api/users/details', (c) => {
         title: 'Ayyyy',
         id: '12erh34',
         teamId: 'team-ultratull',
+        teamName: 'Team Ultratull',
         date: '2024-07-15',
       },
       {
         title: 'Heihei',
         id: '12erh42',
         teamId: 'team-tull',
+        teamName: 'Team Tull',
         date: '2024-08-19',
       },
     ],
@@ -111,88 +114,105 @@ api.get('api/users/details', (c) => {
 
 api.get('api/teams/team-nav/details', (c) => {
   return c.json({
-    id: "team-nav",
-    name: "Team Nav",
+    id: 'team-nav',
+    name: 'Team Nav',
     email: 'team.nav@example.com',
     members: ['mem1', 'mem2', 'mem3'],
-  })
-} )
+  });
+});
 
 api.get('api/teams/team-messi/details', (c) => {
   return c.json({
-    id: "team-messi",
-    name: "Team Messi",
+    id: 'team-messi',
+    name: 'Team Messi',
     email: 'teammessi@example.com',
     members: ['mem1', 'mem2', 'mem3'],
-  })
-} )
-
-api.get('/api/reports/list', (c) => {
-    return c.json([
-        {
-            title: "TestNavn",
-            id: "rykutjyrhterg-87",
-            teamId: "team-tull",
-            date: "2024-05-10",
-        },
-        {
-            title: "Testy",
-            id: "rykutjyrhtehg-67",
-            teamId: "team-ultratull",
-            date: "2024-08-10",
-        },
-        {
-            title: "Testttttt",
-            id: "rykutjyrhqdwerg-12",
-            teamId: "team-tull",
-            date: "2024-05-11",
-        },
-        {
-            title: "Hmmm",
-            id: "rykutxyrhterg-89",
-            teamId: "team-messi",
-            date: "2024-06-10",
-        },
-    ]);
+  });
 });
 
+api.get('api/teams/team-test/details', (c) => {
+  return c.json({
+    id: 'team-test',
+    name: 'Team Test',
+    email: 'team.test@nav.no',
+    members: ['Finnes ikke', 'Ikke en ekte dude', 'Skybert'],
+  });
+});
+
+api.get('/api/reports/list', (c) => {
+  return c.json([
+    {
+      title: 'TestNavn',
+      id: 'rykutjyrhterg-87',
+      teamId: 'team-tull',
+      teamName: 'Team Tull',
+      date: '2024-05-10',
+    },
+    {
+      title: 'Testy',
+      id: 'rykutjyrhtehg-67',
+      teamId: 'team-ultratull',
+      teamName: 'Team Ultratull',
+      date: '2024-08-10',
+    },
+    {
+      title: 'Testttttt',
+      id: 'rykutjyrhqdwerg-12',
+      teamId: 'team-tull',
+      teamName: 'Team Tull',
+      date: '2024-05-11',
+    },
+    {
+      title: 'Hmmm',
+      id: 'rykutxyrhterg-89',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
 
 api.get('api/teams/team-messi/reports', (c) => {
-    return c.json([
-        
-        {
-        title: "Hmmm",
-        id: "rykutxyrhterg-79",         
-        teamId: "team-messi",
-        date: "2024-06-10",
-        },
-        {
-        title: "Messi > Ronaldo",
-        id: "rykutxyrhterg-80",         
-        teamId: "team-messi",
-        date: "2024-06-10",
-        }
-])
-})
+  return c.json([
+    {
+      title: 'Hmmm',
+      id: 'rykutxyrhterg-79',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+    {
+      title: 'Messi > Ronaldo',
+      id: 'rykutxyrhterg-80',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
 
 api.get('api/teams/team-nav/reports', (c) => {
-    return c.json([
-        
-        {
-        title: "Hmmm!",
-        id: "rykutxyrhterg-79",         
-        teamId: "team-messi",
-        date: "2024-06-10",
-        },
-        {
-        title: "Messi < Ronaldo",
-        id: "rykutxyrhterg-70",         
-        teamId: "team-messi",
-        date: "2024-06-10",
-        }
-])
-})
+  return c.json([
+    {
+      title: 'Hmmm!',
+      id: 'rykutxyrhterg-79',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+    {
+      title: 'Messi < Ronaldo',
+      id: 'rykutxyrhterg-70',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
 
+api.get('api/teams/team-test/reports', (c) => {
+  return c.json([]);
+});
 
 api.post('/teams/new', (c) => {
   return c.text('oppretter');
@@ -270,24 +290,25 @@ api.get('/api/criteria', (c) => {
 });
 
 api.get('api/reports/rykutxyrhterg-79', (c) => {
-  return c.json(jsonFile);
+  return c.json(jsonFile2);
 });
 
 api.get('api/reports/rykutxyrhterg-80', (c) => {
-    return c.json(jsonFile);
-  }
-
-);
+  return c.json(jsonFile);
+});
 
 api.get('api/reports/rykutxyrhterg-70', (c) => {
   return c.json(jsonFile);
-}
-
-);
+});
 
 api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
+
+api.patch('/api/reports/123456789', (c) => {
+  return c.json({ messge: 'Report updated' });
+});
+
 api.get('/api/reports/123456789', (c) => {
   const initializedReport = {
     reportId: '123456789',
@@ -425,6 +446,7 @@ api.get('/api/reports/123456789', (c) => {
     ],
     created: [2024, 7, 15, 10, 59, 38],
     lastChanged: [2024, 7, 15, 11, 0, 37],
+    hasWriteAccess: true,
   };
 
   return c.json(initializedReport); // Send the custom object as the response

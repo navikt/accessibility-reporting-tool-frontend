@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
+import { apiProxyUrl } from '@src/urls.client.ts';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
@@ -14,7 +15,7 @@ interface Team {
   members?: string[];
 }
 
-const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
   const ref = useRef<HTMLDialogElement>(null);
   const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
@@ -40,7 +41,7 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     };
 
     try {
-      const response = await fetch('http://localhost:8787/teams/new', {
+      const response = await fetch(`${apiProxyUrl}/teams/new`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,4 +143,4 @@ const ModalElement: React.FC<ModalElementProps> = ({ onAddTeam }) => {
   );
 };
 
-export default ModalElement;
+export default NewTeamModal;

@@ -1,37 +1,76 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
-import { getReport } from '@src/services/reportServices';
+import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
-import { Tabs, TextField } from '@navikt/ds-react';
+import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
+import _ from 'lodash';
+import styles from './CreateReport.module.css';
+
 interface CreateReportProps {
   id: string | undefined;
 }
 
 const CreateReport = ({ id }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
-  const [activeTab, setActiveTab] = useState('metadata');
+  const [activeTab, setActiveTab] = useState('criteria');
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
-  const { data: report, isLoading } = useSWR<Report>(
-    `/reports/${id}`,
-    getReport,
-  );
+  const filterOptions: Record<string, string> = {
+    COMPLIANT: 'Tilfredsstilt',
+    NON_COMPLIANT: 'Ikke tilfredsstilt',
+    NOT_TESTED: 'Ikke testet',
+    NOT_APPLICABLE: 'Ikke aktuelt',
+  };
 
-  const handleCriterionChange = (WCAGId: string, updatedData: string) => {
+  const {
+    data: report,
+    isLoading,
+    mutate,
+  } = useSWR<Report>(`/reports/${id}`, getReport);
+
+  const updateReportData = async (updates: Partial<Report>) => {
+    try {
+      await updateReport(id as string, updates);
+      mutate();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCriterionChange = (
+    WCAGId: string,
+    fieldToUpdate: string,
+    updatedData: string,
+  ) => {
     setCriteriaData((prev) => {
       const index = prev.findIndex((criterion) => criterion.number === WCAGId);
-      console.log('WCAGId:', updatedData);
       if (index !== -1) {
         const newCriteriaData = [...prev];
         newCriteriaData[index] = {
           ...newCriteriaData[index],
-          status: updatedData,
+          [fieldToUpdate]: updatedData,
         };
+        updateReportData({
+          successCriteria: [
+            {
+              ...newCriteriaData[index],
+              [fieldToUpdate]: updatedData,
+            },
+          ],
+        });
         return newCriteriaData;
       }
       return prev;
     });
   };
+
+  const handleMetadataChange = _.debounce(
+    (fieldToUpdate: string, updatedData: string) => {
+      updateReportData({ [fieldToUpdate]: updatedData });
+    },
+    500,
+  );
 
   useEffect(() => {
     if (!isLoading && report) {
@@ -44,70 +83,81 @@ const CreateReport = ({ id }: CreateReportProps) => {
   }
 
   return (
-    <div>
-      <Tabs value={activeTab} onChange={setActiveTab}>
+    <div className={styles.reportContent}>
+      <Heading level="1" size="xlarge">
+        {report?.descriptiveName}
+      </Heading>
+      <Tabs value={activeTab} onChange={setActiveTab} className={styles.tabs}>
         <Tabs.List>
+          <Tabs.Tab value="criteria" label="Rettningslinjer" />
           <Tabs.Tab value="metadata" label="Metadata" />
-          <Tabs.Tab value="NOT_TESTED" label="Ikke testet" />
-          <Tabs.Tab value="NON_COMPLIANT" label="Ikke tilfredsstilt" />
-          <Tabs.Tab value="COMPLIANT" label="Tilfredsstilt" />
-          <Tabs.Tab value="NOT_APPLICABLE" label="Ikke aktuelt" />
         </Tabs.List>
-        <Tabs.Panel value="metadata">
-          <div>
-            <TextField
-              label="Rapportnavn"
-              id="report-name"
-              name="report-name"
-              defaultValue={report?.descriptiveName}
-            />
 
-            <TextField label="URL" id="report-url" name="report-url" />
-          </div>
-        </Tabs.Panel>
-        <Tabs.Panel value="NOT_TESTED">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NOT_TESTED')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-              />
+        <Tabs.Panel value="criteria" className={styles.tabContent}>
+          <Chips className={styles.reportFilters}>
+            {Object.keys(filterOptions).map((option) => (
+              <Chips.Toggle
+                key={option}
+                selected={selectedFilters.includes(option)}
+                onClick={() => {
+                  setSelectedFilters((prev) =>
+                    prev.includes(option)
+                      ? prev.filter((filter) => filter !== option)
+                      : [...prev, option],
+                  );
+                }}
+              >
+                {filterOptions[option]}
+              </Chips.Toggle>
             ))}
+          </Chips>
+          <ul className={styles.criteriaList}>
+            {selectedFilters.length === 0
+              ? criteriaData.map((criterion) => (
+                  <li key={criterion.number}>
+                    <Criterion
+                      key={criterion.number}
+                      criterion={criterion}
+                      handleChange={handleCriterionChange}
+                      hasWriteAccess={report?.hasWriteAccess as boolean}
+                    />
+                  </li>
+                ))
+              : criteriaData
+                  .filter((criterion) =>
+                    selectedFilters.includes(criterion.status),
+                  )
+                  .map((criterion) => (
+                    <li key={criterion.number}>
+                      <Criterion
+                        key={criterion.number}
+                        criterion={criterion}
+                        handleChange={handleCriterionChange}
+                        hasWriteAccess={report?.hasWriteAccess as boolean}
+                      />
+                    </li>
+                  ))}
+          </ul>
         </Tabs.Panel>
-        <Tabs.Panel value="NON_COMPLIANT">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NON_COMPLIANT')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-              />
-            ))}
-        </Tabs.Panel>
-        <Tabs.Panel value="COMPLIANT">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'COMPLIANT')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-              />
-            ))}
-        </Tabs.Panel>
-        <Tabs.Panel value="NOT_APPLICABLE">
-          {criteriaData
-            ?.filter((criterion) => criterion.status === 'NOT_APPLICABLE')
-            .map((criterion) => (
-              <Criterion
-                key={criterion.number}
-                criterion={criterion}
-                handleChange={handleCriterionChange}
-              />
-            ))}
+        <Tabs.Panel value="metadata" className={styles.tabContent}>
+          <TextField
+            label="Rapportnavn"
+            id="report-name"
+            name="report-name"
+            defaultValue={report?.descriptiveName}
+            disabled={!report?.hasWriteAccess}
+            onChange={(e) =>
+              handleMetadataChange('descriptiveName', e.target.value)
+            }
+          />
+          <TextField
+            label="URL"
+            id="report-url"
+            name="report-url"
+            defaultValue={report?.url}
+            disabled={!report?.hasWriteAccess}
+            onChange={(e) => handleMetadataChange('url', e.target.value)}
+          />
         </Tabs.Panel>
       </Tabs>
     </div>

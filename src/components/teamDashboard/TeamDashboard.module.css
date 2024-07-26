@@ -1,40 +1,15 @@
-.teamContent{
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
-.h1 {
-    color: var(--a-blue-800);
-}
-
-
-.selector, .selector2{
-    width: 20%;
-}
-
-.selector{margin-top: 20px;}
-
-.myTeamHeader{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+.adminMail{
+    padding-left: 5px;
+    font-family: var(--a-font-family);
+    font-size: 22px;
 }
 
 .membersList{
     list-style: none;
-}
-
-.myReportsHeader{
-    display: flex;
-    justify-content: right;
-}
-
-.addStatementBtn{
-    margin-top: 52px;
-    margin-bottom: 20px;
+    text-align: left;
+    padding-left: 5px;
+    font-family: var(--a-font-family);
+    font-size: 22px;
 }
 
 .gridWrapper{
@@ -44,7 +19,6 @@
     display: grid;
     gap: 16px;
     grid-template-areas: 
-    'top top top top top'
     'mid mid mid mid mid2'
     'bot bot bot bot bot'
     ;
@@ -57,11 +31,6 @@
     box-shadow: var(--a-shadow-small);
 }
 
-.lastChanges{
-    min-height: 80px;
-    grid-area: top;
-}
-
 .accessibilityStatusContainer{
     min-height: 400px;
     grid-area: mid;
@@ -71,6 +40,11 @@
     min-height: 80%;
     display: flex;
     flex-direction: row;
+    text-align: left;
+}
+
+.chartContainer{
+    margin: auto;
 }
 
 .selectReportContainer{
@@ -87,21 +61,17 @@
 .membersContainer{
     min-height: 400px;
     grid-area: mid2;
+    display: flex;
+    flex-direction: column;
+}
+
+.editTeamBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
 }
 
 .reportsContainer{
     min-height: 120px;
     grid-area: bot;
-}
-
-.myReportsContainer{
-    background-color: white;
-    padding: 16px;
-    border-radius: 10px;
-}
-
-.myReportsContainer>section{
-    display: flex;
-    justify-content: space-between;
-
 }

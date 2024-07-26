@@ -25,8 +25,10 @@ export type Team = {
 };
 
 export type UserProps = {
-  //Må utvides kraftig
-  userName: String;
+  name: String;
+  email: String;
+  reports: Report[];
+  teams: Team[];
 };
 
 export type Author = {
@@ -48,4 +50,11 @@ export type Report = {
   contributers: string[]; // Ask Rannveig what this is?
   lastUpdatedBy: string;
   reportType: string;
+  hasWriteAccess: boolean;
+};
+
+export type InitialReport = {
+  name: string;
+  urlTilSiden: string;
+  teamId: string;
 };

@@ -1,14 +1,14 @@
-import { apiProxyUrl } from '@src/urls.client.ts';
-import type { Report } from '@src/types';
 
-export const createReport = async (
-  title: string,
-  url: string,
-  teamId: string,
-) => {
+import type { Report, InitialReport } from '@src/types';
+import { apiProxyUrl } from '@src/urls.client.ts';
+
+export const createReport = async (initReport: InitialReport) => {
   const response = await fetch(`${apiProxyUrl}/reports/new`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
-    body: JSON.stringify({ title, url, teamId }),
+    body: JSON.stringify(initReport),
     credentials: 'include',
   });
 
@@ -34,5 +34,19 @@ export const getReport = async (url: string): Promise<Report> => {
   } else {
     console.log('Failed to fetch report', response.status);
     throw new Error('Failed to fetch report');
+  }
+};
+
+export const updateReport = async (id: string, updates: Partial<Report>) => {
+  const response = await fetch(`${apiProxyUrl}/reports/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(updates),
+    credentials: 'include',
+  });
+  if (response.ok) {
+    console.log('Report updated', response.status);
+  } else {
+    console.log('Failed to update report-', response.status);
+    throw new Error('Failed to update report');
   }
 };
