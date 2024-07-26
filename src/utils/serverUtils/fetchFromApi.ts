@@ -16,7 +16,7 @@ export const fetchFromApi = async (context: APIContext, apiURL: URL) => {
       Accept: 'application/json',
       Authorization: `Bearer ${oboToken}`,
     },
-    body: requestBody
+    body: JSON.stringify(requestBody),
   });
 
   const contentType = response.headers.get('content-type');
