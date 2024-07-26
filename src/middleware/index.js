@@ -1,4 +1,4 @@
-import { getToken, validateToken, parseAzureUserToken, requestOboToken } from '@navikt/oasis';
+import { getToken, validateToken } from '@navikt/oasis';
 import { isLocal } from '@src/utils/environment';
 import { defineMiddleware } from 'astro/middleware';
 import { loginUrl } from '../utils/serverUtils/urls.ts';
