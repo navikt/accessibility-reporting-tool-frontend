@@ -3,8 +3,9 @@ import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types';
 import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
-import { Tabs, TextField, Chips } from '@navikt/ds-react';
+import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
 import _ from 'lodash';
+import styles from './CreateReport.module.css';
 
 interface CreateReportProps {
   id: string | undefined;
@@ -82,7 +83,10 @@ const CreateReport = ({ id }: CreateReportProps) => {
   }
 
   return (
-    <div>
+    <div className={styles.reportContent}>
+      <Heading level="1" size="xlarge">
+        {report?.descriptiveName}
+      </Heading>
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab value="criteria" label="Rettningslinjer" />
@@ -90,7 +94,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
         </Tabs.List>
 
         <Tabs.Panel value="criteria">
-          <Chips>
+          <Chips className={styles.reportFilters}>
             {Object.keys(filterOptions).map((option) => (
               <Chips.Toggle
                 key={option}

@@ -2,6 +2,7 @@ import { Textarea, Radio, RadioGroup } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { CriterionType } from '@src/types';
 import styles from './Criterion.module.css';
+import { Divider } from '@mui/material';
 
 type CriterionProps = {
   criterion: CriterionType;
@@ -23,7 +24,7 @@ const Criterion = ({
       <div className={styles.criterion}>
         <RadioGroup
           className={styles.radioGroup}
-          legend={criterion.name}
+          legend={`${criterion.number} ${criterion.name}`}
           disabled={!hasWriteAccess}
           onChange={(e) => {
             handleChange(criterion.number, 'status', e as string);
@@ -83,6 +84,7 @@ const Criterion = ({
           </div>
         ) : null}
       </div>
+      <Divider />
     </div>
   );
 };
