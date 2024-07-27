@@ -1,5 +1,5 @@
-import type { Team } from '@src/types';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import type { Team } from '@src/types.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 export const updateTeam = async (teamId: string, updates: Team) => {
   const response = await fetch(`${apiProxyUrl}/team/${teamId}`, {

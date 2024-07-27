@@ -1,12 +1,12 @@
 import ReportList from '@components/ReportList/ReportList';
 import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
 import { Tabs, Select, Heading } from '@navikt/ds-react';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import { useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import TeamDashboard from './TeamDashboard';
 import styles from './MyTeam.module.css';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface Team {
   email: string;

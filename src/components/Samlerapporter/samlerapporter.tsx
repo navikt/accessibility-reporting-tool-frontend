@@ -1,8 +1,8 @@
 import { Link } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
-import { fetcher } from '@src/utils/api.client.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import styles from './Samlerapporter.module.css';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface Rapport {
   navn: string;

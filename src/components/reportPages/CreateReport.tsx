@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
-import type { CriterionType, Report } from '@src/types';
+import type { CriterionType, Report } from '@src/types.ts';
 import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
