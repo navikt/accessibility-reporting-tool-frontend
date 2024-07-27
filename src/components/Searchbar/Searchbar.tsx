@@ -1,8 +1,8 @@
 import { Search } from '@navikt/ds-react';
 import styles from './Searchbar.module.css';
 import useSWRImmutable from 'swr/immutable';
-import { apiProxyUrl } from '@src/urls.client.ts';
-import { fetcher } from '@src/utils/api.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import { useState } from 'react';
 
 interface Rapport {

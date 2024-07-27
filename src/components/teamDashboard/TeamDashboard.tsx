@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
 import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR, { mutate } from 'swr';
 import EditTeamModal from '@components/Modal/EditTeamModal';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface TeamReport {
   title: string;

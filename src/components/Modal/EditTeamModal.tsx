@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Button, List, Modal, TextField } from '@navikt/ds-react';
 import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
-import type { Team } from '@src/types';
+import type { Team } from '@src/types.ts';
 import { updateTeam } from '@src/services/teamServices';
 import useSWR, { mutate } from 'swr';
-import { fetcher } from '@src/utils/api.client';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;

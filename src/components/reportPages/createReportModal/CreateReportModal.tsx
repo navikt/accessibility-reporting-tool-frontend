@@ -2,11 +2,11 @@ import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import useSWRImmutable from 'swr/immutable';
-import type { InitialReport, Team } from '@src/types';
+import type { InitialReport, Team } from '@src/types.ts';
 import styles from './CreateReportModal.module.css';
-import { apiProxyUrl } from '@src/urls.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);

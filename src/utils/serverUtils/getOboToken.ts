@@ -1,13 +1,12 @@
 import { getToken, requestOboToken, validateToken } from '@navikt/oasis';
-import { loginUrl } from '@src/utils/serverUtils/urls.ts';
 import type { APIContext } from 'astro';
-import { isLocal } from '@src/utils/environment.ts';
+const APIS_COPE = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`;
+
 
 export const getOboToken = async (
   request: APIContext['request'],
 ): Promise<string> => {
   const token = getToken(request.headers);
-  const apiScope = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`;
   const url = request.url;
 
   if (!token) {
@@ -15,7 +14,7 @@ export const getOboToken = async (
     throw new Error(`Token for ${url} is undefined`);
   }
 
-  const obo = await requestOboToken(token, apiScope);
+  const obo = await requestOboToken(token, APIS_COPE);
   if (!obo.ok) {
     console.log('Fail on-behalf-of token for api');
     throw new Error(`Request oboToken for a11y-statement backend failed`);

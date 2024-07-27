@@ -1,7 +1,7 @@
 import useSWRImmutable from 'swr/immutable';
 import ReportList from './ReportList';
-import { apiProxyUrl } from '@src/urls.client.ts';
-import { fetcher } from '@src/utils/api.client';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 
 function AllReportsList() {
   const { data: reportListData, isLoading: isLoadingList } = useSWRImmutable(

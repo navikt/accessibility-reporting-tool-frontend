@@ -1,6 +1,6 @@
 import { Textarea, Radio, RadioGroup } from '@navikt/ds-react';
 import { useState } from 'react';
-import type { CriterionType } from '@src/types';
+import type { CriterionType } from '@src/types.ts';
 import styles from './Criterion.module.css';
 import { Divider } from '@mui/material';
 
