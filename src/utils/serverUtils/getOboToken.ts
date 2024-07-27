@@ -1,7 +1,6 @@
 import { getToken, requestOboToken, validateToken } from '@navikt/oasis';
 import type { APIContext } from 'astro';
-const APIS_COPE = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`;
-
+const API_SCOPE = `api://${process.env.NAIS_CLUSTER_NAME}.a11y-statement.a11y-statement/.default`;
 
 export const getOboToken = async (
   request: APIContext['request'],
@@ -14,7 +13,7 @@ export const getOboToken = async (
     throw new Error(`Token for ${url} is undefined`);
   }
 
-  const obo = await requestOboToken(token, APIS_COPE);
+  const obo = await requestOboToken(token, API_SCOPE);
   if (!obo.ok) {
     console.log('Fail on-behalf-of token for api');
     throw new Error(`Request oboToken for a11y-statement backend failed`);
