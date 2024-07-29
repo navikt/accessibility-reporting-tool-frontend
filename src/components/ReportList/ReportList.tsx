@@ -53,24 +53,6 @@ const ReportList = ({ reports }: ReportListProps) => {
     return 1;
   });
 
-  const format = (dateStr?: string) => {
-    if (!dateStr) {
-      return 'No Date Provided'; // Handle undefined or null date
-    }
-
-    console.log('Date String:', dateStr); // Log the date string to see its format
-    const [year, month, day] = dateStr.split('-').map(Number);
-    if (!year || !month || !day) {
-      console.error('Invalid date:', dateStr); // Log the error
-      return 'Invalid Date';
-    }
-    const date = new Date(year, month - 1, day);
-    const y = date.getFullYear();
-    const m = (date.getMonth() + 1).toString().padStart(2, '0');
-    const d = date.getDate().toString().padStart(2, '0');
-    return `${d}.${m}.${y}`;
-  };
-
   // if (isLoading) return <div>Loading...</div>;
   useEffect(() => {
     setData(reports);
@@ -112,6 +94,24 @@ const ReportList = ({ reports }: ReportListProps) => {
       </Table>
     </div>
   );
+};
+
+const format = (dateStr?: string) => {
+  if (!dateStr) {
+    return 'No Date Provided'; // Handle undefined or null date
+  }
+
+  console.log('Date String:', dateStr); // Log the date string to see its format
+  const [year, month, day] = dateStr.split('-').map(Number);
+  if (!year || !month || !day) {
+    console.error('Invalid date:', dateStr); // Log the error
+    return 'Invalid Date';
+  }
+  const date = new Date(year, month, day);
+  const y = date.getFullYear();
+  const m = (date.getMonth() + 1).toString().padStart(2, '0');
+  const d = date.getDate().toString().padStart(2, '0');
+  return `${d}.${m}.${y}`;
 };
 
 export default ReportList;
