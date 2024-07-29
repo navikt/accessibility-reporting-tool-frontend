@@ -1,8 +1,8 @@
 import { Link } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
-import { fetcher } from '@src/utils/api.client.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import styles from './Samlerapporter.module.css';
-import { apiUrl } from '@src/urls.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface Rapport {
   navn: string;
@@ -11,7 +11,7 @@ interface Rapport {
 
 const SamletListe = () => {
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/reports/summary` },
+    { url: `${apiProxyUrl}/reports/summary` },
     fetcher,
   );
   console.log(data);

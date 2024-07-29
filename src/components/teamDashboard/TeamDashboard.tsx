@@ -1,12 +1,12 @@
-import { apiUrl } from '@src/urls';
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
 import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR, { mutate } from 'swr';
 import EditTeamModal from '@components/Modal/EditTeamModal';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface TeamReport {
   title: string;
@@ -24,19 +24,18 @@ function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
-    { url: `${apiUrl}/teams/${props.teamId}/reports` },
+    { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
     fetcher,
   );
-
   const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
-    { url: `${apiUrl}/teams/${props.teamId}/details` },
+    { url: `${apiProxyUrl}/teams/${props.teamId}/details` },
     fetcher,
   );
 
   const { data: reportData, isLoading: isLoadingReport } = useSWR(
-    { url: `${apiUrl}/reports/${currentReportId}` },
+    { url: `${apiProxyUrl}/reports/${currentReportId}` },
     fetcher,
   );
 

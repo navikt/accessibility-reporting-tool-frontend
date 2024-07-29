@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, List, Modal, TextField } from '@navikt/ds-react';
-import { apiUrl } from '@src/urls';
 import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
-import type { Team } from '@src/types';
+import type { Team } from '@src/types.ts';
 import { updateTeam } from '@src/services/teamServices';
 import useSWR, { mutate } from 'swr';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
@@ -31,7 +31,7 @@ function EditTeamModal(props: EditTeamModalProps) {
     data: teamData,
     isLoading: isLoadingTeamData,
     mutate,
-  } = useSWR({ url: `${apiUrl}/teams/${props.teamId}/details` }, fetcher);
+  } = useSWR({ url: `${apiProxyUrl}/teams/${props.teamId}/details` }, fetcher);
 
   const updateTeamData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

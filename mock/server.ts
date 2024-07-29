@@ -446,7 +446,7 @@ api.get('/api/reports/123456789', (c) => {
     ],
     created: [2024, 7, 15, 10, 59, 38],
     lastChanged: [2024, 7, 15, 11, 0, 37],
-    hasWriteAccess: false,
+    hasWriteAccess: true,
   };
 
   return c.json(initializedReport); // Send the custom object as the response
