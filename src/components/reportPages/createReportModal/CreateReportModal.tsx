@@ -78,7 +78,7 @@ const CreateReportModal = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button type="button" onClick={handleSubmit}>
-            Oprett rapport
+            Opprett rapport
           </Button>
           <Button
             type="button"
