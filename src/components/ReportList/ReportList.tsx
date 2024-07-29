@@ -50,7 +50,7 @@ const ReportList = ({ reports }: ReportListProps) => {
         ? comparator(a, b, sort.orderBy as keyof Rapport)
         : comparator(b, a, sort.orderBy as keyof Rapport);
     }
-    return 0;
+    return 1;
   });
 
   const format = (dateStr?: string) => {
@@ -85,11 +85,11 @@ const ReportList = ({ reports }: ReportListProps) => {
       >
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader sortKey="navn" sortable>
+            <Table.ColumnHeader sortKey="title" sortable>
               Navn
             </Table.ColumnHeader>
             <Table.ColumnHeader>Team</Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="dato" sortable>
+            <Table.ColumnHeader sortKey="date" sortable>
               Sist endret
             </Table.ColumnHeader>
           </Table.Row>
