@@ -35,10 +35,10 @@ const ReportList = ({ reports }: ReportListProps) => {
   };
 
   const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
-    if (a[orderBy] < b[orderBy] || a[orderBy] === undefined) {
+    if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
       return -1;
     }
-    if (a[orderBy] > b[orderBy]) {
+    if (b[orderBy] > a[orderBy]) {
       return 1;
     }
     return 0;
@@ -47,8 +47,8 @@ const ReportList = ({ reports }: ReportListProps) => {
   const sortedData = data?.slice().sort((a: Rapport, b: Rapport) => {
     if (sort) {
       return sort.direction === 'ascending'
-        ? comparator(a, b, sort.orderBy as keyof Rapport)
-        : comparator(b, a, sort.orderBy as keyof Rapport);
+        ? comparator(b, a, sort.orderBy as keyof Rapport)
+        : comparator(a, b, sort.orderBy as keyof Rapport);
     }
     return 1;
   });
