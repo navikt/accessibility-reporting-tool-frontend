@@ -119,9 +119,9 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
           <Button
             type="submit"
             form="teamForm"
-            /*onClick={() => {
+            onClick={() => {
                             ref.current?.close();
-                        }}*/
+                        }}
           >
             Send
           </Button>
