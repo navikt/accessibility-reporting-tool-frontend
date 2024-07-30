@@ -153,7 +153,6 @@ function EditTeamModal(props: EditTeamModalProps) {
             type="button"
             variant="secondary"
             onClick={() => {
-              setTeamEmail('');
               setNewMembers([]);
               ref.current?.close();
             }}
