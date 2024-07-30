@@ -2,6 +2,7 @@
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import styles from "./Layout.module.css"
+import { ViewTransitions } from 'astro:transitions';
 ---
 <!doctype html>
 <html lang="no">
@@ -13,6 +14,7 @@ import styles from "./Layout.module.css"
     <title>a11y rapportering</title>
     <link rel="preload" href="https://cdn.nav.no/aksel/@navikt/ds-css/6.10.0/index.min.css" as="style" />
     <link rel="stylesheet" href="https://cdn.nav.no/aksel/@navikt/ds-css/6.10.0/index.min.css" />
+    <ViewTransitions />
 </head>
 <body class="main">
 <Navbar client:only/>
