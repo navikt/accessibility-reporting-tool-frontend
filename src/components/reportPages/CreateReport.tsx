@@ -38,32 +38,33 @@ const CreateReport = ({ id }: CreateReportProps) => {
     }
   };
 
-  const handleCriterionChange = (
-    WCAGId: string,
-    fieldToUpdate: string,
-    updatedData: string,
-  ) => {
-    setCriteriaData((prev) => {
-      const index = prev.findIndex((criterion) => criterion.number === WCAGId);
-      if (index !== -1) {
-        const newCriteriaData = [...prev];
-        newCriteriaData[index] = {
-          ...newCriteriaData[index],
-          [fieldToUpdate]: updatedData,
-        };
-        updateReportData({
-          successCriteria: [
-            {
-              ...newCriteriaData[index],
-              [fieldToUpdate]: updatedData,
-            },
-          ],
-        });
-        return newCriteriaData;
-      }
-      return prev;
-    });
-  };
+  const handleCriterionChange = _.debounce(
+    (WCAGId: string, fieldToUpdate: string, updatedData: string) => {
+      setCriteriaData((prev) => {
+        const index = prev.findIndex(
+          (criterion) => criterion.number === WCAGId,
+        );
+        if (index !== -1) {
+          const newCriteriaData = [...prev];
+          newCriteriaData[index] = {
+            ...newCriteriaData[index],
+            [fieldToUpdate]: updatedData,
+          };
+          updateReportData({
+            successCriteria: [
+              {
+                ...newCriteriaData[index],
+                [fieldToUpdate]: updatedData,
+              },
+            ],
+          });
+          return newCriteriaData;
+        }
+        return prev;
+      });
+    },
+    500,
+  );
 
   const handleMetadataChange = _.debounce(
     (fieldToUpdate: string, updatedData: string) => {
