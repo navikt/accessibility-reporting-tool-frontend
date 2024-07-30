@@ -85,7 +85,7 @@ const CreateReportModal = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button type="submit" disabled={!isValid} onClick={handleSubmit}>
-            Oprett rapport
+            Opprett rapport
           </Button>
           <Button
             type="button"

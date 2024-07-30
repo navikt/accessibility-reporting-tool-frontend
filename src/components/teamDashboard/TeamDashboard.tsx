@@ -4,7 +4,7 @@ import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/clientUtils/api.ts';
 import ReportList from '@components/ReportList/ReportList';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import EditTeamModal from '@components/Modal/EditTeamModal';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
@@ -23,6 +23,7 @@ interface TeamDashboardProps {
 function TeamDashboard(props: TeamDashboardProps) {
   //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
   //samt tilgjengelighetsstatusen deres.
+
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
     fetcher,

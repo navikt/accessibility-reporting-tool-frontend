@@ -24,7 +24,7 @@ function EditTeamModal(props: EditTeamModalProps) {
   const [teamName, setTeamName] = useState('');
 
   const addMemberField = () => {
-    setNewMembers(['']);
+    setNewMembers([...newMembers, '']);
   };
 
   const {
@@ -40,14 +40,20 @@ function EditTeamModal(props: EditTeamModalProps) {
       id: teamData.id,
       name: teamName,
       email: teamEmail,
-      members: currentMembers,
+      members: [...currentMembers, ...newMembers],
     };
+
+    console.log(editedTeam);
 
     try {
       await updateTeam(props.teamId as string, editedTeam);
       mutate();
+      setCurrentMembers(editedTeam.members);
+      setNewMembers([]);
     } catch (error) {
       console.error(error);
+      setCurrentMembers(editedTeam.members); //Denne linja og linja under må fjernes/endres før deployment
+      setNewMembers([]);
     }
   };
 
@@ -79,6 +85,7 @@ function EditTeamModal(props: EditTeamModalProps) {
             <TextField
               label="Sett emailadresse for teameier"
               defaultValue={teamEmail}
+              type="email"
               onChange={(e) => setTeamEmail(e.target.value)}
             />
 
@@ -109,11 +116,12 @@ function EditTeamModal(props: EditTeamModalProps) {
               <TextField
                 key={index}
                 label={`Mailadresse til nytt medlem`}
+                type="email"
                 placeholder="ola.nordmann@nav.no"
                 onChange={(e) => {
                   const newGuys = [...newMembers];
                   newGuys[index] = e.target.value;
-                  setNewMembers(newMembers);
+                  setNewMembers(newGuys);
                 }}
               />
             ))}
@@ -137,7 +145,6 @@ function EditTeamModal(props: EditTeamModalProps) {
             onClick={() => {
               updateTeamData;
               ref.current?.close();
-              setNewMembers([]);
             }}
           >
             Lagre
