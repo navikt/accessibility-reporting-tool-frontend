@@ -34,13 +34,10 @@ const CreateReportModal = () => {
       ...reportDetails,
       [e.target.name]: e.target.value,
     });
-    console.log(reportDetails);
   };
 
   const isValid =
     reportDetails.name && reportDetails.urlTilSiden && reportDetails.teamId;
-
-  const 
 
   return (
     <div>
