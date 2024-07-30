@@ -7,7 +7,6 @@ import useSWRImmutable from 'swr/immutable';
 import type { InitialReport, Team } from '@src/types.ts';
 import styles from './CreateReportModal.module.css';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
-import { E } from 'dist/server/chunks/astro_D3UBNB5r.mjs';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
