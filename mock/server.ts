@@ -444,8 +444,8 @@ api.get('/api/reports/123456789', (c) => {
         successCriterionNumber: '1.3.1',
       },
     ],
-    created: [2024, 7, 15, 10, 59, 38],
-    lastChanged: [2024, 7, 15, 11, 0, 37],
+    created: '2024.07.30 10:46:37',
+    lastChanged: '2024.07.30 10:46:37',
     hasWriteAccess: true,
   };
 

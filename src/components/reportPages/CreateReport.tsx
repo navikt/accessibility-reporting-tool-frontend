@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
 import _ from 'lodash';
 import styles from './CreateReport.module.css';
+import { formatDate } from '@src/utils/formaters/date';
 
 interface CreateReportProps {
   id: string | undefined;
@@ -112,6 +113,12 @@ const CreateReport = ({ id }: CreateReportProps) => {
               </Chips.Toggle>
             ))}
           </Chips>
+          <section>
+            <p>Oprettet: {formatDate(report?.created as string)}</p>
+            <p>Oprettet av: {report?.author.email}</p>
+            <p>Sist endret: {formatDate(report?.lastChanged as string)}</p>
+            <p>Sist endret av: {report?.lastUpdatedBy}</p>
+          </section>
           <ul className={styles.criteriaList}>
             {selectedFilters.length === 0
               ? criteriaData.map((criterion) => (
