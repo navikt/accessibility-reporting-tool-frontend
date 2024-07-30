@@ -151,9 +151,8 @@ function EditTeamModal(props: EditTeamModalProps) {
           </Button>
           <Button
             type="button"
-            variant="danger"
+            variant="secondary"
             onClick={() => {
-              setTeamEmail('');
               setNewMembers([]);
               ref.current?.close();
             }}
