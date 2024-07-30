@@ -2,10 +2,11 @@ import { useRef, useState } from 'react';
 import { Button, Modal, Select, TextField } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
-import { fetcher } from '@src/utils/api.client';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import useSWRImmutable from 'swr/immutable';
-import { apiUrl } from '@src/urls';
-import type { InitialReport, Team } from '@src/types';
+import type { InitialReport, Team } from '@src/types.ts';
+import styles from './CreateReportModal.module.css';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -21,7 +22,7 @@ const CreateReportModal = () => {
   };
 
   const { data: userDetails, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 
@@ -48,7 +49,7 @@ const CreateReportModal = () => {
         Opprett en ny rapport
       </Button>
       <Modal ref={ref} header={{ heading: 'Opprett rapport' }}>
-        <Modal.Body>
+        <Modal.Body className={styles.modalBody}>
           <TextField
             label="Tittel"
             type="text"

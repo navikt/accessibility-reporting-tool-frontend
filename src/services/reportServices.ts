@@ -1,8 +1,8 @@
-import { apiUrl } from '@src/urls';
-import type { Report, InitialReport } from '@src/types';
+import type { Report, InitialReport } from '@src/types.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 export const createReport = async (initReport: InitialReport) => {
-  const response = await fetch(`${apiUrl}/reports/new`, {
+  const response = await fetch(`${apiProxyUrl}/reports/new`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -22,7 +22,7 @@ export const createReport = async (initReport: InitialReport) => {
 };
 
 export const getReport = async (url: string): Promise<Report> => {
-  const response = await fetch(`${apiUrl}${url}`, {
+  const response = await fetch(`${apiProxyUrl}${url}`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -37,7 +37,7 @@ export const getReport = async (url: string): Promise<Report> => {
 };
 
 export const updateReport = async (id: string, updates: Partial<Report>) => {
-  const response = await fetch(`${apiUrl}/reports/${id}`, {
+  const response = await fetch(`${apiProxyUrl}/reports/${id}/update`, {
     method: 'PATCH',
     body: JSON.stringify(updates),
     credentials: 'include',

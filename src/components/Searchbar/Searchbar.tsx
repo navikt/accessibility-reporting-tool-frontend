@@ -1,8 +1,8 @@
 import { Search } from '@navikt/ds-react';
 import styles from './Searchbar.module.css';
 import useSWRImmutable from 'swr/immutable';
-import { apiUrl } from '@src/urls.ts';
-import { fetcher } from '@src/utils/api.client.ts';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import { useState } from 'react';
 
 interface Rapport {
@@ -12,7 +12,7 @@ interface Rapport {
 
 const Searchbar = () => {
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/reports/list` },
+    { url: `${apiProxyUrl}/reports/list` },
     fetcher,
   );
   console.log(data);

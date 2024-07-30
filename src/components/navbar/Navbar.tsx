@@ -1,13 +1,13 @@
 import { Link } from '@navikt/ds-react';
 import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
-import { apiUrl } from '@src/urls';
-import { fetcher } from '@src/utils/api.client';
+import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { fetcher } from '@src/utils/clientUtils/api.ts';
 import useSWRImmutable from 'swr/immutable';
 
 function Navbar() {
   const { data, isLoading } = useSWRImmutable(
-    { url: `${apiUrl}/users/details` },
+    { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
 
