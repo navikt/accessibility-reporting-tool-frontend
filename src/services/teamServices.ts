@@ -2,7 +2,7 @@ import type { Team } from '@src/types.ts';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 
 export const updateTeam = async (teamId: string, updates: Team) => {
-  const response = await fetch(`${apiProxyUrl}/team/${teamId}`, {
+  const response = await fetch(`${apiProxyUrl}/teams/${teamId}/update`, {
     method: 'PUT',
     body: JSON.stringify(updates),
     credentials: 'include',
