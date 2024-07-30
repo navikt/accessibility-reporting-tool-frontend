@@ -7,6 +7,7 @@ import useSWRImmutable from 'swr/immutable';
 import type { InitialReport, Team } from '@src/types.ts';
 import styles from './CreateReportModal.module.css';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { E } from 'dist/server/chunks/astro_D3UBNB5r.mjs';
 
 const CreateReportModal = () => {
   const ref = useRef<HTMLDialogElement>(null);
@@ -33,8 +34,10 @@ const CreateReportModal = () => {
       ...reportDetails,
       [e.target.name]: e.target.value,
     });
-    console.log(reportDetails);
   };
+
+  const isValid =
+    reportDetails.name && reportDetails.urlTilSiden && reportDetails.teamId;
 
   return (
     <div>
@@ -56,6 +59,7 @@ const CreateReportModal = () => {
             id="title"
             name="name"
             onChange={handleChange}
+            required
           />
           <TextField
             label="URL"
@@ -63,11 +67,13 @@ const CreateReportModal = () => {
             id="url"
             name="urlTilSiden"
             onChange={handleChange}
+            required
           />
           <Select
             label="Hilket team er ansvarlig for løsningen?"
             name="teamId"
             onChange={handleChange}
+            required
           >
             <option value="">Velg team</option>
             {userDetails?.teams.map((team: Team) => (
@@ -78,7 +84,7 @@ const CreateReportModal = () => {
           </Select>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="button" onClick={handleSubmit}>
+          <Button type="submit" disabled={!isValid} onClick={handleSubmit}>
             Opprett rapport
           </Button>
           <Button
