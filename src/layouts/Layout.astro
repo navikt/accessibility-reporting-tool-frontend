@@ -17,7 +17,7 @@ import { ViewTransitions } from 'astro:transitions';
     <ViewTransitions />
 </head>
 <body class="main">
-<Navbar client:only/>
+<Navbar client:only="react"/>
 <div class={styles.page}>
     <slot />
 </div>
