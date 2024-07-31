@@ -2,7 +2,6 @@ import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import * as jsonFile from './report.json';
-import * as teamsJson from '../teams.json';
 import * as jsonFile2 from './report2.json';
 
 const api = new Hono();

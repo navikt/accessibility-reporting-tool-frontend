@@ -24,7 +24,7 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link underline={false} variant="neutral" href="/alle-teams">
+          <Link underline={false} variant="neutral" href="/teams">
             Teams
           </Link>
         </li>
