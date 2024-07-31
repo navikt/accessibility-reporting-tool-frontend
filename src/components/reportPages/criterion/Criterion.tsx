@@ -1,9 +1,7 @@
 import { Textarea, Radio, RadioGroup, Link } from '@navikt/ds-react';
-import { useState } from 'react';
 import type { CriterionType } from '@src/types.ts';
 import styles from './Criterion.module.css';
 import { Divider } from '@mui/material';
-import { ArrowRightIcon } from '@navikt/aksel-icons';
 
 type CriterionProps = {
   criterion: CriterionType;
