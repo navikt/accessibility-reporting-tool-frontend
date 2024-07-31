@@ -114,9 +114,11 @@ const CreateReport = ({ id }: CreateReportProps) => {
             ))}
           </Chips>
           <section>
-            <p>Oprettet: {formatDate(report?.created as string)}</p>
+            {report?.created && <p>Oprettet: {formatDate(report?.created)}</p>}
             <p>Oprettet av: {report?.author.email}</p>
-            <p>Sist endret: {formatDate(report?.lastChanged as string)}</p>
+            {report?.lastChanged && (
+              <p>Sist endret: {formatDate(report?.lastChanged)}</p>
+            )}
             <p>Sist endret av: {report?.lastUpdatedBy}</p>
           </section>
           <ul className={styles.criteriaList}>
