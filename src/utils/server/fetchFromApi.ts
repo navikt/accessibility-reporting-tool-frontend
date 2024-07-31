@@ -1,9 +1,9 @@
 import { isLocal } from './urls.ts';
-import { getOboToken } from '@src/utils/serverUtils/getOboToken.ts';
+import { getOboToken } from '@src/utils/server/getOboToken.ts';
 import type { APIContext } from 'astro';
 
 export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
-  const oboToken = isLocal ? 'fake token' : await getOboToken(context.request);
+  const oboToken = isLocal ? 'fake token' : await getOboToken(context.locals.token);
   const method = context.request.method;
 
   const requestInit: RequestInit = {
@@ -24,6 +24,7 @@ export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
     console.log(
       `Failed to fetch data from api ${apiUrl.href} status text: ${response.statusText} and status code: ${response.status}`,
     );
+
     return new Response(JSON.stringify({}), {
       status: response.status,
       headers: response.headers,

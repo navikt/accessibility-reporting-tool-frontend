@@ -1,5 +1,5 @@
 import type { Report, InitialReport } from '@src/types.ts';
-import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 export const createReport = async (initReport: InitialReport) => {
   const response = await fetch(`${apiProxyUrl}/reports/new`, {

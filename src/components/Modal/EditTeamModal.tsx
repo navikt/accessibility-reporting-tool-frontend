@@ -5,8 +5,8 @@ import styles from './EditTeamModal.module.css';
 import type { Team } from '@src/types.ts';
 import { updateTeam } from '@src/services/teamServices';
 import useSWR, { mutate } from 'swr';
-import { fetcher } from '@src/utils/clientUtils/api.ts';
-import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { fetcher } from '@src/utils/client/api.ts';
+import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;

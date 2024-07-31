@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
-import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
+import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 interface ModalElementProps {
   onAddTeam?: (newTeam: Team) => void;
