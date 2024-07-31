@@ -28,8 +28,7 @@ function MyTeam() {
 
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
-  const userName = userData?.name.split(",");
-
+  const userName = userData?.name.split(',');
 
   if (isLoading) {
     return null;
@@ -38,7 +37,9 @@ function MyTeam() {
   return (
     <main className={styles.teamContent}>
       <header>
-        <h1 className={styles.h1}>God dag {userName[1]} {userName[0]}</h1>
+        <h1 className={styles.h1}>
+          God dag {userName[1]} {userName[0]}
+        </h1>
       </header>
 
       <Tabs value={state} onChange={setState}>
