@@ -1,0 +1,24 @@
+---
+import { getOboToken } from '../../utils/server/getOboToken';
+import { Button } from '@navikt/ds-react';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const response = await fetch("http://localhost:8787/api/users/details", {
+  method: "GET",
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const data = await response.json();
+---
+
+<div>
+  <Button>Aksel button!</Button>
+  <p>Email: {JSON.stringify(data.email)}</p>
+</div>
