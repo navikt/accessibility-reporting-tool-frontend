@@ -72,24 +72,20 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
 
-      <Modal
-        ref={ref}
-        header={{ heading: 'Legg til team' }}
-        width={400}
-      >
+      <Modal ref={ref} header={{ heading: 'Legg til team' }} width={400}>
         <Modal.Body>
           <form id="teamForm" onSubmit={handleSubmit}>
             <TextField
               label="Teamnavn"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
-              placeholder='Team Eksempel'
+              placeholder="Team Eksempel"
             />
             <TextField
               label="Skriv inn din e-post."
               value={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
-              placeholder='ola.nordmann@nav.no'
+              placeholder="ola.nordmann@nav.no"
             />
 
             {members.map((member, index) => (
@@ -97,7 +93,7 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
                 key={index}
                 label={`Medlem ${index + 1}`}
                 value={member}
-                placeholder='ola.nordmann@nav.no'
+                placeholder="ola.nordmann@nav.no"
                 onChange={(e) => {
                   const newMembers = [...members];
                   newMembers[index] = e.target.value;
