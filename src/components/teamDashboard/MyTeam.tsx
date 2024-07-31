@@ -38,7 +38,7 @@ function MyTeam() {
     <main className={styles.teamContent}>
       <header>
         <h1 className={styles.h1}>
-          God dag {userName[1]} {userName[0]}
+          God dag, {userName[1]} {userName[0]}
         </h1>
       </header>
 
