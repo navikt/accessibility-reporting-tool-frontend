@@ -1,9 +1,8 @@
-import { isLocal } from './urls.ts';
 import { getOboToken } from '@src/utils/server/getOboToken.ts';
 import type { APIContext } from 'astro';
 
 export const fetchFromApi = async (context: APIContext, apiUrl: URL) => {
-  const oboToken = isLocal ? 'fake token' : await getOboToken(context.locals.token);
+  const oboToken = await getOboToken(context.locals.token);
   const method = context.request.method;
 
   const requestInit: RequestInit = {
