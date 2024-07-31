@@ -8,7 +8,7 @@ interface AddOrgBtnProps {
 
 const AddOrgBtn: React.FC<AddOrgBtnProps> = ({ onClick }) => {
   return (
-    <Button variant="secondary" icon={<PersonPlusIcon />} onClick={onClick}>
+    <Button icon={<PersonPlusIcon />} onClick={onClick}>
       Legg til ditt team{' '}
     </Button>
   );
