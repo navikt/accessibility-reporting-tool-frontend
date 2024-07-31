@@ -90,7 +90,7 @@ api.get('api/teams', (c) => {
 api.get('api/users/details', (c) => {
   return c.json({
     email: 'my.user@nav.no',
-    name: 'JasMaNi Hakaurlander',
+    name: 'Hakaurlander, JasMaNi',
     teams: teams,
     reports: [
       {
