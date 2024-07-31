@@ -1,10 +1,11 @@
 ---
 import { getOboToken } from '../../utils/server/getOboToken';
+import { apiUrl } from '../../utils/server/urls';
 import { Button } from '@navikt/ds-react';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-const response = await fetch("http://localhost:8787/api/users/details", {
+const response = await fetch(`${apiUrl}/users/details`, {
   method: "GET",
   headers: {
     'Content-Type': 'application/json',
