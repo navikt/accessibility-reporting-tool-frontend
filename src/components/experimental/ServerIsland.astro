@@ -17,7 +17,13 @@ const response = await fetch(`${apiUrl}/users/details`, {
 });
 
 const data = await response.json();
-console.log("Data: " + JSON.stringify(data));
+
+if (!Astro.locals.token) {
+  console.log("Missing token")
+}
+
+console.log(`Url: ${apiUrl}/users/details`)
+console.log(`Data: ${JSON.stringify(data)}`);
 ---
 
 <div>
