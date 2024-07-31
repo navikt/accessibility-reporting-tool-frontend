@@ -24,12 +24,12 @@ function Navbar() {
           </Link>
         </li>
         <li>
-          <Link underline={false} variant="neutral" href="/teams">
+          <Link underline={false} variant="neutral" href="/alle-teams">
             Teams
           </Link>
         </li>
         <li>
-          <Link underline={false} variant="neutral" href="/alleRapporter">
+          <Link underline={false} variant="neutral" href="/alle-rapporter">
             Alle rapporter
           </Link>
         </li>
