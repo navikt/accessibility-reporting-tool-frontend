@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
 import _ from 'lodash';
 import styles from './CreateReport.module.css';
-import { formatDate } from '@src/utils/formaters/date';
+import { formatDate } from '@src/utils/clientUtils/date';
 
 interface CreateReportProps {
   id: string | undefined;

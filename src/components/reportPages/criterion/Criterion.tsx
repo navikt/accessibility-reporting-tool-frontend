@@ -1,8 +1,9 @@
-import { Textarea, Radio, RadioGroup } from '@navikt/ds-react';
+import { Textarea, Radio, RadioGroup, Link } from '@navikt/ds-react';
 import { useState } from 'react';
 import type { CriterionType } from '@src/types.ts';
 import styles from './Criterion.module.css';
 import { Divider } from '@mui/material';
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 
 type CriterionProps = {
   criterion: CriterionType;
@@ -29,7 +30,15 @@ const Criterion = ({
           onChange={(e) => {
             handleChange(criterion.number, 'status', e as string);
           }}
-          description={criterion.description}
+          description={
+            <p>
+              {criterion.description} Les mer på{' '}
+              {criterion.wcagUrl && <Link href={criterion.wcagUrl}>W3C</Link>}
+              {criterion.helpUrl && (
+                <Link href={criterion.helpUrl}>Aksel </Link>
+              )}
+            </p>
+          }
           defaultValue={
             criterion.status !== 'NOT_TESTED' ? criterion.status : 'NOT_TESTED'
           }
