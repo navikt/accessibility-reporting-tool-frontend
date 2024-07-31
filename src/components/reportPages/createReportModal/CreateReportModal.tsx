@@ -69,7 +69,7 @@ const CreateReportModal = () => {
             required
           />
           <Select
-            label="Hilket team er ansvarlig for løsningen?"
+            label="Hvilket team er ansvarlig for løsningen?"
             name="teamId"
             onChange={handleChange}
             required
