@@ -3,15 +3,13 @@ import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 import { fetcher } from '@src/utils/clientUtils/api.ts';
-import useSWRImmutable from 'swr/immutable';
+import useSWR from 'swr';
 
 function Navbar() {
-  const { data, isLoading } = useSWRImmutable(
+  const { data, isLoading } = useSWR(
     { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
-
-  console.log(data);
 
   if (isLoading) {
     return null;

@@ -5,6 +5,6 @@ import styles from "./_[teamId].module.css";
 ---
 <Layout>
     <main class={styles.content}>
-        <TeamDashboard teamId={Astro.params.teamId as string} isMyTeam={false} client:only/>
+        <TeamDashboard teamId={Astro.params.teamId as string} isMyTeam={false} client:only="react"/>
     </main>
 </Layout>
