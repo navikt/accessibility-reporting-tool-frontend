@@ -3,15 +3,13 @@ import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
 import { apiProxyUrl } from '@src/utils/clientUtils/urls.ts';
 import { fetcher } from '@src/utils/clientUtils/api.ts';
-import useSWRImmutable from 'swr/immutable';
+import useSWR from 'swr';
 
 function Navbar() {
-  const { data, isLoading } = useSWRImmutable(
+  const { data, isLoading } = useSWR(
     { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
-
-  console.log(data);
 
   if (isLoading) {
     return null;
@@ -43,8 +41,8 @@ function Navbar() {
           </p>
         </li>
         <li className={styles.utlogging}>
-          <Link underline={false} href="#">
-            <LeaveIcon></LeaveIcon>Logg Ut
+          <Link underline={false} href="/oauth2/logout">
+            <LeaveIcon /> Logg Ut
           </Link>
         </li>
       </ul>

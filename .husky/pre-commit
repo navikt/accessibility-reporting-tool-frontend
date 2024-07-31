@@ -1,1 +1,1 @@
-npx prettier --write "./src/**/*.{ts,tsx}"
+npm run build && npx prettier --write "./src/**/*.{ts,tsx}"

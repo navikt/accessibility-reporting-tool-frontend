@@ -81,7 +81,7 @@ const ReportList = ({ reports }: ReportListProps) => {
             return (
               <Table.Row key={rapport.title}>
                 <Table.HeaderCell>
-                  <Link href={`reports/${rapport.id}`} variant="action">
+                  <Link href={`/reports/${rapport.id}`} variant="action">
                     {rapport.title}
                   </Link>
                 </Table.HeaderCell>

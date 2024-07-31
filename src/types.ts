@@ -44,9 +44,9 @@ export type Report = {
   testData: string; // Ask Rannveig what this is?
   author: Author;
   filters: string[];
-  created: number[]; // Ask Rannveig why string?
+  created: string; // Ask Rannveig why string?
   successCriteria: CriterionType[];
-  lastChanged: number[]; // Ask Rannveig why string?
+  lastChanged: string; // Ask Rannveig why string?
   contributers: string[]; // Ask Rannveig what this is?
   lastUpdatedBy: string;
   reportType: string;
