@@ -17,6 +17,7 @@ const response = await fetch(`${apiUrl}/users/details`, {
 });
 
 const data = await response.json();
+console.log("Data: " + JSON.stringify(data));
 ---
 
 <div>
