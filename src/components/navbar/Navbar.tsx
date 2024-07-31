@@ -41,7 +41,7 @@ function Navbar() {
           </p>
         </li>
         <li className={styles.utlogging}>
-          <Link underline={false} href="/oath2/logout">
+          <Link underline={false} href="/oauth2/logout">
             <LeaveIcon /> Logg Ut
           </Link>
         </li>
