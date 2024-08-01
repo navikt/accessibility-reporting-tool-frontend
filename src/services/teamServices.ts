@@ -24,7 +24,7 @@ export const createNewTeam = async (newTeam: NewTeam) => {
     },
   });
   if(response.ok){
-    console.log(`${newTeam.name} Created!`, response.status)
+    console.log(`${newTeam.name} Created! The members are: ${newTeam.members}`, response.status)
   }
 
   if (!response.ok) {
