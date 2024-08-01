@@ -16,6 +16,7 @@ export const updateTeam = async (teamId: string, updates: Team) => {
 };
 
 export const createNewTeam = async (newTeam: NewTeam) => {
+  console.log(newTeam);
   const response = await fetch(`${apiProxyUrl}/teams/new`, {
     method: 'POST',
     body: JSON.stringify(newTeam),
@@ -25,7 +26,7 @@ export const createNewTeam = async (newTeam: NewTeam) => {
   });
   if (response.ok) {
     console.log(
-      `${newTeam.name} Created! The members are: ${newTeam.members}`,
+      `${newTeam.name} Created! The members are: ${newTeam.members}`, //Rediger senere. Brukte til debugging
       response.status,
     );
   }
