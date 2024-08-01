@@ -26,15 +26,14 @@ function NewTeamModal() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Team Name:', teamName);
-    console.log('Email:', teamEmail);
-    console.log('Members:', members);
 
     const newTeam: NewTeam = {
       name: teamName,
       email: teamEmail,
-      members: [...members],
+      members: members,
     };
+
+    console.log(newTeam);
 
     try {
       await createNewTeam(newTeam);

@@ -213,8 +213,8 @@ api.get('api/teams/team-test/reports', (c) => {
   return c.json([]);
 });
 
-api.post('/teams/new', (c) => {
-  return c.text('oppretter');
+api.post('/api/teams/new', (c) => {
+  return c.text('det funka');
 });
 
 api.get('/api/reports/summary', (c) => {
