@@ -27,7 +27,8 @@ const TeamListe = () => {
   );
   console.log(data);
 
-  {/*
+  {
+    /*
   const handleAddTeam = async (newTeam: NewTeam) => {
     try {
       mutate((currentData: Team[] | undefined) => {
@@ -38,14 +39,15 @@ const TeamListe = () => {
       console.error('Error adding team:', error);
     }
   };
-*/}
+*/
+  }
   if (isLoading) {
     return null;
   }
 
   return (
     <section className={styles.wrapper}>
-      <NewTeamModal/>
+      <NewTeamModal />
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (

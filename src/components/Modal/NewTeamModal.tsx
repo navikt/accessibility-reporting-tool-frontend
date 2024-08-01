@@ -6,12 +6,13 @@ import type { NewTeam } from '@src/types';
 import { createNewTeam } from '@src/services/teamServices';
 import { mutate } from 'swr';
 
-{/*
+{
+  /*
 interface ModalElementProps {
   onAddTeam?: (newTeam: NewTeam) => void;
 }
-*/}
-  
+*/
+}
 
 function NewTeamModal() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -118,6 +119,6 @@ function NewTeamModal() {
       </Modal>
     </div>
   );
-};
+}
 
 export default NewTeamModal;

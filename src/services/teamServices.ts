@@ -8,7 +8,6 @@ export const updateTeam = async (teamId: string, updates: Team) => {
     credentials: 'include',
   });
   if (response.ok) {
-
     console.log('Team updated', response.status);
   } else {
     console.log('Failed to update team-', response.status);
@@ -27,4 +26,4 @@ export const createNewTeam = async (newTeam: NewTeam) => {
   if (!response.ok) {
     throw new Error('Failed to create team');
   }
-}
+};
