@@ -1,5 +1,5 @@
 ---
-import Navbar from '../components/navbar/Navbar';
+import Navbar from '../components/navbar/Navbar.astro';
 import Footer from '../components/footer/Footer';
 import styles from "./Layout.module.css"
 import { ViewTransitions } from 'astro:transitions';
@@ -17,10 +17,10 @@ import { ViewTransitions } from 'astro:transitions';
     <ViewTransitions />
 </head>
 <body class="main">
-<Navbar client:only="react"/>
+<Navbar />
 <div class={styles.page}>
     <slot />
 </div>
-<Footer/>
+<Footer />
 </body>
 </html>

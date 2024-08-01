@@ -190,6 +190,13 @@ api.get('api/teams/team-messi/reports', (c) => {
   ]);
 });
 
+api.get('api/users/details', (c) => {
+  return c.json({
+    email: 'nav@nav.no',
+    oid: '01d97f04-270a-4aa6-bb98-cc093b855dab',
+  });
+});
+
 api.get('api/teams/team-nav/reports', (c) => {
   return c.json([
     {

@@ -1,12 +1,11 @@
 ---
-import { getOboToken } from '../../utils/server/getOboToken';
 import { apiUrl } from '../../utils/server/urls';
-import { Button } from '@navikt/ds-react';
+import { getOboToken } from '@src/utils/server/getOboToken';
+
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-console.log(`URL: ${apiUrl}/users/details`);
-const response = await fetch(`${apiUrl}/users/details`, {
+const response = await fetch(`${apiUrl}/api/users/details`, {
   method: "GET",
   headers: {
     'Content-Type': 'application/json',
@@ -20,7 +19,6 @@ const response = await fetch(`${apiUrl}/users/details`, {
 const data = await response.json();
 ---
 
-<div>
-  <Button>Aksel button!</Button>
-  <p>Email: {data.email}</p>
-</div>
+<p>
+Innlogget som <strong >{data.email}</strong>
+</p>
