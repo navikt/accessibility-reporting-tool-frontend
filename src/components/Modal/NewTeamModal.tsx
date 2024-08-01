@@ -33,11 +33,10 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
     const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
     const newTeam: Team = {
-      id: teamName + teamName.length, //lol dette får endres
+      id: urlFriendlyName,
       name: teamName,
-      //url: `/team/${urlFriendlyName}`,
       email: teamEmail,
-      members: members.filter((member) => member),
+      members: [...members],
     };
 
     try {
