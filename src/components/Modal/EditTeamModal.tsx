@@ -4,13 +4,9 @@ import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
 import type { Team } from '@src/types.ts';
 import { updateTeam } from '@src/services/teamServices';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import { fetcher } from '@src/utils/client/api.ts';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
-
-interface ModalElementProps {
-  onAddTeam?: (newTeam: Team) => void;
-}
 
 interface EditTeamModalProps {
   teamId: string;

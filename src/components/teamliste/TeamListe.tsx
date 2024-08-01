@@ -13,13 +13,22 @@ interface Team {
   members?: string[];
 }
 
+interface NewTeam {
+  name: string;
+  //url: string
+  email: string;
+  members?: string[];
+}
+
 const TeamListe = () => {
   const { data, isLoading, mutate } = useSWRImmutable(
     { url: `${apiProxyUrl}/teams` },
     fetcher,
   );
   console.log(data);
-  const handleAddTeam = async (newTeam: Team) => {
+
+  {/*
+  const handleAddTeam = async (newTeam: NewTeam) => {
     try {
       mutate((currentData: Team[] | undefined) => {
         if (!currentData) return [newTeam];
@@ -29,14 +38,14 @@ const TeamListe = () => {
       console.error('Error adding team:', error);
     }
   };
-
+*/}
   if (isLoading) {
     return null;
   }
 
   return (
     <section className={styles.wrapper}>
-      <NewTeamModal onAddTeam={handleAddTeam} />
+      <NewTeamModal/>
       <ul className={styles.list}>
         {data.map((team: Team) => {
           return (

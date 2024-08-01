@@ -24,6 +24,12 @@ export type Team = {
   members: string[];
 };
 
+export type NewTeam = {
+  name: string;
+  email: string;
+  members?: string[];
+}
+
 export type UserProps = {
   name: String;
   email: String;

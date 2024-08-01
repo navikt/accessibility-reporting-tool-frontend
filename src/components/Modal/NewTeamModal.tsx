@@ -2,20 +2,18 @@ import { useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
+import type { NewTeam } from '@src/types';
+import { createNewTeam } from '@src/services/teamServices';
+import { mutate } from 'swr';
 
+{/*
 interface ModalElementProps {
-  onAddTeam?: (newTeam: Team) => void;
+  onAddTeam?: (newTeam: NewTeam) => void;
 }
+*/}
+  
 
-interface Team {
-  id: string;
-  name: string;
-  //url: string
-  email: string;
-  members?: string[];
-}
-
-const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+function NewTeamModal() {
   const ref = useRef<HTMLDialogElement>(null);
   const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
@@ -31,33 +29,14 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     console.log('Email:', teamEmail);
     console.log('Members:', members);
 
-    const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
-    const newTeam: Team = {
-      id: urlFriendlyName,
+    const newTeam: NewTeam = {
       name: teamName,
       email: teamEmail,
       members: [...members],
     };
 
     try {
-      const response = await fetch(`${apiProxyUrl}/teams/new`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTeam),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create team');
-      }
-
-      const responseData = await response.json();
-      console.log('Created Team:', responseData.team);
-      if (onAddTeam) {
-        onAddTeam(responseData.team);
-      }
-
+      await createNewTeam(newTeam);
       setTeamName('');
       setTeamEmail('');
       setMembers(['']);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { BodyLong, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/client/api.ts';
 import ReportList from '@components/ReportList/ReportList';
@@ -141,9 +141,9 @@ function TeamDashboard(props: TeamDashboardProps) {
           </section>
         ) : (
           <>
-            <h2>
+            <BodyLong>
               Her var det tomt, da teamet du har valgt ikke har noen rapporter!
-            </h2>
+            </BodyLong>
           </>
         )}
       </article>
