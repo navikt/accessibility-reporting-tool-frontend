@@ -1,0 +1,39 @@
+---
+import { Link } from '@navikt/ds-react';
+import styles from './Navbar.module.css';
+import { LeaveIcon } from '@navikt/aksel-icons';
+import DisplayEmail from './DisplayEmail.astro';
+---
+
+<header class={styles.navBarContainer}>
+  <ul class={styles.navBarP1}>
+    <li>
+      <Link underline={false} variant="neutral" href="/">
+        Forside
+      </Link>
+    </li>
+    <li>
+      <Link underline={false} variant="neutral" href="/teams">
+        Teams
+      </Link>
+    </li>
+    <li>
+      <Link underline={false} variant="neutral" href="/alle-rapporter">
+        Alle rapporter
+      </Link>
+    </li>
+  </ul>
+  <ul class={styles.navBarP2}>
+    <li>
+
+      <DisplayEmail server:defer>
+        <div slot="fallback">Loading...</div>
+      </DisplayEmail>
+    </li>
+    <li class={styles.utlogging}>
+      <Link underline={false} href="/oauth2/logout">
+        <LeaveIcon /> Logg Ut
+      </Link>
+    </li>
+  </ul>
+</header>
