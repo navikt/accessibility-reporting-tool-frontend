@@ -5,7 +5,7 @@ import { Button } from '@navikt/ds-react';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-const response = await fetch(`${apiUrl}/api/users/details`, {
+const response = await fetch(`${apiUrl}/users/details`, {
   method: "GET",
   headers: {
     'Content-Type': 'application/json',
@@ -17,16 +17,9 @@ const response = await fetch(`${apiUrl}/api/users/details`, {
 });
 
 const data = await response.json();
-
-if (!Astro.locals.token) {
-  console.log("Missing token")
-}
-
-console.log(`Url: ${apiUrl}/users/details`)
-console.log(`Data: ${JSON.stringify(data)}`);
 ---
 
 <div>
   <Button>Aksel button!</Button>
-  <p>Email: {JSON.stringify(data.email)}</p>
+  <p>Email: {data.email}</p>
 </div>
