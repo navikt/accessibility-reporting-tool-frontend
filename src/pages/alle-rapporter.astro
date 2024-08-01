@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AllReportsList from '@components/ReportList/AllReportsList';
-import SamletListe from "../components/Samlerapporter/samlerapporter";
 import Searchbar from "../components/Searchbar/Searchbar";
 import styles from "./_rapporter.module.css"
 import { Heading } from "@navikt/ds-react/Typography";
@@ -17,7 +16,5 @@ import { Heading } from "@navikt/ds-react/Typography";
             <Searchbar client:only="react"/>
         </div>
         <AllReportsList client:only="react"/>
-        <Heading size="medium" level="3">Samlerapporter</Heading>
-       <!--  <SamletListe client:only="react"/> -->
     </section>
 </Layout>
