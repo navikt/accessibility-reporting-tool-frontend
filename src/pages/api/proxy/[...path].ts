@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { apiUrl } from '@src/utils/serverUtils/urls.ts';
-import { fetchFromApi } from '@src/utils/serverUtils/fetchFromApi.ts';
+import { apiUrl } from '@src/utils/server/urls.ts';
+import { fetchFromApi } from '@src/utils/server/fetchFromApi.ts';
 
 const retrieveSourceApiUrl = (request: Request) => {
   const proxyUrl = new URL(apiUrl);
