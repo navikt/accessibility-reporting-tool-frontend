@@ -132,9 +132,10 @@ function TeamDashboard(props: TeamDashboardProps) {
                     cornerRadius: 5,
                     startAngle: 0,
                     endAngle: 360,
+                    cx: 150
                   },
                 ]}
-                width={600}
+                width={500}
                 height={300}
               />
             </section>
