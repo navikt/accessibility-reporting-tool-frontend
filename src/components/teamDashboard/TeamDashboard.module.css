@@ -38,6 +38,7 @@
 
 .accessibilityStatusInner{
     min-height: 80%;
+    min-width: 700px;
     display: flex;
     flex-direction: row;
     text-align: left;
@@ -54,7 +55,7 @@
     padding: 15px 10px 15px 10px;
     box-shadow: var(--a-shadow-xsmall);
     border-radius: 10px;
-    min-width: 20%;
+    min-width: 30%;
     margin-top: 20px;
 }
 
