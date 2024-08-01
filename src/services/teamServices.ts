@@ -20,6 +20,7 @@ export const createNewTeam = async (newTeam: NewTeam) => {
   const response = await fetch(`${apiProxyUrl}/teams/new`, {
     method: 'POST',
     body: JSON.stringify(newTeam),
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },

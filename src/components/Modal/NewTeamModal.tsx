@@ -60,7 +60,7 @@ function NewTeamModal() {
               placeholder="Team Eksempel"
             />
             <TextField
-              label="Skriv inn din e-post."
+              label="Skriv inn din e-post:"
               value={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
               placeholder="ola.nordmann@nav.no"
