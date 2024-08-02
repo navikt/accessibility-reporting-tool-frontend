@@ -7,6 +7,7 @@ import { createNewTeam } from '@src/services/teamServices';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/client/api';
 import styles from './Modal.module.css';
+import useSWR from 'swr';
 
 {
   /*
@@ -22,10 +23,12 @@ function NewTeamModal() {
   const [teamEmail, setTeamEmail] = useState('');
   const [members, setMembers] = useState<string[]>(['']);
 
-  const { data: userDetails, isLoading } = useSWRImmutable(
+  const { data: userDetails } = useSWRImmutable(
     { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
+
+  const { mutate } = useSWR({ url: `${apiProxyUrl}/teams` }, fetcher);
 
   const addMemberField = () => {
     setMembers([...members, '']);
@@ -44,6 +47,7 @@ function NewTeamModal() {
 
     try {
       await createNewTeam(newTeam);
+      mutate();
       setTeamName('');
       setTeamEmail('');
       setMembers(['']);
@@ -72,7 +76,6 @@ function NewTeamModal() {
             />
             <TextField
               label="Skriv inn din e-post:"
-              value={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
               placeholder="ola.nordmann@nav.no"
               defaultValue={userDetails?.email}
