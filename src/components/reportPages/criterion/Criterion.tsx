@@ -24,7 +24,7 @@ const Criterion = ({
         <RadioGroup
           className={styles.radioGroup}
           legend={`${criterion.number} ${criterion.name}`}
-          disabled={!hasWriteAccess}
+          readOnly={!hasWriteAccess}
           onChange={(e) => {
             handleChange(criterion.number, 'status', e as string);
           }}
@@ -54,7 +54,7 @@ const Criterion = ({
               label="Det er innhold på siden som bryter kravet."
               description="Beskriv kort hvilket innhold som bryter kravet, hvorfor og konsekvensene dette får for brukeren."
               defaultValue={criterion.breakingTheLaw}
-              disabled={!hasWriteAccess}
+              readOnly={!hasWriteAccess}
               onChange={(e) =>
                 handleChange(criterion.number, 'breakingTheLaw', e.target.value)
               }
@@ -65,7 +65,7 @@ const Criterion = ({
               description="Hvilket innhold er ikke underlagt kravet?
 "
               defaultValue={criterion.lawDoesNotApply}
-              disabled={!hasWriteAccess}
+              readOnly={!hasWriteAccess}
               onChange={(e) =>
                 handleChange(
                   criterion.number,
@@ -79,7 +79,7 @@ const Criterion = ({
               label="Innholdet er unntatt fordi det er en uforholdsmessig stor byrde å følge kravet."
               description="Hvorfor mener vi at det er en uforholdsmessig stor byrde for innholdet å følge kravet?"
               defaultValue={criterion.tooHardToComply}
-              disabled={!hasWriteAccess}
+              readOnly={!hasWriteAccess}
               onChange={(e) =>
                 handleChange(
                   criterion.number,

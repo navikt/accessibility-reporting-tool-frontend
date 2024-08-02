@@ -155,7 +155,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
             id="report-name"
             name="report-name"
             defaultValue={report?.descriptiveName}
-            disabled={!report?.hasWriteAccess}
+            readOnly={!report?.hasWriteAccess}
             onChange={(e) =>
               handleMetadataChange('descriptiveName', e.target.value)
             }
@@ -165,7 +165,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
             id="report-url"
             name="report-url"
             defaultValue={report?.url}
-            disabled={!report?.hasWriteAccess}
+            readOnly={!report?.hasWriteAccess}
             onChange={(e) => handleMetadataChange('url', e.target.value)}
           />
         </Tabs.Panel>
