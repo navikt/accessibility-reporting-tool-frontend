@@ -59,6 +59,8 @@ function EditTeamModal(props: EditTeamModalProps) {
     setTeamName(teamData?.name);
   }, [props.teamId]);
 
+  const isValid = teamName && teamEmail;
+
   return (
     <div className="py-12">
       <Button
@@ -142,6 +144,7 @@ function EditTeamModal(props: EditTeamModalProps) {
           <Button
             type="submit"
             form="teamForm"
+            disabled={!isValid}
             onClick={() => {
               updateTeamData;
               ref.current?.close();

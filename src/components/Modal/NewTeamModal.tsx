@@ -57,6 +57,8 @@ function NewTeamModal() {
     }
   };
 
+  const isValid = teamName && teamEmail;
+
   return (
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
@@ -111,6 +113,7 @@ function NewTeamModal() {
           <Button
             type="submit"
             form="teamForm"
+            disabled={!isValid}
             onClick={() => {
               ref.current?.close();
             }}
