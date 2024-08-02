@@ -4,7 +4,8 @@ import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 import type { NewTeam } from '@src/types';
 import { createNewTeam } from '@src/services/teamServices';
-import { mutate } from 'swr';
+import useSWRImmutable from 'swr/immutable';
+import { fetcher } from '@src/utils/client/api';
 
 {
   /*
@@ -19,6 +20,12 @@ function NewTeamModal() {
   const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
   const [members, setMembers] = useState<string[]>(['']);
+
+
+  const { data: userDetails, isLoading } = useSWRImmutable(
+    { url: `${apiProxyUrl}/users/details` },
+    fetcher,
+  );
 
   const addMemberField = () => {
     setMembers([...members, '']);
@@ -64,6 +71,7 @@ function NewTeamModal() {
               value={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
               placeholder="ola.nordmann@nav.no"
+              defaultValue={userDetails?.email}
             />
 
             {members.map((member, index) => (
