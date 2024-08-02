@@ -30,11 +30,15 @@ const Criterion = ({
           }}
           description={
             <p className={styles.criterionHelpText}>
-              {criterion.description} <span>Les mer på{' '}
-              {criterion.wcagUrl && <Link href={criterion.wcagUrl}>W3C</Link>}</span>
+              {criterion.description}{' '}
+              <span>
+                Les mer på{' '}
+                {criterion.wcagUrl && <Link href={criterion.wcagUrl}>W3C</Link>}
+              </span>
               {criterion.helpUrl && (
-                <span> Hvordan teste: {' '}
-                <Link href={criterion.helpUrl}>  Aksel</Link>
+                <span>
+                  {' '}
+                  Hvordan teste: <Link href={criterion.helpUrl}> Aksel</Link>
                 </span>
               )}
             </p>

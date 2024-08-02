@@ -21,7 +21,6 @@ function NewTeamModal() {
   const [teamEmail, setTeamEmail] = useState('');
   const [members, setMembers] = useState<string[]>(['']);
 
-
   const { data: userDetails, isLoading } = useSWRImmutable(
     { url: `${apiProxyUrl}/users/details` },
     fetcher,
