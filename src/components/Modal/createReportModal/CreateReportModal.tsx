@@ -50,7 +50,7 @@ const CreateReportModal = () => {
       >
         Opprett en ny rapport
       </Button>
-      <Modal ref={ref} header={{ heading: 'Opprett rapport' }}>
+      <Modal ref={ref} header={{ heading: 'Opprett rapport' }} closeOnBackdropClick={true}>
         <Modal.Body className={styles.modalBody}>
           <TextField
             label="Tittel"

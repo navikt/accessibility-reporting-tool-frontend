@@ -5,7 +5,7 @@ import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/client/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
-import EditTeamModal from '@components/Modal/EditTeamModal';
+import EditTeamModal from '@components/Modal/TeamModals/EditTeamModal';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 interface TeamReport {

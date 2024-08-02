@@ -71,7 +71,7 @@ function EditTeamModal(props: EditTeamModalProps) {
         Rediger
       </Button>
 
-      <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400}>
+      <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400} closeOnBackdropClick={true}>
         <Modal.Body>
           <form
             id="teamForm"

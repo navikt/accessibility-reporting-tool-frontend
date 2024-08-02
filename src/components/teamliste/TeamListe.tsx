@@ -2,7 +2,7 @@ import { Link } from '@navikt/ds-react';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/client/api.ts';
 import styles from './TeamListe.module.css';
-import NewTeamModal from '@components/Modal/NewTeamModal';
+import NewTeamModal from '@components/Modal/TeamModals/NewTeamModal';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 interface Team {
