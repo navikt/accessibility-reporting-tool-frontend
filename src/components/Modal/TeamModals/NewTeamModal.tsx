@@ -63,7 +63,12 @@ function NewTeamModal() {
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
 
-      <Modal ref={ref} header={{ heading: 'Legg til team' }} width={400} closeOnBackdropClick={true}>
+      <Modal
+        ref={ref}
+        header={{ heading: 'Legg til team' }}
+        width={400}
+        closeOnBackdropClick={true}
+      >
         <Modal.Body className={styles.modalBody}>
           <form
             id="teamForm"
