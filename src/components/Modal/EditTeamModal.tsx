@@ -71,7 +71,11 @@ function EditTeamModal(props: EditTeamModalProps) {
 
       <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400}>
         <Modal.Body>
-          <form id="teamForm" onSubmit={updateTeamData}>
+          <form
+            id="teamForm"
+            onSubmit={updateTeamData}
+            className={styles.modalFields}
+          >
             <TextField
               label="Sett navn for team"
               defaultValue={teamName}

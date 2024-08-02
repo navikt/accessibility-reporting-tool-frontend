@@ -6,6 +6,7 @@ import type { NewTeam } from '@src/types';
 import { createNewTeam } from '@src/services/teamServices';
 import useSWRImmutable from 'swr/immutable';
 import { fetcher } from '@src/utils/client/api';
+import styles from './Modal.module.css';
 
 {
   /*
@@ -57,8 +58,12 @@ function NewTeamModal() {
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
 
       <Modal ref={ref} header={{ heading: 'Legg til team' }} width={400}>
-        <Modal.Body>
-          <form id="teamForm" onSubmit={handleSubmit}>
+        <Modal.Body className={styles.modalBody}>
+          <form
+            id="teamForm"
+            onSubmit={handleSubmit}
+            className={styles.modalFields}
+          >
             <TextField
               label="Teamnavn"
               value={teamName}
