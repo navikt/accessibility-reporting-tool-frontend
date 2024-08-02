@@ -8,6 +8,9 @@ const getEnvironment = (): ENV => {
   if (window.location.href.includes('dev.nav.no')) {
     return ENV.development;
   }
+  if (window.location.href.includes('ansatt.nav.no')) {
+    return ENV.production
+  }
   return ENV.local;
 };
 
