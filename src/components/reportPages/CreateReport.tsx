@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { CriterionType, Report } from '@src/types.ts';
-import { getReport, getAstroReport } from '@src/services/reportServices';
+import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
 import _ from 'lodash';
@@ -155,7 +155,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
             id="report-name"
             name="report-name"
             defaultValue={report?.descriptiveName}
-            disabled={!report?.hasWriteAccess}
+            readOnly={!report?.hasWriteAccess}
             onChange={(e) =>
               handleMetadataChange('descriptiveName', e.target.value)
             }
@@ -165,7 +165,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
             id="report-url"
             name="report-url"
             defaultValue={report?.url}
-            disabled={!report?.hasWriteAccess}
+            readOnly={!report?.hasWriteAccess}
             onChange={(e) => handleMetadataChange('url', e.target.value)}
           />
         </Tabs.Panel>
