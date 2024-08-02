@@ -105,22 +105,22 @@ function TeamDashboard(props: TeamDashboardProps) {
                       {
                         value: COMPLIANT,
                         color: 'green',
-                        label: `${COMPLIANT} krav oppfylt`,
+                        label: `Krav oppfylt: ${COMPLIANT}`,
                       },
                       {
                         value: NOT_COMPLIANT,
                         color: 'red',
-                        label: `${NOT_COMPLIANT} krav ikke oppfylt`,
+                        label: `Krav ikke oppfylt: ${NOT_COMPLIANT}`,
                       },
                       {
                         value: NOT_APPLICABLE,
                         color: 'gray',
-                        label: `${NOT_APPLICABLE} krav ikke aktuelle`,
+                        label: `Krav ikke aktuelle: ${NOT_APPLICABLE}`,
                       },
                       {
                         value: NOT_TESTED,
                         color: '#FFB703',
-                        label: `${NOT_TESTED} krav ikke testet`,
+                        label: `Krav ikke testet: ${NOT_TESTED}`,
                       },
                     ],
                     valueFormatter: () => {
@@ -135,7 +135,15 @@ function TeamDashboard(props: TeamDashboardProps) {
                     cx: 150,
                   },
                 ]}
-                width={500}
+                slotProps={{
+                  legend: {
+                    labelStyle: {
+                      fontSize: 20,
+                      fontFamily: 'Source Sans Pro',
+                    },
+                  },
+                }}
+                width={540}
                 height={300}
               />
             </section>

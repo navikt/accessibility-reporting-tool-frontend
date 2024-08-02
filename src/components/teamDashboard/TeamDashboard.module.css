@@ -46,6 +46,7 @@
 
 .chartContainer{
     margin: auto;
+    min-width: 600px;
 }
 
 .selectReportContainer{

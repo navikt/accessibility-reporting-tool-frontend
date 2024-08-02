@@ -9,7 +9,7 @@ const getEnvironment = (): ENV => {
     return ENV.development;
   }
   if (window.location.href.includes('ansatt.nav.no')) {
-    return ENV.production
+    return ENV.production;
   }
   return ENV.local;
 };
