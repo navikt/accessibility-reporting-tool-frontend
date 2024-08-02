@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 'main'
+      - "dev-*"
 
 permissions:
   contents: 'read'
@@ -41,7 +42,7 @@ jobs:
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
 
-  deploy:
+  deploy-dev:
     runs-on: 'ubuntu-latest'
     needs: 'build'
     steps:
@@ -50,5 +51,18 @@ jobs:
         uses: 'nais/deploy/actions/deploy@v2'
         env:
           CLUSTER: 'dev-gcp'
-          RESOURCE: nais/nais.yaml
+          RESOURCE: nais/dev/nais.yaml
+          VAR: image=${{ needs.build.outputs.image }},version=${{ github.sha }}
+
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: 'ubuntu-latest'
+    needs: 'build'
+    steps:
+      - uses: 'actions/checkout@v3'
+      - name: 'Deploy'
+        uses: 'nais/deploy/actions/deploy@v2'
+        env:
+          CLUSTER: 'prod-gcp'
+          RESOURCE: nais/prod/nais.yaml
           VAR: image=${{ needs.build.outputs.image }},version=${{ github.sha }}
