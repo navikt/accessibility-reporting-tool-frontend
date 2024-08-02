@@ -128,7 +128,7 @@ function TeamDashboard(props: TeamDashboardProps) {
                     },
                     innerRadius: 30,
                     outerRadius: 150,
-                    paddingAngle: 2,
+                    paddingAngle: 1,
                     cornerRadius: 5,
                     startAngle: 0,
                     endAngle: 360,
