@@ -29,11 +29,13 @@ const Criterion = ({
             handleChange(criterion.number, 'status', e as string);
           }}
           description={
-            <p>
-              {criterion.description} Les mer på{' '}
-              {criterion.wcagUrl && <Link href={criterion.wcagUrl}>W3C</Link>}
+            <p className={styles.criterionHelpText}>
+              {criterion.description} <span>Les mer på{' '}
+              {criterion.wcagUrl && <Link href={criterion.wcagUrl}>W3C</Link>}</span>
               {criterion.helpUrl && (
-                <Link href={criterion.helpUrl}>Aksel </Link>
+                <span> Hvordan teste: {' '}
+                <Link href={criterion.helpUrl}>  Aksel</Link>
+                </span>
               )}
             </p>
           }
