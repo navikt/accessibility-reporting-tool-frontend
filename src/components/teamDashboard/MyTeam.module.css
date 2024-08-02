@@ -1,5 +1,16 @@
-.teamContent{
-    width: 70%;
+@media only screen and (min-width: 2001px) {
+    .teamContent {
+        max-width: 60%;
+    }
+}
+
+@media only screen and (max-width: 2000px) {
+    .teamContent {
+        max-width: 80%;
+    }
+}
+
+.teamContent {
     margin-left: auto;
     margin-right: auto;
 
@@ -9,34 +20,37 @@
     color: var(--a-blue-800);
 }
 
-.myTeamHeader{
+.myTeamHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.selector, .selector2{
+.selector,
+.selector2 {
     width: 20%;
 }
 
-.selector{margin-top: 20px;}
+.selector {
+    margin-top: 20px;
+}
 
-.myReportsHeader{
+.myReportsHeader {
     display: flex;
     justify-content: right;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.myReportsContainer{
+.myReportsContainer {
     background-color: white;
     padding: 16px;
     border-radius: 10px;
     box-shadow: var(--a-shadow-xsmall);
 }
 
-.myReportsContainer>section{
+.myReportsContainer>section {
     display: flex;
     justify-content: space-between;
 

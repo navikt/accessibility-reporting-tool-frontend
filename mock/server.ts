@@ -220,8 +220,8 @@ api.get('api/teams/team-test/reports', (c) => {
   return c.json([]);
 });
 
-api.post('/teams/new', (c) => {
-  return c.text('oppretter');
+api.post('/api/teams/new', (c) => {
+  return c.text('det funka');
 });
 
 api.get('/api/reports/summary', (c) => {
@@ -346,7 +346,7 @@ api.get('/api/reports/123456789', (c) => {
         status: 'COMPLIANT',
         wcagUrl:
           'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html',
-        helpUrl: null,
+        helpUrl: "aksel.no",
         wcagVersion: '2.1',
         wcagLevel: 'A',
         successCriterionNumber: '1.1.1',

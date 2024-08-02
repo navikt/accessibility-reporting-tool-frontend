@@ -15,7 +15,7 @@
 .gridWrapper{
     margin-top: 20px;
     margin-bottom: 20px;
-    min-height: 1000px;
+    min-height: 800px;
     display: grid;
     gap: 16px;
     grid-template-areas: 
@@ -38,6 +38,7 @@
 
 .accessibilityStatusInner{
     min-height: 80%;
+    min-width: 700px;
     display: flex;
     flex-direction: row;
     text-align: left;
@@ -45,6 +46,7 @@
 
 .chartContainer{
     margin: auto;
+    min-width: 600px;
 }
 
 .selectReportContainer{
@@ -54,7 +56,7 @@
     padding: 15px 10px 15px 10px;
     box-shadow: var(--a-shadow-xsmall);
     border-radius: 10px;
-    min-width: 20%;
+    min-width: 30%;
     margin-top: 20px;
 }
 

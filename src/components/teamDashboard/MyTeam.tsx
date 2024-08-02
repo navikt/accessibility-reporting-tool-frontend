@@ -1,5 +1,5 @@
 import ReportList from '@components/ReportList/ReportList';
-import CreateReportModal from '@components/reportPages/createReportModal/CreateReportModal';
+import CreateReportModal from '@components/Modal/createReportModal/CreateReportModal';
 import { Tabs, Select, Heading } from '@navikt/ds-react';
 import { fetcher } from '@src/utils/client/api.ts';
 import { useState } from 'react';

@@ -15,3 +15,8 @@
 .textarea {
   margin-top: var(--a-spacing-6);
 }
+
+.criterionHelpText{
+  display: flex;
+  flex-direction: column;
+}

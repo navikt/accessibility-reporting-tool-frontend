@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import { Button, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { BodyLong, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/client/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
-import EditTeamModal from '@components/Modal/EditTeamModal';
+import EditTeamModal from '@components/Modal/TeamModals/EditTeamModal';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 interface TeamReport {
@@ -105,22 +105,22 @@ function TeamDashboard(props: TeamDashboardProps) {
                       {
                         value: COMPLIANT,
                         color: 'green',
-                        label: `${COMPLIANT} krav oppfylt`,
+                        label: `Krav oppfylt: ${COMPLIANT}`,
                       },
                       {
                         value: NOT_COMPLIANT,
                         color: 'red',
-                        label: `${NOT_COMPLIANT} krav ikke oppfylt`,
+                        label: `Krav ikke oppfylt: ${NOT_COMPLIANT}`,
                       },
                       {
                         value: NOT_APPLICABLE,
                         color: 'gray',
-                        label: `${NOT_APPLICABLE} krav ikke aktuelle`,
+                        label: `Krav ikke aktuelle: ${NOT_APPLICABLE}`,
                       },
                       {
                         value: NOT_TESTED,
                         color: '#FFB703',
-                        label: `${NOT_TESTED} krav ikke testet`,
+                        label: `Krav ikke testet: ${NOT_TESTED}`,
                       },
                     ],
                     valueFormatter: () => {
@@ -128,22 +128,31 @@ function TeamDashboard(props: TeamDashboardProps) {
                     },
                     innerRadius: 30,
                     outerRadius: 150,
-                    paddingAngle: 2,
+                    paddingAngle: 1,
                     cornerRadius: 5,
                     startAngle: 0,
                     endAngle: 360,
+                    cx: 150,
                   },
                 ]}
-                width={600}
+                slotProps={{
+                  legend: {
+                    labelStyle: {
+                      fontSize: 20,
+                      fontFamily: 'Source Sans Pro',
+                    },
+                  },
+                }}
+                width={540}
                 height={300}
               />
             </section>
           </section>
         ) : (
           <>
-            <h2>
+            <BodyLong>
               Her var det tomt, da teamet du har valgt ikke har noen rapporter!
-            </h2>
+            </BodyLong>
           </>
         )}
       </article>
@@ -178,11 +187,6 @@ function TeamDashboard(props: TeamDashboardProps) {
         </Heading>
 
         <ReportList reports={reportListData} />
-        {/*
-        <Heading level="2" size="large" spacing>
-          Samlerapporter
-        </Heading>
-        */}
       </section>
     </section>
   );

@@ -2,24 +2,33 @@ import { useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
+import type { NewTeam } from '@src/types';
+import { createNewTeam } from '@src/services/teamServices';
+import useSWRImmutable from 'swr/immutable';
+import { fetcher } from '@src/utils/client/api';
+import styles from '../Modal.module.css';
+import useSWR from 'swr';
 
+{
+  /*
 interface ModalElementProps {
-  onAddTeam?: (newTeam: Team) => void;
+  onAddTeam?: (newTeam: NewTeam) => void;
+}
+*/
 }
 
-interface Team {
-  id: string;
-  name: string;
-  //url: string
-  email: string;
-  members?: string[];
-}
-
-const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
+function NewTeamModal() {
   const ref = useRef<HTMLDialogElement>(null);
   const [teamName, setTeamName] = useState('');
   const [teamEmail, setTeamEmail] = useState('');
   const [members, setMembers] = useState<string[]>(['']);
+
+  const { data: userDetails } = useSWRImmutable(
+    { url: `${apiProxyUrl}/users/details` },
+    fetcher,
+  );
+
+  const { mutate } = useSWR({ url: `${apiProxyUrl}/teams` }, fetcher);
 
   const addMemberField = () => {
     setMembers([...members, '']);
@@ -27,38 +36,18 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Team Name:', teamName);
-    console.log('Email:', teamEmail);
-    console.log('Members:', members);
 
-    const urlFriendlyName = teamName.toLowerCase().replace(/\s+/g, '-');
-    const newTeam: Team = {
-      id: teamName + teamName.length, //lol dette får endres
+    const newTeam: NewTeam = {
       name: teamName,
-      //url: `/team/${urlFriendlyName}`,
       email: teamEmail,
-      members: members.filter((member) => member),
+      members: members,
     };
 
+    console.log(newTeam);
+
     try {
-      const response = await fetch(`${apiProxyUrl}/teams/new`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTeam),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create team');
-      }
-
-      const responseData = await response.json();
-      console.log('Created Team:', responseData.team);
-      if (onAddTeam) {
-        onAddTeam(responseData.team);
-      }
-
+      await createNewTeam(newTeam);
+      mutate();
       setTeamName('');
       setTeamEmail('');
       setMembers(['']);
@@ -68,13 +57,24 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
     }
   };
 
+  const isValid = teamName && teamEmail;
+
   return (
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
 
-      <Modal ref={ref} header={{ heading: 'Legg til team' }} width={400}>
-        <Modal.Body>
-          <form id="teamForm" onSubmit={handleSubmit}>
+      <Modal
+        ref={ref}
+        header={{ heading: 'Legg til team' }}
+        width={400}
+        closeOnBackdropClick={true}
+      >
+        <Modal.Body className={styles.modalBody}>
+          <form
+            id="teamForm"
+            onSubmit={handleSubmit}
+            className={styles.modalFields}
+          >
             <TextField
               label="Teamnavn"
               value={teamName}
@@ -82,10 +82,10 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
               placeholder="Team Eksempel"
             />
             <TextField
-              label="Skriv inn din e-post."
-              value={teamEmail}
+              label="Skriv inn din e-post:"
               onChange={(e) => setTeamEmail(e.target.value)}
               placeholder="ola.nordmann@nav.no"
+              defaultValue={userDetails?.email}
             />
 
             {members.map((member, index) => (
@@ -118,6 +118,7 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
           <Button
             type="submit"
             form="teamForm"
+            disabled={!isValid}
             onClick={() => {
               ref.current?.close();
             }}
@@ -140,6 +141,6 @@ const NewTeamModal: React.FC<ModalElementProps> = ({ onAddTeam }) => {
       </Modal>
     </div>
   );
-};
+}
 
 export default NewTeamModal;

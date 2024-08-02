@@ -1,0 +1,42 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: accessibility-reporting-tool-frontend
+  namespace: a11y-statement
+  labels:
+    team: a11y-statement
+spec:
+  image: {{image}}
+  port: 3000
+  liveness:
+    path: /api/internal/isAlive
+    initialDelay: 10
+  readiness:
+    path: /api/internal/isReady
+    initialDelay: 10
+  replicas:
+    min: 2
+    max: 4
+  ingresses:
+    - 'https://a11y-statement-ny.ansatt.nav.no'
+  accessPolicy:
+    outbound:
+      rules:
+        - application: a11y-statement
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: true
+      tenant: nav.no
+      claims:
+        groups:
+          - id: '07bca51b-e5dc-484a-ac09-685e61244b6b' #admins
+    sidecar:
+      enabled: true
+      autoLogin: true
+  resources:
+    limits:
+      memory: 768Mi
+    requests:
+      cpu: '20m'
+      memory: 128Mi

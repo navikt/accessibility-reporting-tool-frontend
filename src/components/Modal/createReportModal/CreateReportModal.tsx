@@ -5,7 +5,7 @@ import { FilePlusIcon } from '@navikt/aksel-icons';
 import { fetcher } from '@src/utils/client/api.ts';
 import useSWRImmutable from 'swr/immutable';
 import type { InitialReport, Team } from '@src/types.ts';
-import styles from './CreateReportModal.module.css';
+import styles from '../Modal.module.css';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 const CreateReportModal = () => {
@@ -50,7 +50,11 @@ const CreateReportModal = () => {
       >
         Opprett en ny rapport
       </Button>
-      <Modal ref={ref} header={{ heading: 'Opprett rapport' }}>
+      <Modal
+        ref={ref}
+        header={{ heading: 'Opprett rapport' }}
+        closeOnBackdropClick={true}
+      >
         <Modal.Body className={styles.modalBody}>
           <TextField
             label="Tittel"

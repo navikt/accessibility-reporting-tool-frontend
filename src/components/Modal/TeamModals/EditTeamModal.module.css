@@ -12,3 +12,9 @@
 .currentMembersListItem:hover{
     background-color: lightgray;
 }
+
+.modalFields{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }

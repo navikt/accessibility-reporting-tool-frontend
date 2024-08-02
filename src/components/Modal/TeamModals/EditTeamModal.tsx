@@ -4,13 +4,9 @@ import { PersonPencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 import styles from './EditTeamModal.module.css';
 import type { Team } from '@src/types.ts';
 import { updateTeam } from '@src/services/teamServices';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import { fetcher } from '@src/utils/client/api.ts';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
-
-interface ModalElementProps {
-  onAddTeam?: (newTeam: Team) => void;
-}
 
 interface EditTeamModalProps {
   teamId: string;
@@ -63,6 +59,8 @@ function EditTeamModal(props: EditTeamModalProps) {
     setTeamName(teamData?.name);
   }, [props.teamId]);
 
+  const isValid = teamName && teamEmail;
+
   return (
     <div className="py-12">
       <Button
@@ -73,9 +71,18 @@ function EditTeamModal(props: EditTeamModalProps) {
         Rediger
       </Button>
 
-      <Modal ref={ref} header={{ heading: 'Rediger team' }} width={400}>
+      <Modal
+        ref={ref}
+        header={{ heading: 'Rediger team' }}
+        width={400}
+        closeOnBackdropClick={true}
+      >
         <Modal.Body>
-          <form id="teamForm" onSubmit={updateTeamData}>
+          <form
+            id="teamForm"
+            onSubmit={updateTeamData}
+            className={styles.modalFields}
+          >
             <TextField
               label="Sett navn for team"
               defaultValue={teamName}
@@ -142,6 +149,7 @@ function EditTeamModal(props: EditTeamModalProps) {
           <Button
             type="submit"
             form="teamForm"
+            disabled={!isValid}
             onClick={() => {
               updateTeamData;
               ref.current?.close();
