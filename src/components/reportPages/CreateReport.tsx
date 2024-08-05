@@ -91,7 +91,7 @@ const CreateReport = ({ id }: CreateReportProps) => {
       </Heading>
       <Tabs value={activeTab} onChange={setActiveTab} className={styles.tabs}>
         <Tabs.List>
-          <Tabs.Tab value="criteria" label="Rettningslinjer" />
+          <Tabs.Tab value="criteria" label="Retningslinjer" />
           <Tabs.Tab value="metadata" label="Metadata" />
         </Tabs.List>
 
@@ -114,8 +114,8 @@ const CreateReport = ({ id }: CreateReportProps) => {
             ))}
           </Chips>
           <section>
-            {report?.created && <p>Oprettet: {formatDate(report?.created)}</p>}
-            <p>Oprettet av: {report?.author.email}</p>
+            {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
+            <p>Opprettet av: {report?.author.email}</p>
             {report?.lastChanged && (
               <p>Sist endret: {formatDate(report?.lastChanged)}</p>
             )}
