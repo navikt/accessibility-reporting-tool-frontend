@@ -60,9 +60,9 @@ function NewTeamModal() {
   const isValid = teamName && teamEmail;
 
   useEffect(() => {
-      setTeamEmail(userDetails?.email);
-  },[])
-  
+    setTeamEmail(userDetails?.email);
+  }, [isLoading])
+
   return (
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
