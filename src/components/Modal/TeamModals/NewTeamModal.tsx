@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Modal, TextField } from '@navikt/ds-react';
 import AddOrgBtn from '@components/buttons/AddOrgBtn.tsx';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
@@ -23,7 +23,7 @@ function NewTeamModal() {
   const [teamEmail, setTeamEmail] = useState('');
   const [members, setMembers] = useState<string[]>(['']);
 
-  const { data: userDetails } = useSWRImmutable(
+  const { data: userDetails, isLoading } = useSWRImmutable(
     { url: `${apiProxyUrl}/users/details` },
     fetcher,
   );
@@ -59,6 +59,10 @@ function NewTeamModal() {
 
   const isValid = teamName && teamEmail;
 
+  useEffect(() => {
+      setTeamEmail(userDetails?.email);
+  },[])
+  
   return (
     <div className="py-12">
       <AddOrgBtn onClick={() => ref.current?.showModal()} />
