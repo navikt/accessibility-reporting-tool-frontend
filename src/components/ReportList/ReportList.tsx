@@ -109,7 +109,7 @@ const format = (dateStr?: string) => {
   }
   const date = new Date(year, month, day);
   const y = date.getFullYear();
-  const m = (date.getMonth() + 1).toString().padStart(2, '0');
+  const m = date.getMonth().toString().padStart(2, '0');
   const d = date.getDate().toString().padStart(2, '0');
   return `${d}.${m}.${y}`;
 };
