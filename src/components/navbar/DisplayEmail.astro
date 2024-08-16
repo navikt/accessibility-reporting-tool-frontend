@@ -2,11 +2,10 @@
 import { apiUrl } from '../../utils/server/urls';
 import { getOboToken } from '@src/utils/server/getOboToken';
 
-
 const oboToken = await getOboToken(Astro.locals.token);
 
 const response = await fetch(`${apiUrl}/api/users/details`, {
-  method: "GET",
+  method: 'GET',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -20,5 +19,5 @@ const data = await response.json();
 ---
 
 <p>
-Innlogget som <strong >{data.email}</strong>
+  Innlogget som <strong>{data.email}</strong>
 </p>

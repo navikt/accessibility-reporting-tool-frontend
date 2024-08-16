@@ -61,7 +61,7 @@ function NewTeamModal() {
 
   useEffect(() => {
     setTeamEmail(userDetails?.email);
-  }, [isLoading])
+  }, [isLoading]);
 
   return (
     <div className="py-12">

@@ -1,21 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
 import AllReportsList from '@components/ReportList/AllReportsList';
-import Searchbar from "../components/Searchbar/Searchbar";
-import styles from "./_rapporter.module.css"
-import { Heading } from "@navikt/ds-react/Typography";
-
+import styles from './_rapporter.module.css';
 ---
 
 <Layout>
-
-    <h1 class={styles.h1}>Alle rapporter</h1>
-    <section class={styles.content}>
-        <!--
+  <h1 class={styles.h1}>Alle rapporter</h1>
+  <section class={styles.content}>
+    <!--
         <div class={styles.search}>
             <Searchbar client:only="react"/>
         </div>
          -->
-        <AllReportsList client:only="react"/>
-    </section>
+    <AllReportsList client:only="react" />
+  </section>
 </Layout>

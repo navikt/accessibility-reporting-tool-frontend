@@ -8,14 +8,10 @@ import DisplayEmail from './DisplayEmail.astro';
 <header class={styles.navBarContainer}>
   <ul class={styles.navBarP1}>
     <li>
-      <Link underline={false} variant="neutral" href="/">
-        Forside
-      </Link>
+      <Link underline={false} variant="neutral" href="/"> Forside </Link>
     </li>
     <li>
-      <Link underline={false} variant="neutral" href="/teams">
-        Teams
-      </Link>
+      <Link underline={false} variant="neutral" href="/teams"> Teams </Link>
     </li>
     <li>
       <Link underline={false} variant="neutral" href="/alle-rapporter">
@@ -25,7 +21,6 @@ import DisplayEmail from './DisplayEmail.astro';
   </ul>
   <ul class={styles.navBarP2}>
     <li>
-
       <DisplayEmail server:defer>
         <div slot="fallback">Loading...</div>
       </DisplayEmail>

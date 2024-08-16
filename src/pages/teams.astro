@@ -1,13 +1,12 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import TeamListe from "../components/teamliste/TeamListe";
-import styles from "./_teams.module.css"
+import Layout from '../layouts/Layout.astro';
+import TeamListe from '../components/teamliste/TeamListe';
+import styles from './_teams.module.css';
 ---
+
 <Layout>
-    <header class={styles.orgHeader}>
-        <h1 class={styles.h}>Teams</h1>
-
-    </header>
-    <TeamListe client:only="react"/>
-
+  <header class={styles.orgHeader}>
+    <h1 class={styles.h}>Teams</h1>
+  </header>
+  <TeamListe client:only="react" />
 </Layout>

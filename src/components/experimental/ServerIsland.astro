@@ -7,7 +7,7 @@ const oboToken = await getOboToken(Astro.locals.token);
 
 console.log(`URL: ${apiUrl}/users/details`);
 const response = await fetch(`${apiUrl}/users/details`, {
-  method: "GET",
+  method: 'GET',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
