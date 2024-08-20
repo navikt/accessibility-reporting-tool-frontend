@@ -49,3 +49,16 @@ export const updateReport = async (id: string, updates: Partial<Report>) => {
     throw new Error('Failed to update report');
   }
 };
+
+export const deleteReport = async (id: string) => {
+  const response = await fetch(`${apiProxyUrl}/reports/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (response.ok) {
+    console.log('Report deleted', response.status);
+  } else {
+    console.log('Failed to delete report', response.status);
+    throw new Error('Failed to delete report');
+  }
+};

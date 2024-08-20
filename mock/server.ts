@@ -315,6 +315,23 @@ api.patch('/api/reports/123456789', (c) => {
   return c.json({ messge: 'Report updated' });
 });
 
+api.delete('/api/reports/123456789', (c) => {
+  return c.json({ message: 'Report deleted' });
+});
+
+api.delete('/api/teams/team-nav', (c) => {
+  return c.json({ message: 'Team deleted' });
+});
+
+api.post('/api/merged-reports/new', (c) => {
+  return c.json({ id: '123456789' });
+});
+
+// Which information is necessary to get?
+api.get('/api/merged-reports/123456789', (c) => {
+  return c.json(jsonFile);
+});
+
 api.get('/api/reports/123456789', (c) => {
   const initializedReport = {
     reportId: '123456789',
@@ -346,7 +363,7 @@ api.get('/api/reports/123456789', (c) => {
         status: 'COMPLIANT',
         wcagUrl:
           'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html',
-        helpUrl: "aksel.no",
+        helpUrl: 'aksel.no',
         wcagVersion: '2.1',
         wcagLevel: 'A',
         successCriterionNumber: '1.1.1',
