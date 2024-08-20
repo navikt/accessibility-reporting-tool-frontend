@@ -47,7 +47,7 @@ export type Report = {
   descriptiveName: string;
   team: Team;
   version: string; // Ask Rannveig what this is?
-  testData: string; // Ask Rannveig what this is?
+  testData: string; // Ask Rannveig what this is???
   author: Author;
   filters: string[];
   created: string; // Ask Rannveig why string?
@@ -60,7 +60,7 @@ export type Report = {
 };
 
 export type InitialReport = {
-  name: string;
-  urlTilSiden: string;
-  teamId: string;
+  name: string; // Changed to descriptiveName
+  urlTilSiden: string; // Changed to url
+  teamId: string; // Changed to just Id
 };
