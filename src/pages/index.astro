@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ConditionalFrontpage from '@components/frontpage/Frontpage';
+import Home from '@components/home/Home';
 ---
 
 <Layout>
-  <ConditionalFrontpage client:only="react" />
+  <Home client:only="react" />
 </Layout>
