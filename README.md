@@ -12,3 +12,7 @@ I ny terminal, kjør
 ## Deployed versjon
 
 Pushes til main deployes til [denne URL](https://a11y-statement-ny.ansatt.dev.nav.no/)
+
+## Endpoints
+
+En oversikt over endepunkter: https://a11y-statement.ekstern.dev.nav.no/static/openapi

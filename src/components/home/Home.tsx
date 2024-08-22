@@ -1,19 +1,20 @@
 import { Button, Heading, Link } from '@navikt/ds-react';
-import styles from './Frontpage.module.css';
-import {
-  ArrowRightIcon,
-  ComponentIcon,
-  FigureIcon,
-  WrenchIcon,
-} from '@navikt/aksel-icons';
+import styles from './Home.module.css';
+import { ArrowRightIcon, ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
 import useSWRImmutable from 'swr/immutable';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 import { fetcher } from '@src/utils/client/api.ts';
-import { useEffect, useState } from 'react';
 import MyTeam from '@components/teamDashboard/MyTeam';
 
-function FrontpageWithoutTeam() {
-  return (
+const Home = () => {
+  const { data: userData, isLoading } = useSWRImmutable(
+    { url: `${apiProxyUrl}/users/details` },
+    fetcher,
+  );
+
+  return userData?.teams ? (
+    <MyTeam />
+  ) : (
     <main>
       <section className={styles.section1}>
         <section className={styles.innerSection1}>
@@ -59,32 +60,6 @@ function FrontpageWithoutTeam() {
       </section>
     </main>
   );
-}
+};
 
-function ConditionalFrontpage() {
-  const { data: userData, isLoading } = useSWRImmutable(
-    { url: `${apiProxyUrl}/users/details` },
-    fetcher,
-  );
-
-  const [userInTeam, setUserInTeam] = useState<boolean>();
-
-  useEffect(() => {
-    if (userData?.teams.length > 0) {
-      //Sjekker om innlogget bruker er del av et team
-      setUserInTeam(true);
-    } else {
-      setUserInTeam(false);
-    }
-  }, [userData]);
-
-  if (userInTeam) {
-    //Hvis ja; vis forside der du kan velge hvilket team du vil se dashboard for
-    return <MyTeam />;
-  }
-  {
-    return <FrontpageWithoutTeam />; //Hvis nei; vis generisk, statisk side, som er deklarert i den funksjonelle komponenten over.
-  }
-}
-
-export default ConditionalFrontpage;
+export default Home;
