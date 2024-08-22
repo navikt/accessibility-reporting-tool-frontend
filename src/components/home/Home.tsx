@@ -13,7 +13,7 @@ const Home = () => {
   );
   return (
     <>
-      {userData?.teams !== undefined ? (
+      {userData?.teams.length !== 0 ? (
         <MyTeam />
       ) : (
         <main>
