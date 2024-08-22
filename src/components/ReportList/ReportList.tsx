@@ -1,5 +1,6 @@
 import { Link, Table } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
+import { formatDate } from '@src/utils/client/date';
 import type { SortState } from '@navikt/ds-react';
 
 interface Rapport {
@@ -86,7 +87,7 @@ const ReportList = ({ reports }: ReportListProps) => {
                   </Link>
                 </Table.HeaderCell>
                 <Table.DataCell>{rapport.teamName}</Table.DataCell>
-                <Table.DataCell>{format(rapport.date)}</Table.DataCell>
+                <Table.DataCell>{formatDate(rapport.date)}</Table.DataCell>
               </Table.Row>
             );
           })}
@@ -94,24 +95,6 @@ const ReportList = ({ reports }: ReportListProps) => {
       </Table>
     </div>
   );
-};
-
-const format = (dateStr?: string) => {
-  if (!dateStr) {
-    return 'No Date Provided'; // Handle undefined or null date
-  }
-
-  console.log('Date String:', dateStr); // Log the date string to see its format
-  const [year, month, day] = dateStr.split('-').map(Number);
-  if (!year || !month || !day) {
-    console.error('Invalid date:', dateStr); // Log the error
-    return 'Invalid Date';
-  }
-  const date = new Date(year, month, day);
-  const y = date.getFullYear();
-  const m = date.getMonth().toString().padStart(2, '0');
-  const d = date.getDate().toString().padStart(2, '0');
-  return `${d}.${m}.${y}`;
 };
 
 export default ReportList;
