@@ -311,6 +311,10 @@ api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
 
+api.post('/api/admin/aggregated-reports/new', (c) => {
+  return c.json({ id: '1234567890' });
+});
+
 api.patch('/api/reports/123456789', (c) => {
   return c.json({ messge: 'Report updated' });
 });
