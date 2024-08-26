@@ -64,3 +64,9 @@ export type InitialReport = {
   urlTilSiden: string; // Changed to url
   teamId: string; // Changed to just Id
 };
+
+export type InitializeAggregatedReport = {
+  title: string;
+  url: string;
+  reports: string[];
+};

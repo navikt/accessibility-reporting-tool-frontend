@@ -1,4 +1,8 @@
-import type { Report, InitialReport } from '@src/types.ts';
+import type {
+  Report,
+  InitialReport,
+  InitializeAggregatedReport,
+} from '@src/types.ts';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
 export const createReport = async (initReport: InitialReport) => {
@@ -60,5 +64,27 @@ export const deleteReport = async (id: string) => {
   } else {
     console.log('Failed to delete report', response.status);
     throw new Error('Failed to delete report');
+  }
+};
+
+export const createAggregatedReport = async (
+  aggregatedReport: InitializeAggregatedReport,
+) => {
+  const response = await fetch(`${apiProxyUrl}/admin/aggregated-reports/new`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(aggregatedReport),
+    credentials: 'include',
+  });
+
+  if (response.ok) {
+    const report = await response.json();
+    console.log('Aggregated report created', report, response.status);
+    window.location.href = `admin/aggregated-reports/${report.id}`;
+  } else {
+    console.log('Failed to create aggregated report', response.status);
+    throw new Error('Failed to create aggregated report');
   }
 };

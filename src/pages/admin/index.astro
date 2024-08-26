@@ -1,0 +1,31 @@
+---
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
+import Layout from '../../layouts/Layout.astro';
+import ReportList from '@components/ReportList/ReportList';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+console.log(`URL: ${apiUrl}/reports/list`);
+
+const response = await fetch(`${apiUrl}/api/reports/list`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const data = await response.json();
+---
+
+<Layout>
+  <div>
+    <h1>Admin</h1>
+    <a href="/admin/report">Oprett samlerapport</a>
+    <ReportList client:only reports={data} />
+  </div>
+</Layout>
