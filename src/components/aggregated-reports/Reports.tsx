@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import { Button, Checkbox, CheckboxGroup, TextField } from '@navikt/ds-react';
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Textarea,
+  TextField,
+} from '@navikt/ds-react';
 import type { InitializeAggregatedReport } from '@src/types';
 import { createAggregatedReport } from '@src/services/reportServices';
 
-interface Rapport {
+interface Report {
   title: string;
   id: string;
   teamName: string;
@@ -12,30 +18,51 @@ interface Rapport {
 }
 
 interface ReportListProps {
-  reports: Rapport[];
+  reports: Report[];
 }
 
 const Reports = ({ reports }: ReportListProps) => {
-  const [chosenReports, setChosenReports] = useState<string[]>([]);
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+  const [initialData, setInitialData] = useState<InitializeAggregatedReport>({
+    title: '',
+    url: '',
+    notes: '',
+    reports: [],
+  });
+
+  const handleChenge = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInitialData({ ...initialData, [e.target.name]: e.target.value });
+  };
 
   return (
     <div>
       <TextField
         label="Tittel på den nye rapporten"
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={handleChenge}
+        name="title"
       />
       <TextField
         label="URL til den nye rapporten"
-        onChange={(e) => setUrl(e.target.value)}
+        onChange={handleChenge}
+        name="url"
+      />
+      <Textarea
+        label="Notater"
+        name="notes"
+        onChange={(e) => {
+          setInitialData({ ...initialData, notes: e.target.value });
+        }}
       />
       <CheckboxGroup
         legend="Velg rapporter du ønsker å slå sammen"
         size="small"
-        onChange={setChosenReports}
+        onChange={(e) => {
+          setInitialData({
+            ...initialData,
+            reports: e.map((id) => id),
+          });
+        }}
       >
-        {reports.map((report: Rapport) => (
+        {reports.map((report: Report) => (
           <Checkbox value={report.id} key={report.id}>
             {report.title}
           </Checkbox>
@@ -43,13 +70,7 @@ const Reports = ({ reports }: ReportListProps) => {
       </CheckboxGroup>
       <Button
         variant="primary"
-        onClick={() =>
-          createAggregatedReport({
-            title: title,
-            url: url,
-            reports: chosenReports,
-          } as InitializeAggregatedReport)
-        }
+        onClick={() => createAggregatedReport(initialData)}
       >
         Oprett Rapport
       </Button>
