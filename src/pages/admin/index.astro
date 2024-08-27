@@ -25,7 +25,7 @@ const data = await response.json();
 <Layout>
   <div>
     <h1>Admin</h1>
-    <a href="/admin/report">Oprett samlerapport</a>
+    <a href="/admin/create-report">Oprett samlerapport</a>
     <ReportList client:only reports={data} />
   </div>
 </Layout>
