@@ -19,7 +19,7 @@ spec:
     min: 2
     max: 4
   ingresses:
-    - 'https://a11y-statement-ny.dev.nav.no'
+    - 'https://a11y-statement-ny.ansatt.dev.nav.no'
     - 'https://a11y.ansatt.dev.nav.no'
   accessPolicy:
     outbound:
