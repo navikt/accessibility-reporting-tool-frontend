@@ -2,7 +2,7 @@ import ReportList from '@components/ReportList/ReportList';
 import CreateReportModal from '@components/Modal/createReportModal/CreateReportModal';
 import { Tabs, Select, Heading } from '@navikt/ds-react';
 import { fetcher } from '@src/utils/client/api.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import TeamDashboard from './TeamDashboard';
 import styles from './MyTeam.module.css';
@@ -29,6 +29,12 @@ function MyTeam() {
   const [state, setState] = useState('mittTeam');
   const [currentTeamId, setCurrentTeamId] = useState(userData?.teams[0].id); //Hvilken team som sees
   const userName = userData?.name.split(',');
+
+  useEffect(() => {
+    setCurrentTeamId(userData?.teams[0].id);
+  }, [userData]);
+  console.log(currentTeamId);
+  console.log(userData);
 
   if (isLoading) {
     return null;
