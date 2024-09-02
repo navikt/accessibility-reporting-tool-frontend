@@ -1,9 +1,28 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import CreateReport from '../../../components/reportPages/CreateReport';
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
 const { id } = Astro.params;
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const response = await fetch(`${apiUrl}/reports/aggregated/${id}`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const aggregatedReport = await response.json();
 ---
 
 <Layout>
-  <CreateReport client:only="react" id={id} />
+  <CreateReport client:only="react" report={aggregatedReport}>
+    <div slot="fallback">Loading...</div>
+  </CreateReport>
 </Layout>

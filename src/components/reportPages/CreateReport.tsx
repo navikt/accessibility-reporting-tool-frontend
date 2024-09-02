@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
-import type { CriterionType, Report } from '@src/types.ts';
+import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
 import { getReport, updateReport } from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
@@ -9,10 +9,10 @@ import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
 
 interface CreateReportProps {
-  id: string | undefined;
+  report: Report | AggregatedReport;
 }
 
-const CreateReport = ({ id }: CreateReportProps) => {
+const CreateReport = ({ report }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -24,16 +24,10 @@ const CreateReport = ({ id }: CreateReportProps) => {
     NOT_APPLICABLE: 'Ikke aktuelt',
   };
 
-  const {
-    data: report,
-    isLoading,
-    mutate,
-  } = useSWR<Report>(`/reports/${id}`, getReport);
-
   const updateReportData = async (updates: Partial<Report>) => {
     try {
-      await updateReport(id as string, updates);
-      mutate();
+      await updateReport(report.reportId, updates);
+      console.log('Report updated');
     } catch (error) {
       console.error(error);
     }
@@ -75,14 +69,10 @@ const CreateReport = ({ id }: CreateReportProps) => {
   );
 
   useEffect(() => {
-    if (!isLoading && report) {
+    if (report) {
       setCriteriaData(report.successCriteria);
     }
-  }, [isLoading, report]);
-
-  if (isLoading) {
-    return <div>Loading report...</div>;
-  }
+  }, [report]);
 
   return (
     <div className={styles.reportContent}>
