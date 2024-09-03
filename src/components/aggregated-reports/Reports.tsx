@@ -23,7 +23,7 @@ interface ReportListProps {
 
 const Reports = ({ reports }: ReportListProps) => {
   const [initialData, setInitialData] = useState<InitializeAggregatedReport>({
-    title: '',
+    descriptiveName: '',
     url: '',
     notes: '',
     reports: [],
@@ -38,7 +38,7 @@ const Reports = ({ reports }: ReportListProps) => {
       <TextField
         label="Tittel på den nye rapporten"
         onChange={handleChenge}
-        name="title"
+        name="descriptiveName"
       />
       <TextField
         label="URL til den nye rapporten"

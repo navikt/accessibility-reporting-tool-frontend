@@ -66,7 +66,7 @@ export type InitialReport = {
 };
 
 export type InitializeAggregatedReport = {
-  title: string;
+  descriptiveName: string;
   url: string;
   notes: string;
   reports: string[];
