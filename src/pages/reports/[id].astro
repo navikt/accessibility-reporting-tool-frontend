@@ -24,7 +24,6 @@ const report = await response.json();
 
 <Layout>
   <CreateReport client:only="react" report={report} reportType="SINGLE">
-    <div slot="
-    fallback">Loading...</div>
+    <div slot="fallback">Loading...</div>
   </CreateReport>
 </Layout>
