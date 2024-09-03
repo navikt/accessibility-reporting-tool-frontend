@@ -83,6 +83,7 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
     }
   }, [report]);
 
+  console.log('report', report);
   return (
     <div className={styles.reportContent}>
       <Heading level="1" size="xlarge">
