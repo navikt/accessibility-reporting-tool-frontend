@@ -91,7 +91,7 @@ export const deleteReport = async (id: string) => {
 export const createAggregatedReport = async (
   aggregatedReport: InitializeAggregatedReport,
 ) => {
-  const response = await fetch(`${apiProxyUrl}/admin/aggregated-reports/new`, {
+  const response = await fetch(`${apiProxyUrl}/admin/reports/aggregated/new`, {
     headers: {
       'Content-Type': 'application/json',
     },
