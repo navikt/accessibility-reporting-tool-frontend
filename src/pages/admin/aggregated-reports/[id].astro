@@ -22,7 +22,11 @@ const aggregatedReport = await response.json();
 ---
 
 <Layout>
-  <CreateReport client:only="react" report={aggregatedReport}>
+  <CreateReport
+    client:only="react"
+    report={aggregatedReport}
+    reportType="AGGREGATED"
+  >
     <div slot="fallback">Loading...</div>
   </CreateReport>
 </Layout>

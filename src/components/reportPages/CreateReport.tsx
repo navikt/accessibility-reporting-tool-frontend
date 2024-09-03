@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
-import { getReport, updateReport } from '@src/services/reportServices';
+import {
+  getReport,
+  updateAggregatedReport,
+  updateReport,
+} from '@src/services/reportServices';
 import useSWR from 'swr';
 import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
 import _ from 'lodash';
@@ -10,9 +14,10 @@ import { formatDate } from '@src/utils/client/date';
 
 interface CreateReportProps {
   report: Report | AggregatedReport;
+  reportType: 'SINGLE' | 'AGGREGATED';
 }
 
-const CreateReport = ({ report }: CreateReportProps) => {
+const CreateReport = ({ report, reportType }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -24,9 +29,13 @@ const CreateReport = ({ report }: CreateReportProps) => {
     NOT_APPLICABLE: 'Ikke aktuelt',
   };
 
-  const updateReportData = async (updates: Partial<Report>) => {
+  const updateReportData = async (
+    updates: Partial<Report> | Partial<AggregatedReport>,
+  ) => {
     try {
-      await updateReport(report.reportId, updates);
+      reportType === 'SINGLE'
+        ? await updateReport(report.reportId, updates)
+        : await updateAggregatedReport(report.reportId, updates);
       console.log('Report updated');
     } catch (error) {
       console.error(error);

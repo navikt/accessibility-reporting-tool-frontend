@@ -23,7 +23,8 @@ const report = await response.json();
 ---
 
 <Layout>
-  <CreateReport client:only="react" report={report}>
-    <div slot="fallback">Loading...</div>
+  <CreateReport client:only="react" report={report} reportType="SINGLE">
+    <div slot="
+    fallback">Loading...</div>
   </CreateReport>
 </Layout>

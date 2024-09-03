@@ -2,6 +2,7 @@ import type {
   Report,
   InitialReport,
   InitializeAggregatedReport,
+  AggregatedReport,
 } from '@src/types.ts';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 
@@ -46,6 +47,26 @@ export const updateReport = async (id: string, updates: Partial<Report>) => {
     body: JSON.stringify(updates),
     credentials: 'include',
   });
+  if (response.ok) {
+    console.log('Report updated', response.status);
+  } else {
+    console.log('Failed to update report-', response.status);
+    throw new Error('Failed to update report');
+  }
+};
+
+export const updateAggregatedReport = async (
+  id: string,
+  updates: Partial<AggregatedReport>,
+) => {
+  const response = await fetch(
+    `${apiProxyUrl}/admin/reports/aggregated/${id}`,
+    {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      credentials: 'include',
+    },
+  );
   if (response.ok) {
     console.log('Report updated', response.status);
   } else {
