@@ -7,7 +7,7 @@ const { id } = Astro.params;
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-const response = await fetch(`${apiUrl}/reports/aggregated/${id}`, {
+const response = await fetch(`${apiUrl}/api/reports/aggregated/${id}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
