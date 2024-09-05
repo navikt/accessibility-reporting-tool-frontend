@@ -6,8 +6,6 @@ import ReportList from '@components/ReportList/ReportList';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-console.log(`URL: ${apiUrl}/reports/list`);
-
 const response = await fetch(`${apiUrl}/api/reports/aggregated`, {
   method: 'GET',
   headers: {
