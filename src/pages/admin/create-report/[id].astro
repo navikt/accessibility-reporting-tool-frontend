@@ -1,8 +1,9 @@
 ---
 import { getOboToken } from '@src/utils/server/getOboToken';
 import { apiUrl } from '@src/utils/server/urls';
-import Layout from '../../layouts/Layout.astro';
+import Layout from '@src/layouts/Layout.astro';
 import Reports from '@components/aggregated-reports/Reports';
+const { id } = Astro.params;
 
 const oboToken = await getOboToken(Astro.locals.token);
 
@@ -19,11 +20,26 @@ const response = await fetch(`${apiUrl}/api/reports/list`, {
   duplex: 'half',
 });
 
+const responseAggregated = await fetch(
+  `${apiUrl}/api/reports/aggregated/${id}`,
+  {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${oboToken}`,
+    },
+    // @ts-expect-error - This is a valid option
+    duplex: 'half',
+  },
+);
+
 const data = await response.json();
+const aggregatedReport = await responseAggregated.json();
 ---
 
 <Layout>
   <div>
-    <Reports client:only reports={data} />
+    <Reports client:only reports={data} aggregatedReport={aggregatedReport} />
   </div>
 </Layout>

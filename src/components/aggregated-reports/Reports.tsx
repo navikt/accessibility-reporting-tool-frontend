@@ -6,7 +6,7 @@ import {
   Textarea,
   TextField,
 } from '@navikt/ds-react';
-import type { InitializeAggregatedReport } from '@src/types';
+import type { AggregatedReport, InitializeAggregatedReport } from '@src/types';
 import { createAggregatedReport } from '@src/services/reportServices';
 
 interface Report {
@@ -19,14 +19,18 @@ interface Report {
 
 interface ReportListProps {
   reports: Report[];
+  aggregatedReport?: AggregatedReport;
 }
 
-const Reports = ({ reports }: ReportListProps) => {
+const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
   const [initialData, setInitialData] = useState<InitializeAggregatedReport>({
-    descriptiveName: '',
-    url: '',
-    notes: '',
-    reports: [],
+    descriptiveName: aggregatedReport?.descriptiveName || '',
+    url: aggregatedReport?.url || '',
+    notes: aggregatedReport?.notes || '',
+    reports:
+      aggregatedReport?.fromReports.map((report) => {
+        return report.reportId;
+      }) || [],
   });
 
   const handleChenge = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,15 +43,18 @@ const Reports = ({ reports }: ReportListProps) => {
         label="Tittel på den nye rapporten"
         onChange={handleChenge}
         name="descriptiveName"
+        defaultValue={initialData.descriptiveName}
       />
       <TextField
         label="URL til den nye rapporten"
         onChange={handleChenge}
         name="url"
+        defaultValue={initialData.url}
       />
       <Textarea
         label="Notater"
         name="notes"
+        defaultValue={initialData.notes}
         onChange={(e) => {
           setInitialData({ ...initialData, notes: e.target.value });
         }}
@@ -55,6 +62,7 @@ const Reports = ({ reports }: ReportListProps) => {
       <CheckboxGroup
         legend="Velg rapporter du ønsker å slå sammen"
         size="small"
+        defaultValue={initialData.reports}
         onChange={(e) => {
           setInitialData({
             ...initialData,

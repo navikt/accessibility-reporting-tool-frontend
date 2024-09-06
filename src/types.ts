@@ -99,4 +99,5 @@ export type AggregatedReport = {
       lastChanged: string;
     },
   ];
+  notes: string;
 };
