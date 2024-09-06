@@ -7,10 +7,18 @@ import {
   updateReport,
 } from '@src/services/reportServices';
 import useSWR from 'swr';
-import { Tabs, TextField, Chips, Heading, Link } from '@navikt/ds-react';
+import {
+  Tabs,
+  TextField,
+  Chips,
+  Heading,
+  Link,
+  Button,
+} from '@navikt/ds-react';
 import _ from 'lodash';
 import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 
 interface CreateReportProps {
   report: Report | AggregatedReport;
@@ -114,9 +122,15 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
             ))}
           </Chips>
           {reportType === 'AGGREGATED' && (
-            <Link href={`/admin/create-reports/${report?.reportId}`}>
+            <Button
+              as={Link}
+              variant="primary"
+              href={`/admin/create-report/${report?.reportId}`}
+              iconPosition="right"
+              icon={<ArrowRightIcon />}
+            >
               Bruk som mal
-            </Link>
+            </Button>
           )}
           <section>
             {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
