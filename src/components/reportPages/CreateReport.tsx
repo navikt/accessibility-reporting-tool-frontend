@@ -104,35 +104,38 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
         </Tabs.List>
 
         <Tabs.Panel value="criteria" className={styles.tabContent}>
-          <Chips className={styles.reportFilters}>
-            {Object.keys(filterOptions).map((option) => (
-              <Chips.Toggle
-                key={option}
-                selected={selectedFilters.includes(option)}
-                onClick={() => {
-                  setSelectedFilters((prev) =>
-                    prev.includes(option)
-                      ? prev.filter((filter) => filter !== option)
-                      : [...prev, option],
-                  );
-                }}
+          <span className={styles.filtersAndButton}>
+            <Chips className={styles.reportFilters}>
+              {Object.keys(filterOptions).map((option) => (
+                <Chips.Toggle
+                  key={option}
+                  selected={selectedFilters.includes(option)}
+                  onClick={() => {
+                    setSelectedFilters((prev) =>
+                      prev.includes(option)
+                        ? prev.filter((filter) => filter !== option)
+                        : [...prev, option],
+                    );
+                  }}
+                >
+                  {filterOptions[option]}
+                </Chips.Toggle>
+              ))}
+            </Chips>
+            {reportType === 'AGGREGATED' && (
+              <Button
+                as={Link}
+                variant="secondary"
+                href={`/admin/create-report/${report?.reportId}`}
+                underline={false}
+                iconPosition="right"
+                icon={<ArrowRightIcon />}
               >
-                {filterOptions[option]}
-              </Chips.Toggle>
-            ))}
-          </Chips>
-          {reportType === 'AGGREGATED' && (
-            <Button
-              as={Link}
-              variant="primary"
-              href={`/admin/create-report/${report?.reportId}`}
-              iconPosition="right"
-              icon={<ArrowRightIcon />}
-            >
-              Bruk som mal
-            </Button>
-          )}
-          <section>
+                Bruk som mal
+              </Button>
+            )}
+          </span>
+          <section className={styles.metadata}>
             {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
             <p>Opprettet av: {report?.author.email}</p>
             {report?.lastChanged && (
