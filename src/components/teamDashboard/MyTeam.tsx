@@ -32,7 +32,7 @@ function MyTeam() {
 
   useEffect(() => {
     setCurrentTeamId(userData?.teams[0].id);
-  }, [userData]);
+  }, [userData, currentTeamId]);
   console.log(currentTeamId);
   console.log(userData);
 
