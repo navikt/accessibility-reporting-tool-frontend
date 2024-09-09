@@ -3,6 +3,7 @@ import { getOboToken } from '@src/utils/server/getOboToken';
 import { apiUrl } from '@src/utils/server/urls';
 import Layout from '../../../layouts/Layout.astro';
 import Reports from '@components/aggregated-reports/Reports';
+import styles from './create-report.module.css';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
@@ -23,7 +24,8 @@ const data = await response.json();
 ---
 
 <Layout>
-  <div>
+  <div class={styles.content}>
+    <h1 class={styles.h1}>Opprett samlerapport</h1>
     <Reports client:only reports={data} />
   </div>
 </Layout>

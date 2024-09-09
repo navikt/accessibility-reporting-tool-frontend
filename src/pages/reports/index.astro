@@ -1,0 +1,16 @@
+---
+import Layout from '@layouts/Layout.astro';
+import AllReportsList from '@components/ReportList/AllReportsList';
+import CreateReportModal from '@components/Modal/createReportModal/CreateReportModal';
+import styles from '@src/pages/_rapporter.module.css';
+---
+
+<Layout>
+  <div class={styles.headingAndButton}>
+    <h1 class={styles.h1}>Alle rapporter</h1>
+    <CreateReportModal client:only />
+  </div>
+  <section class={styles.content}>
+    <AllReportsList client:only="react" />
+  </section>
+</Layout>

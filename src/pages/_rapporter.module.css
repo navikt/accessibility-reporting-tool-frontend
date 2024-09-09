@@ -10,9 +10,8 @@
   box-shadow: var(--a-shadow-small);
 }
 
-.h1{
+.h1 {
   color: var(--a-blue-800);
-  margin-left: 10%;
 }
 
 .btn {
@@ -22,4 +21,13 @@
   max-width: 30%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.headingAndButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 20px;
 }
