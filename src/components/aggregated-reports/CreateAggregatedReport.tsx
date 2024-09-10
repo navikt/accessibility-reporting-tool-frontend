@@ -8,6 +8,7 @@ import {
 } from '@navikt/ds-react';
 import type { AggregatedReport, InitializeAggregatedReport } from '@src/types';
 import { createAggregatedReport } from '@src/services/reportServices';
+import styles from './CreateAggregatedReport.module.css';
 
 interface Report {
   title: string;
@@ -38,7 +39,7 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
   };
 
   return (
-    <div>
+    <div className={styles.createReportContainer}>
       <TextField
         label="Tittel på den nye rapporten"
         onChange={handleChenge}
@@ -79,8 +80,9 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
       <Button
         variant="primary"
         onClick={() => createAggregatedReport(initialData)}
+        className={styles.createReportButton}
       >
-        Oprett Rapport
+        Oprett rapport
       </Button>
     </div>
   );

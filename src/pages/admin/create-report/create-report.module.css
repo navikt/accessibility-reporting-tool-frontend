@@ -1,17 +1,18 @@
 .content {
+  display: flex;
+  flex-direction: column;
   text-align: auto;
-  width: 80%;
+  width: 66%;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
-  padding: 15px 20px 15px 20px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: var(--a-shadow-small);
+  margin: 3rem auto;
+  padding: 2rem 4rem;
+  border-radius: 1rem;
+  background-color: var(--a-white);
+  box-shadow: var(--a-shadow-large);
 }
 
 .h1 {
-  margin-bottom: 1rem;
-  margin-top: 1rem;
   align-self: center;
 }

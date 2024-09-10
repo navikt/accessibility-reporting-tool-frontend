@@ -1,0 +1,11 @@
+.createReportContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.createReportButton {
+  align-self: start;
+  padding: var(--ac-button-padding, var(--__ac-button-padding));
+}
