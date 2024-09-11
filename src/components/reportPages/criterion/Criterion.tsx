@@ -21,6 +21,7 @@ const Criterion = ({
   return (
     <div className={styles.criterionWrapper}>
       <div className={styles.criterion}>
+        <h2 className="sr-only">{`${criterion.number} ${criterion.name}`}</h2>
         <RadioGroup
           className={styles.radioGroup}
           legend={`${criterion.number} ${criterion.name}`}
