@@ -103,7 +103,7 @@ export const createAggregatedReport = async (
   if (response.ok) {
     const report = await response.json();
     console.log('Aggregated report created', report, response.status);
-    window.location.href = `/admin/aggregated-reports/${report.id}`;
+    window.location.href = `/reports/aggregated/${report.id}`;
   } else {
     console.log('Failed to create aggregated report', response.status);
     throw new Error('Failed to create aggregated report');
