@@ -1,14 +1,33 @@
 .footerContainer {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   background-color: #003453;
   bottom: 0;
   width: 100%;
-  height: 200px;
   color: white;
-  padding: 32px;
   font-family: 'Source Sans Pro', Arial, sans-serif;
 }
 
-.footer_a {
+.contentGroups {
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  gap: 2rem;
+  padding: 32px;
+  width: 70%;
+  max-width: 1350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contentGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.contentGroup a {
   color: white;
-  text-decoration: underline;
 }
