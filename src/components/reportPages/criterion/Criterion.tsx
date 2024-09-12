@@ -21,6 +21,7 @@ const Criterion = ({
   return (
     <div className={styles.criterionWrapper}>
       <div className={styles.criterion}>
+        <h2 className="sr-only">{`${criterion.number} ${criterion.name}`}</h2>
         <RadioGroup
           className={styles.radioGroup}
           legend={`${criterion.number} ${criterion.name}`}
@@ -67,9 +68,8 @@ const Criterion = ({
             />
             <Textarea
               className={styles.textarea}
-              label="Det er innhold i på siden som ikke er underlagt kravet"
-              description="Hvilket innhold er ikke underlagt kravet?
-"
+              label="Det er innhold på siden som ikke er underlagt kravet"
+              description="Hvilket innhold er ikke underlagt kravet?"
               defaultValue={criterion.lawDoesNotApply}
               readOnly={!hasWriteAccess}
               onChange={(e) =>

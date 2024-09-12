@@ -2,7 +2,23 @@
 import { Link } from '@navikt/ds-react';
 import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
-import DisplayEmail from './DisplayEmail.astro';
+import { apiUrl } from '../../utils/server/urls';
+import { getOboToken } from '@src/utils/server/getOboToken';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const response = await fetch(`${apiUrl}/api/users/details`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const userDetails = await response.json();
 ---
 
 <header class={styles.navBarContainer}>
@@ -14,16 +30,23 @@ import DisplayEmail from './DisplayEmail.astro';
       <Link underline={false} variant="neutral" href="/teams"> Teams </Link>
     </li>
     <li>
-      <Link underline={false} variant="neutral" href="/alle-rapporter">
+      <Link underline={false} variant="neutral" href="/reports">
         Alle rapporter
       </Link>
     </li>
+    {
+      userDetails?.isAdmin && (
+        <li>
+          <Link underline={false} href="/admin">
+            Admin
+          </Link>
+        </li>
+      )
+    }
   </ul>
   <ul class={styles.navBarP2}>
     <li>
-      <DisplayEmail server:defer>
-        <div slot="fallback">Loading...</div>
-      </DisplayEmail>
+      <p>Inlogget som: <strong>{userDetails.email}</strong></p>
     </li>
     <li class={styles.utlogging}>
       <Link underline={false} href="/oauth2/logout">

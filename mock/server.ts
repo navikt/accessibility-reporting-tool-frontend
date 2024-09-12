@@ -92,6 +92,7 @@ api.get('api/users/details', (c) => {
     email: 'my.user@nav.no',
     name: 'Hakaurlander, JasMaNi',
     teams: teams,
+    isAdmin: true,
     reports: [
       {
         title: 'Ayyyy',
@@ -139,6 +140,39 @@ api.get('api/teams/team-test/details', (c) => {
 });
 
 api.get('/api/reports/list', (c) => {
+  return c.json([
+    {
+      title: 'TestNavn',
+      id: 'rykutjyrhterg-87',
+      teamId: 'team-tull',
+      teamName: 'Team Tull',
+      date: '2024-05-10',
+    },
+    {
+      title: 'Testy',
+      id: 'rykutjyrhtehg-67',
+      teamId: 'team-ultratull',
+      teamName: 'Team Ultratull',
+      date: '2024-08-10',
+    },
+    {
+      title: 'Testttttt',
+      id: 'rykutjyrhqdwerg-12',
+      teamId: 'team-tull',
+      teamName: 'Team Tull',
+      date: '2024-05-11',
+    },
+    {
+      title: 'Hmmm',
+      id: 'rykutxyrhterg-89',
+      teamId: 'team-messi',
+      teamName: 'Team Messi',
+      date: '2024-06-10',
+    },
+  ]);
+});
+
+api.get('/api/reports/aggregated', (c) => {
   return c.json([
     {
       title: 'TestNavn',
@@ -311,6 +345,10 @@ api.post('/api/reports/new', (c) => {
   return c.json({ id: '123456789' });
 });
 
+api.post('/api/admin/aggregated-reports/new', (c) => {
+  return c.json({ id: '1234567890' });
+});
+
 api.patch('/api/reports/123456789', (c) => {
   return c.json({ messge: 'Report updated' });
 });
@@ -330,6 +368,149 @@ api.post('/api/merged-reports/new', (c) => {
 // Which information is necessary to get?
 api.get('/api/merged-reports/123456789', (c) => {
   return c.json(jsonFile);
+});
+
+api.get('/api/reports/aggregated/123456789', (c) => {
+  const initializedReport = {
+    reportId: '123456789',
+    descriptiveName: 'Skikkelig tilgjengelig side',
+    url: 'https://www.nav.no/',
+    team: {
+      id: 'team-team-min-side-fan-club',
+      name: 'Team Team Min Side Fan Club',
+      email: 'mats.thoresen.nylander@nav.no',
+      members: [],
+    },
+    author: {
+      email: 'Mats.Thoresen.Nylander@nav.no',
+      oid: '01d97f04-270a-4aa6-bb98-cc093b855dab',
+    },
+    successCriteria: [
+      {
+        name: 'Ikke-tekstlig innhold',
+        description:
+          'Gi brukeren et tekstalternativ for innhold som ikke er tekst.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.1 Tekstalternativer',
+        tools: 'ARC Toolkit',
+        number: '1.1.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Ikoner, bilder, grafer',
+        status: 'COMPLIANT',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html',
+        helpUrl: 'aksel.no',
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.1.1',
+      },
+      {
+        name: 'Bare lyd og bare video (forhåndsinnspilt)',
+        description:
+          'Gi brukeren et alternativ når innholdet presenteres kun som video eller lyd.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'COMPLIANT',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/audio-only-and-video-only-prerecorded.html',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.2.1',
+      },
+      {
+        name: 'Teksting (forhåndsinnspilt)',
+        description: 'Tilby teksting for forhåndsinnspilt video med lyd.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.2',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'COMPLIANT',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/captions-prerecorded',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.2.2',
+      },
+      {
+        name: 'Synstolking eller mediealternativ (forhåndsinnspilt)',
+        description:
+          'Tilby en beskrivende tekst eller et lydspor med beskrivelse for videoer som ikke er direktesendt.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.3',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'NOT_TESTED',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/audio-description-or-media-alternative-prerecorded',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.2.3',
+      },
+      {
+        name: 'Synstolking (forhåndsinnspilt)',
+        description:
+          'Tilby synstolking til alle videoer som ikke er direktesendinger.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.5',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'NON_COMPLIANT',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/audio-description-prerecorded',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'AA',
+        successCriterionNumber: '1.2.5',
+      },
+      {
+        name: 'Informasjon og relasjoner',
+        description: 'Ting skal være kodet som det ser ut som.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.3 Mulig å tilpasse',
+        tools: 'DevTools/headingsMap',
+        number: '1.3.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: '',
+        status: 'NOT_APPLICABLE',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.3.1',
+      },
+    ],
+    created: '2023-10-04T15:24:18.000Z',
+    lastChanged: '2023-10-04T15:24:18.000Z',
+    hasWriteAccess: true,
+  };
+
+  return c.json(initializedReport); // Send the custom object as the response
 });
 
 api.get('/api/reports/123456789', (c) => {

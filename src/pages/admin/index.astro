@@ -1,0 +1,33 @@
+---
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
+import Layout from '../../layouts/Layout.astro';
+import ReportList from '@components/ReportList/ReportList';
+import styles from '../_rapporter.module.css';
+import { Button, Link } from '@navikt/ds-react';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const response = await fetch(`${apiUrl}/api/reports/aggregated`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const data = await response.json();
+---
+
+<Layout>
+  <div class={styles.headingAndButton}>
+    <h1 class={styles.h1}>Admin</h1>
+    <a href="/admin/create-report">Opprett rapport</a>
+  </div>
+  <div class={styles.content}>
+    <ReportList client:only reports={data} />
+  </div>
+</Layout>

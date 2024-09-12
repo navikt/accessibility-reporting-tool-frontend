@@ -8,11 +8,11 @@
   border-radius: 10px;
   background-color: white;
   box-shadow: var(--a-shadow-small);
+  max-width: 1280px;
 }
 
-.h1{
+.h1 {
   color: var(--a-blue-800);
-  margin-left: 10%;
 }
 
 .btn {
@@ -20,6 +20,18 @@
 }
 .search {
   max-width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headingAndButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem;
+  width: 66%;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
 }

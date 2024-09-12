@@ -4,16 +4,31 @@ import styles from './Footer.module.css';
 function Footer() {
   return (
     <footer className={styles.footerContainer}>
-      <Heading level="1" size="large">
-        Kontakt oss
-      </Heading>
-      <p>
-        Har du spørsmål eller behov for støtte? Ta gjerne kontakt i{' '}
-        <a className={styles.footer_a}>#nav-uu</a> kanalen på Slack eller sende
-        en mail til{' '}
-        <a className={styles.footer_a}>universell.utforming@nav.no</a>
-      </p>
-      <strong>Takk for at du bidrar til et mer tilgjengelig NAV!</strong>
+      <div className={styles.contentGroups}>
+        <div className={styles.contentGroup}>
+          <Heading level="3" size="medium">
+            Kontakt oss
+          </Heading>
+          <p>
+            Har du spørsmål om universell utforming eller testing? Kontakt oss
+            på e-post eller Slack.
+          </p>
+          <a href="mailto:uu@nav.no">E-post</a>
+          <a href="https://nav-it.slack.com/archives/C7MANSGLS">Slack</a>
+        </div>
+        <div className={styles.contentGroup}>
+          <Heading level="3" size="medium">
+            Har du tilbakemelding?
+          </Heading>
+          <p>
+            Oppdager du feil eller har forslag til forbedringer? Legg inn en
+            issue på GitHub.
+          </p>
+          <a href="https://github.com/navikt/accessibility-reporting-tool-frontend">
+            GitHub
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }

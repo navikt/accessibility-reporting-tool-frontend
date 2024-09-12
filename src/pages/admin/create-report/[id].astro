@@ -1,0 +1,46 @@
+---
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
+import Layout from '@src/layouts/Layout.astro';
+import Reports from '@components/aggregated-reports/CreateAggregatedReport';
+const { id } = Astro.params;
+import styles from './create-report.module.css';
+const oboToken = await getOboToken(Astro.locals.token);
+
+console.log(`URL: ${apiUrl}/reports/list`);
+
+const response = await fetch(`${apiUrl}/api/reports/list`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const responseAggregated = await fetch(
+  `${apiUrl}/api/reports/aggregated/${id}`,
+  {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${oboToken}`,
+    },
+    // @ts-expect-error - This is a valid option
+    duplex: 'half',
+  },
+);
+
+const data = await response.json();
+const aggregatedReport = await responseAggregated.json();
+---
+
+<Layout>
+  <div class={styles.content}>
+    <h1 class={styles.h1}>Opprett samlerapport</h1>
+    <Reports client:only reports={data} aggregatedReport={aggregatedReport} />
+  </div>
+</Layout>

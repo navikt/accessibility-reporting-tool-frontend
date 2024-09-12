@@ -1,18 +1,31 @@
 import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
-import type { CriterionType, Report } from '@src/types.ts';
-import { getReport, updateReport } from '@src/services/reportServices';
+import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
+import {
+  getReport,
+  updateAggregatedReport,
+  updateReport,
+} from '@src/services/reportServices';
 import useSWR from 'swr';
-import { Tabs, TextField, Chips, Heading } from '@navikt/ds-react';
+import {
+  Tabs,
+  TextField,
+  Chips,
+  Heading,
+  Link,
+  Button,
+} from '@navikt/ds-react';
 import _ from 'lodash';
 import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
+import { ArrowRightIcon } from '@navikt/aksel-icons';
 
 interface CreateReportProps {
-  id: string | undefined;
+  report: Report | AggregatedReport;
+  reportType: 'SINGLE' | 'AGGREGATED';
 }
 
-const CreateReport = ({ id }: CreateReportProps) => {
+const CreateReport = ({ report, reportType }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -24,16 +37,14 @@ const CreateReport = ({ id }: CreateReportProps) => {
     NOT_APPLICABLE: 'Ikke aktuelt',
   };
 
-  const {
-    data: report,
-    isLoading,
-    mutate,
-  } = useSWR<Report>(`/reports/${id}`, getReport);
-
-  const updateReportData = async (updates: Partial<Report>) => {
+  const updateReportData = async (
+    updates: Partial<Report> | Partial<AggregatedReport>,
+  ) => {
     try {
-      await updateReport(id as string, updates);
-      mutate();
+      reportType === 'SINGLE'
+        ? await updateReport(report.reportId, updates)
+        : await updateAggregatedReport(report.reportId, updates);
+      console.log('Report updated');
     } catch (error) {
       console.error(error);
     }
@@ -75,15 +86,12 @@ const CreateReport = ({ id }: CreateReportProps) => {
   );
 
   useEffect(() => {
-    if (!isLoading && report) {
+    if (report) {
       setCriteriaData(report.successCriteria);
     }
-  }, [isLoading, report]);
+  }, [report]);
 
-  if (isLoading) {
-    return <div>Loading report...</div>;
-  }
-
+  console.log('report', report);
   return (
     <div className={styles.reportContent}>
       <Heading level="1" size="xlarge">
@@ -96,24 +104,38 @@ const CreateReport = ({ id }: CreateReportProps) => {
         </Tabs.List>
 
         <Tabs.Panel value="criteria" className={styles.tabContent}>
-          <Chips className={styles.reportFilters}>
-            {Object.keys(filterOptions).map((option) => (
-              <Chips.Toggle
-                key={option}
-                selected={selectedFilters.includes(option)}
-                onClick={() => {
-                  setSelectedFilters((prev) =>
-                    prev.includes(option)
-                      ? prev.filter((filter) => filter !== option)
-                      : [...prev, option],
-                  );
-                }}
+          <span className={styles.filtersAndButton}>
+            <Chips className={styles.reportFilters}>
+              {Object.keys(filterOptions).map((option) => (
+                <Chips.Toggle
+                  key={option}
+                  selected={selectedFilters.includes(option)}
+                  onClick={() => {
+                    setSelectedFilters((prev) =>
+                      prev.includes(option)
+                        ? prev.filter((filter) => filter !== option)
+                        : [...prev, option],
+                    );
+                  }}
+                >
+                  {filterOptions[option]}
+                </Chips.Toggle>
+              ))}
+            </Chips>
+            {reportType === 'AGGREGATED' && (
+              <Button
+                as={Link}
+                variant="secondary"
+                href={`/admin/create-report/${report?.reportId}`}
+                underline={false}
+                iconPosition="right"
+                icon={<ArrowRightIcon />}
               >
-                {filterOptions[option]}
-              </Chips.Toggle>
-            ))}
-          </Chips>
-          <section>
+                Bruk som mal
+              </Button>
+            )}
+          </span>
+          <section className={styles.metadata}>
             {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
             <p>Opprettet av: {report?.author.email}</p>
             {report?.lastChanged && (

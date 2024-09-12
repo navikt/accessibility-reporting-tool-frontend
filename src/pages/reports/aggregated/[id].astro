@@ -1,14 +1,13 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import CreateReport from '../../components/reportPages/CreateReport';
+import Layout from '../../../layouts/Layout.astro';
+import CreateReport from '../../../components/reportPages/CreateReport';
 import { getOboToken } from '@src/utils/server/getOboToken';
 import { apiUrl } from '@src/utils/server/urls';
 const { id } = Astro.params;
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-console.log(`url: ${apiUrl}/api/reports/${id}`);
-const response = await fetch(`${apiUrl}/api/reports/${id}`, {
+const response = await fetch(`${apiUrl}/api/reports/aggregated/${id}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -19,11 +18,15 @@ const response = await fetch(`${apiUrl}/api/reports/${id}`, {
   duplex: 'half',
 });
 
-const report = await response.json();
+const aggregatedReport = await response.json();
 ---
 
 <Layout>
-  <CreateReport client:only="react" report={report} reportType="SINGLE">
+  <CreateReport
+    client:only="react"
+    report={aggregatedReport}
+    reportType="AGGREGATED"
+  >
     <div slot="fallback">Loading...</div>
   </CreateReport>
 </Layout>

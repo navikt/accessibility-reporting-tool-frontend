@@ -31,8 +31,10 @@ function MyTeam() {
   const userName = userData?.name.split(',');
 
   useEffect(() => {
-    setCurrentTeamId(userData?.teams[0].id);
-  }, [userData]);
+    currentTeamId === undefined
+      ? setCurrentTeamId(userData?.teams[0].id)
+      : setCurrentTeamId(currentTeamId);
+  }, [userData, currentTeamId]);
   console.log(currentTeamId);
   console.log(userData);
 
