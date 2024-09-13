@@ -91,7 +91,7 @@ const ReportList = ({ reports }: ReportListProps) => {
                       href={`/reports/aggregated/${rapport.id}`}
                       variant="action"
                     >
-                      {rapport.title}
+                      {rapport.title === '' ? 'Uten navn' : rapport.title}
                     </Link>
                   )}
                 </Table.HeaderCell>
