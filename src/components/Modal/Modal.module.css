@@ -5,8 +5,12 @@
   padding: 2rem;
 }
 
-.modalFields{
+.modalFields {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.button {
+  white-space: nowrap;
 }

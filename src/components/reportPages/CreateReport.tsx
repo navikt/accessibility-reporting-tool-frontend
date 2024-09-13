@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import Criterion from './criterion/Criterion';
 import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
 import {
-  getReport,
   updateAggregatedReport,
   updateReport,
+  deleteReport,
 } from '@src/services/reportServices';
-import useSWR from 'swr';
 import {
   Tabs,
   TextField,
@@ -19,6 +18,7 @@ import _ from 'lodash';
 import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
+import DeleteReportModal from '@components/Modal/deleteReportModal/DeleteReportModal';
 
 interface CreateReportProps {
   report: Report | AggregatedReport;
@@ -98,10 +98,18 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
         {report?.descriptiveName}
       </Heading>
       <Tabs value={activeTab} onChange={setActiveTab} className={styles.tabs}>
-        <Tabs.List>
-          <Tabs.Tab value="criteria" label="Retningslinjer" />
-          <Tabs.Tab value="metadata" label="Metadata" />
-        </Tabs.List>
+        <div className={styles.tabListButton}>
+          <Tabs.List>
+            <Tabs.Tab value="criteria" label="Retningslinjer" />
+            <Tabs.Tab value="metadata" label="Metadata" />
+          </Tabs.List>
+          {report?.hasWriteAccess && (
+            <DeleteReportModal
+              reportType={reportType}
+              reportId={report.reportId}
+            />
+          )}
+        </div>
 
         <Tabs.Panel value="criteria" className={styles.tabContent}>
           <span className={styles.filtersAndButton}>
