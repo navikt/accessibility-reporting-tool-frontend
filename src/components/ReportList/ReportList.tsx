@@ -71,29 +71,23 @@ const ReportList = ({ reports }: ReportListProps) => {
         <Table.Body>
           {sortedData?.map((report: ReportSummary) => {
             return (
-              <Table.Row key={report.descriptiveName}>
+              <Table.Row key={report.title}>
                 <Table.HeaderCell>
                   {report.teamId !== '' ? (
-                    <Link href={`/reports/${report.reportId}`} variant="action">
-                      {report.descriptiveName === ''
-                        ? 'Uten navn'
-                        : report.descriptiveName}
+                    <Link href={`/reports/${report.id}`} variant="action">
+                      {report.title === '' ? 'Uten navn' : report.title}
                     </Link>
                   ) : (
                     <Link
-                      href={`/reports/aggregated/${report.reportId}`}
+                      href={`/reports/aggregated/${report.id}`}
                       variant="action"
                     >
-                      {report.descriptiveName === ''
-                        ? 'Uten navn'
-                        : report.descriptiveName}
+                      {report.title === '' ? 'Uten navn' : report.title}
                     </Link>
                   )}
                 </Table.HeaderCell>
                 <Table.DataCell>{report.teamName}</Table.DataCell>
-                <Table.DataCell>
-                  {formatDate(report.lastChanged)}
-                </Table.DataCell>
+                <Table.DataCell>{formatDate(report.date)}</Table.DataCell>
               </Table.Row>
             );
           })}

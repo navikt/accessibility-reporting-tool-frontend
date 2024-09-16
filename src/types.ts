@@ -60,11 +60,11 @@ export type Report = {
 };
 
 export type ReportSummary = {
-  descriptiveName: string;
-  reportId: string;
+  title: string;
+  id: string;
   teamId: string;
   teamName: string;
-  lastChanged: string;
+  date: string;
 };
 
 export type InitialReport = {
