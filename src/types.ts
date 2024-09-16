@@ -59,6 +59,14 @@ export type Report = {
   hasWriteAccess: boolean;
 };
 
+export type ReportSummary = {
+  descriptiveName: string;
+  reportId: string;
+  teamId: string;
+  teamName: string;
+  lastChanged: string;
+};
+
 export type InitialReport = {
   name: string; // Changed to descriptiveName
   urlTilSiden: string; // Changed to url

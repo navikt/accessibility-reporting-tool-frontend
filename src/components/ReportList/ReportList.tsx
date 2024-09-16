@@ -2,24 +2,14 @@ import { Link, Table } from '@navikt/ds-react';
 import { useEffect, useState } from 'react';
 import { formatDate } from '@src/utils/client/date';
 import type { SortState } from '@navikt/ds-react';
-
-interface Rapport {
-  title: string;
-  id: string;
-  teamName: string;
-  teamId: string;
-  date: string;
-}
+import type { ReportSummary } from '@src/types';
 
 interface ReportListProps {
-  reports: Rapport[];
+  reports: ReportSummary[];
 }
 
 const ReportList = ({ reports }: ReportListProps) => {
-  const [data, setData] = useState(reports);
-
   const [sort, setSort] = useState<SortState | undefined>();
-  console.log(data);
 
   const handleSort = (sortKey: string) => {
     setSort(
@@ -35,7 +25,11 @@ const ReportList = ({ reports }: ReportListProps) => {
     );
   };
 
-  const comparator = (a: Rapport, b: Rapport, orderBy: keyof Rapport) => {
+  const comparator = (
+    a: ReportSummary,
+    b: ReportSummary,
+    orderBy: keyof ReportSummary,
+  ) => {
     if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
       return -1;
     }
@@ -45,19 +39,16 @@ const ReportList = ({ reports }: ReportListProps) => {
     return 0;
   };
 
-  const sortedData = data?.slice().sort((a: Rapport, b: Rapport) => {
-    if (sort) {
-      return sort.direction === 'ascending'
-        ? comparator(b, a, sort.orderBy as keyof Rapport)
-        : comparator(a, b, sort.orderBy as keyof Rapport);
-    }
-    return 1;
-  });
-
-  // if (isLoading) return <div>Loading...</div>;
-  useEffect(() => {
-    setData(reports);
-  }, [reports]);
+  const sortedData = reports
+    ?.slice()
+    .sort((a: ReportSummary, b: ReportSummary) => {
+      if (sort) {
+        return sort.direction === 'ascending'
+          ? comparator(b, a, sort.orderBy as keyof ReportSummary)
+          : comparator(a, b, sort.orderBy as keyof ReportSummary);
+      }
+      return 1;
+    });
 
   return (
     <div>
@@ -78,25 +69,31 @@ const ReportList = ({ reports }: ReportListProps) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {sortedData?.map((rapport: Rapport) => {
+          {sortedData?.map((report: ReportSummary) => {
             return (
-              <Table.Row key={rapport.title}>
+              <Table.Row key={report.descriptiveName}>
                 <Table.HeaderCell>
-                  {rapport.teamId !== '' ? (
-                    <Link href={`/reports/${rapport.id}`} variant="action">
-                      {rapport.title}
+                  {report.teamId !== '' ? (
+                    <Link href={`/reports/${report.reportId}`} variant="action">
+                      {report.descriptiveName === ''
+                        ? 'Uten navn'
+                        : report.descriptiveName}
                     </Link>
                   ) : (
                     <Link
-                      href={`/reports/aggregated/${rapport.id}`}
+                      href={`/reports/aggregated/${report.reportId}`}
                       variant="action"
                     >
-                      {rapport.title === '' ? 'Uten navn' : rapport.title}
+                      {report.descriptiveName === ''
+                        ? 'Uten navn'
+                        : report.descriptiveName}
                     </Link>
                   )}
                 </Table.HeaderCell>
-                <Table.DataCell>{rapport.teamName}</Table.DataCell>
-                <Table.DataCell>{formatDate(rapport.date)}</Table.DataCell>
+                <Table.DataCell>{report.teamName}</Table.DataCell>
+                <Table.DataCell>
+                  {formatDate(report.lastChanged)}
+                </Table.DataCell>
               </Table.Row>
             );
           })}

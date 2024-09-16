@@ -139,35 +139,35 @@ api.get('api/teams/team-test/details', (c) => {
   });
 });
 
-api.get('/api/reports/list', (c) => {
+api.get('/api/reports', (c) => {
   return c.json([
     {
-      title: 'TestNavn',
-      id: 'rykutjyrhterg-87',
+      descriptiveName: 'TestNavn',
+      reportId: 'rykutjyrhterg-87',
       teamId: 'team-tull',
       teamName: 'Team Tull',
-      date: '2024-05-10',
+      lastChanged: '2024-05-10',
     },
     {
-      title: 'Testy',
-      id: 'rykutjyrhtehg-67',
+      descriptiveName: 'Testy',
+      reportId: 'rykutjyrhtehg-67',
       teamId: 'team-ultratull',
       teamName: 'Team Ultratull',
-      date: '2024-08-10',
+      lastChanged: '2024-08-10',
     },
     {
-      title: 'Testttttt',
-      id: 'rykutjyrhqdwerg-12',
+      descriptiveName: 'Testttttt',
+      reportId: 'rykutjyrhqdwerg-12',
       teamId: 'team-tull',
       teamName: 'Team Tull',
-      date: '2024-05-11',
+      lastChanged: '2024-05-11',
     },
     {
-      title: 'Hmmm',
-      id: 'rykutxyrhterg-89',
+      descriptiveName: 'Hmmm',
+      reportId: 'rykutxyrhterg-89',
       teamId: 'team-messi',
       teamName: 'Team Messi',
-      date: '2024-06-10',
+      lastChanged: '2024-06-10',
     },
   ]);
 });
