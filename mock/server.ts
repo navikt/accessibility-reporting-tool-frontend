@@ -361,6 +361,14 @@ api.delete('/api/teams/team-nav', (c) => {
   return c.json({ message: 'Team deleted' });
 });
 
+api.delete('/api/reports/123456789', (c) => {
+  return c.json({ message: 'Report deleted' });
+});
+
+api.delete('/api/admin/reports/aggregated/1234567890', (c) => {
+  return c.json({ message: 'Report deleted' });
+});
+
 api.post('/api/merged-reports/new', (c) => {
   return c.json({ id: '123456789' });
 });

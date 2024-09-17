@@ -36,7 +36,7 @@ const DeleteReportModal = ({
             variant="danger"
             onClick={() => {
               deleteReport(reportId, reportType);
-              window.location.href = '/reports';
+              //window.location.href = '/reports';
             }}
           >
             Slett
