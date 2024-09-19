@@ -75,13 +75,26 @@ export const updateAggregatedReport = async (
   }
 };
 
-export const deleteReport = async (id: string) => {
-  const response = await fetch(`${apiProxyUrl}/reports/${id}`, {
-    method: 'DELETE',
-    credentials: 'include',
-  });
+export const deleteReport = async (
+  id: string,
+  reportType: 'SINGLE' | 'AGGREGATED',
+) => {
+  let response: Response;
+
+  if (reportType === 'SINGLE') {
+    response = await fetch(`${apiProxyUrl}/reports/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+  } else {
+    response = await fetch(`${apiProxyUrl}/admin/reports/aggregated/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+  }
+
   if (response.ok) {
-    console.log('Report deleted', response.status);
+    window.location.href = '/reports';
   } else {
     console.log('Failed to delete report', response.status);
     throw new Error('Failed to delete report');

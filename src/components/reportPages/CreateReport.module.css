@@ -42,6 +42,12 @@
   margin-bottom: 3rem;
 }
 
+.tabListButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 /*.reportContent {
   display: flex;
   flex-direction: column;

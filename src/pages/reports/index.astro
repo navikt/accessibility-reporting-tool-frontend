@@ -1,8 +1,25 @@
 ---
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
 import Layout from '@layouts/Layout.astro';
-import AllReportsList from '@components/ReportList/AllReportsList';
+import ReportList from '@components/ReportList/ReportList';
 import CreateReportModal from '@components/Modal/createReportModal/CreateReportModal';
 import styles from '@src/pages/_rapporter.module.css';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const response = await fetch(`${apiUrl}/api/reports`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const reports = await response.json();
 ---
 
 <Layout>
@@ -11,6 +28,6 @@ import styles from '@src/pages/_rapporter.module.css';
     <CreateReportModal client:only />
   </div>
   <section class={styles.content}>
-    <AllReportsList client:only="react" />
+    <ReportList client:only="react" reports={reports} />
   </section>
 </Layout>
