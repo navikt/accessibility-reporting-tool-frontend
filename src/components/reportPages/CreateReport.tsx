@@ -103,12 +103,12 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
             <Tabs.Tab value="criteria" label="Retningslinjer" />
             <Tabs.Tab value="metadata" label="Metadata" />
           </Tabs.List>
-          {report?.hasWriteAccess && (
+          {/*{report?.hasWriteAccess && (
             <DeleteReportModal
               reportType={reportType}
               reportId={report.reportId}
             />
-          )}
+          )}*/}
         </div>
 
         <Tabs.Panel value="criteria" className={styles.tabContent}>
