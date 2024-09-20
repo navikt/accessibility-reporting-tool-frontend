@@ -77,8 +77,11 @@ export const updateAggregatedReport = async (
 
 export const deleteReport = async (id: string) => {
   const response = await fetch(
-    `${apiProxyUrl}/admin/reports/aggregated/${id}/delete`,
+    `${apiProxyUrl}/admin/reports/aggregated/${id}`,
     {
+      headers: {
+        'Content-Type': 'application/json',
+      },
       method: 'DELETE',
       credentials: 'include',
     },
