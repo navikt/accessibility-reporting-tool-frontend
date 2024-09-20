@@ -23,9 +23,10 @@ import DeleteReportModal from '@components/Modal/deleteReportModal/DeleteReportM
 interface CreateReportProps {
   report: Report | AggregatedReport;
   reportType: 'SINGLE' | 'AGGREGATED';
+  isAdmin: boolean;
 }
 
-const CreateReport = ({ report, reportType }: CreateReportProps) => {
+const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -103,12 +104,7 @@ const CreateReport = ({ report, reportType }: CreateReportProps) => {
             <Tabs.Tab value="criteria" label="Retningslinjer" />
             <Tabs.Tab value="metadata" label="Metadata" />
           </Tabs.List>
-          {/*{report?.hasWriteAccess && (
-            <DeleteReportModal
-              reportType={reportType}
-              reportId={report.reportId}
-            />
-          )}*/}
+          {isAdmin && <DeleteReportModal reportId={report.reportId} />}
         </div>
 
         <Tabs.Panel value="criteria" className={styles.tabContent}>

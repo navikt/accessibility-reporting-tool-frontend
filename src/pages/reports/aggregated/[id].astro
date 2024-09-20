@@ -7,7 +7,21 @@ const { id } = Astro.params;
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-const response = await fetch(`${apiUrl}/api/reports/aggregated/${id}`, {
+const aggregatedReportResponse = await fetch(
+  `${apiUrl}/api/reports/aggregated/${id}`,
+  {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${oboToken}`,
+    },
+    // @ts-expect-error - This is a valid option
+    duplex: 'half',
+  },
+);
+
+const userResponse = await fetch(`${apiUrl}/api/user`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -18,7 +32,8 @@ const response = await fetch(`${apiUrl}/api/reports/aggregated/${id}`, {
   duplex: 'half',
 });
 
-const aggregatedReport = await response.json();
+const aggregatedReport = await aggregatedReportResponse.json();
+const user = await userResponse.json();
 ---
 
 <Layout>
@@ -26,6 +41,7 @@ const aggregatedReport = await response.json();
     client:only="react"
     report={aggregatedReport}
     reportType="AGGREGATED"
+    isAdmin={user.isAdmin}
   >
     <div slot="fallback">Loading...</div>
   </CreateReport>

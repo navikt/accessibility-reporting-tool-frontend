@@ -5,14 +5,10 @@ import { useRef } from 'react';
 import styles from '../Modal.module.css';
 
 interface DeleteReportModalProps {
-  reportType: 'SINGLE' | 'AGGREGATED';
   reportId: string;
 }
 
-const DeleteReportModal = ({
-  reportType,
-  reportId,
-}: DeleteReportModalProps) => {
+const DeleteReportModal = ({ reportId }: DeleteReportModalProps) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   return (
@@ -26,7 +22,7 @@ const DeleteReportModal = ({
         Slett rapport
       </Button>
 
-      <Modal ref={ref} header={{ heading: 'Overskrift' }}>
+      <Modal ref={ref} header={{ heading: 'Slett rapport' }}>
         <Modal.Body>
           <BodyLong>Er du sikker på at du vil slette denne rapporten?</BodyLong>
         </Modal.Body>
@@ -35,7 +31,7 @@ const DeleteReportModal = ({
             type="button"
             variant="danger"
             onClick={() => {
-              deleteReport(reportId, reportType);
+              deleteReport(reportId);
               //window.location.href = '/reports';
             }}
           >
