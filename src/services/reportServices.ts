@@ -88,7 +88,7 @@ export const deleteReport = async (id: string) => {
   );
 
   if (response.ok) {
-    console.log('Report deleted', response.status);
+    window.location.href = '/reports';
   } else {
     console.log('Failed to delete report', response.status);
     throw new Error('Failed to delete report');
