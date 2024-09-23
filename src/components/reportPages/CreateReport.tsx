@@ -15,7 +15,7 @@ import {
   Button,
   Checkbox,
 } from '@navikt/ds-react';
-import _ from 'lodash';
+import _, { set } from 'lodash';
 import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
@@ -31,6 +31,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [isPartOfNavNo, setIsPartOfNavNo] = useState(report.isPartOfNavNo);
 
   const filterOptions: Record<string, string> = {
     COMPLIANT: 'Tilfredsstilt',
@@ -81,19 +82,17 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   );
 
   const handleMetadataChange = _.debounce(
-    (fieldToUpdate: string, updatedData: string | boolean) => {
+    (fieldToUpdate: string, updatedData: string) => {
       updateReportData({ [fieldToUpdate]: updatedData });
     },
     500,
   );
 
-  useEffect(() => {
-    if (report) {
-      setCriteriaData(report.successCriteria);
-    }
-  }, [report]);
+  const handleCheckboxChange = () => {
+    setIsPartOfNavNo(!isPartOfNavNo);
+    updateReportData({ isPartOfNavNo: !isPartOfNavNo });
+  };
 
-  console.log('report', report);
   return (
     <div className={styles.reportContent}>
       <Heading level="1" size="xlarge">
@@ -207,10 +206,8 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
             <Checkbox
               description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
               name="isPartOfNavNo"
-              checked={report?.isPartOfNavNo}
-              onChange={() =>
-                handleMetadataChange('isPartOfNavNo', !report?.isPartOfNavNo)
-              }
+              value={isPartOfNavNo}
+              onChange={() => handleCheckboxChange}
             >
               Ikke en del av NAV.no
             </Checkbox>
