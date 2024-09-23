@@ -47,7 +47,6 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
       reportType === 'SINGLE'
         ? await updateReport(report.reportId, updates)
         : await updateAggregatedReport(report.reportId, updates);
-      console.log('Report updated');
     } catch (error) {
       console.error(error);
     }
@@ -90,13 +89,15 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
 
   const handleCheckboxChange = () => {
     setIsPartOfNavNo(!isPartOfNavNo);
-    updateReportData({ isPartOfNavNo: isPartOfNavNo });
   };
 
   useEffect(() => {
     setCriteriaData(report.successCriteria);
-    setIsPartOfNavNo(report.isPartOfNavNo);
   }, [report]);
+
+  useEffect(() => {
+    updateReportData({ isPartOfNavNo: isPartOfNavNo });
+  }, [isPartOfNavNo]);
 
   return (
     <div className={styles.reportContent}>
