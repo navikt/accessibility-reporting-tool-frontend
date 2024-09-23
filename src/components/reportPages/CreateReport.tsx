@@ -90,7 +90,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
 
   const handleCheckboxChange = () => {
     setIsPartOfNavNo(!isPartOfNavNo);
-    updateReportData({ isPartOfNavNo: !isPartOfNavNo });
+    updateReportData({ isPartOfNavNo: isPartOfNavNo });
   };
 
   useEffect(() => {
