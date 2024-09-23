@@ -211,8 +211,8 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
             <Checkbox
               description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
               name="isPartOfNavNo"
-              value={isPartOfNavNo}
-              onChange={() => handleCheckboxChange}
+              value={!isPartOfNavNo}
+              onChange={handleCheckboxChange}
             >
               Ikke en del av NAV.no
             </Checkbox>
