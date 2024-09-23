@@ -4,15 +4,16 @@ import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
 import {
   updateAggregatedReport,
   updateReport,
-  deleteReport,
 } from '@src/services/reportServices';
 import {
   Tabs,
   TextField,
+  Textarea,
   Chips,
   Heading,
   Link,
   Button,
+  Checkbox,
 } from '@navikt/ds-react';
 import _ from 'lodash';
 import styles from './CreateReport.module.css';
@@ -80,7 +81,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   );
 
   const handleMetadataChange = _.debounce(
-    (fieldToUpdate: string, updatedData: string) => {
+    (fieldToUpdate: string, updatedData: string | boolean) => {
       updateReportData({ [fieldToUpdate]: updatedData });
     },
     500,
@@ -139,14 +140,6 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
               </Button>
             )}
           </span>
-          <section className={styles.metadata}>
-            {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
-            <p>Opprettet av: {report?.author.email}</p>
-            {report?.lastChanged && (
-              <p>Sist endret: {formatDate(report?.lastChanged)}</p>
-            )}
-            <p>Sist endret av: {report?.lastUpdatedBy}</p>
-          </section>
           <ul className={styles.criteriaList}>
             {selectedFilters.length === 0
               ? criteriaData.map((criterion) => (
@@ -176,6 +169,14 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
           </ul>
         </Tabs.Panel>
         <Tabs.Panel value="metadata" className={styles.tabContent}>
+          <section className={styles.metadata}>
+            {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
+            <p>Opprettet av: {report?.author.email}</p>
+            {report?.lastChanged && (
+              <p>Sist endret: {formatDate(report?.lastChanged)}</p>
+            )}
+            <p>Sist endret av: {report?.lastUpdatedBy}</p>
+          </section>
           <TextField
             label="Rapportnavn"
             id="report-name"
@@ -194,6 +195,26 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
             readOnly={!report?.hasWriteAccess}
             onChange={(e) => handleMetadataChange('url', e.target.value)}
           />
+          <Textarea
+            label="Notater"
+            id="notes"
+            name="notes"
+            defaultValue={report?.notes}
+            readOnly={!report?.hasWriteAccess}
+            onChange={(e) => handleMetadataChange('notes', e.target.value)}
+          />
+          {reportType === 'SINGLE' && (
+            <Checkbox
+              description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
+              name="isPartOfNavNo"
+              checked={report?.isPartOfNavNo}
+              onChange={() =>
+                handleMetadataChange('isPartOfNavNo', !report?.isPartOfNavNo)
+              }
+            >
+              Ikke en del av NAV.no
+            </Checkbox>
+          )}
         </Tabs.Panel>
       </Tabs>
     </div>

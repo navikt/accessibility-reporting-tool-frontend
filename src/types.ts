@@ -57,6 +57,8 @@ export type Report = {
   lastUpdatedBy: string;
   reportType: string;
   hasWriteAccess: boolean;
+  notes: string;
+  isPartOfNavNo: boolean;
 };
 
 export type ReportSummary = {
@@ -65,12 +67,14 @@ export type ReportSummary = {
   teamId: string;
   teamName: string;
   date: string;
+  isPartOfNavNo: boolean;
 };
 
 export type InitialReport = {
   name: string; // Changed to descriptiveName
   urlTilSiden: string; // Changed to url
   teamId: string; // Changed to just Id
+  isPartOfNavNo: boolean;
 };
 
 export type InitializeAggregatedReport = {
@@ -108,4 +112,5 @@ export type AggregatedReport = {
     },
   ];
   notes: string;
+  isPartOfNavNo: boolean;
 };
