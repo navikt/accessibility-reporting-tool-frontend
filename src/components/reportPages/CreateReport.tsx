@@ -93,6 +93,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
 
   useEffect(() => {
     setCriteriaData(report.successCriteria);
+    setIsPartOfNavNo(report.isPartOfNavNo);
   }, [report]);
 
   useEffect(() => {
@@ -212,7 +213,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
             <Checkbox
               description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
               name="isPartOfNavNo"
-              value={!isPartOfNavNo}
+              defaultChecked={!isPartOfNavNo}
               onChange={handleCheckboxChange}
             >
               Ikke en del av NAV.no
