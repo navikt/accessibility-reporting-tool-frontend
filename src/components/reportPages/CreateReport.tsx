@@ -93,6 +93,11 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
     updateReportData({ isPartOfNavNo: !isPartOfNavNo });
   };
 
+  useEffect(() => {
+    setCriteriaData(report.successCriteria);
+    setIsPartOfNavNo(report.isPartOfNavNo);
+  }, [report]);
+
   return (
     <div className={styles.reportContent}>
       <Heading level="1" size="xlarge">
