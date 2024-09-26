@@ -28,7 +28,9 @@ interface CreateReportProps {
 }
 
 const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
-  const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
+  const [criteriaData, setCriteriaData] = useState<CriterionType[]>(
+    report.successCriteria,
+  );
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [isPartOfNavNo, setIsPartOfNavNo] = useState(report.isPartOfNavNo);
@@ -90,11 +92,6 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   const handleCheckboxChange = () => {
     setIsPartOfNavNo(!isPartOfNavNo);
   };
-
-  useEffect(() => {
-    setCriteriaData(report.successCriteria);
-    setIsPartOfNavNo(report.isPartOfNavNo);
-  }, [report]);
 
   useEffect(() => {
     updateReportData({ isPartOfNavNo: isPartOfNavNo });

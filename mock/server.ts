@@ -685,7 +685,7 @@ api.get('/api/reports/123456789', (c) => {
     lastChanged: '2023-10-04T15:24:18.000Z',
     notes: 'Dette er en testrapport',
     hasWriteAccess: true,
-    isPartOfNavNo: true,
+    isPartOfNavNo: false,
   };
 
   return c.json(initializedReport); // Send the custom object as the response

@@ -6,20 +6,16 @@ import {
   Textarea,
   TextField,
 } from '@navikt/ds-react';
-import type { AggregatedReport, InitializeAggregatedReport } from '@src/types';
+import type {
+  AggregatedReport,
+  InitializeAggregatedReport,
+  ReportSummary,
+} from '@src/types';
 import { createAggregatedReport } from '@src/services/reportServices';
 import styles from './CreateAggregatedReport.module.css';
 
-interface Report {
-  title: string;
-  id: string;
-  teamName: string;
-  teamId: string;
-  date: string;
-}
-
 interface ReportListProps {
-  reports: Report[];
+  reports: ReportSummary[];
   aggregatedReport?: AggregatedReport;
 }
 
@@ -71,7 +67,7 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
           });
         }}
       >
-        {reports.map((report: Report) => (
+        {reports.map((report: ReportSummary) => (
           <Checkbox value={report.id} key={report.id}>
             {report.title}
           </Checkbox>
