@@ -4,17 +4,18 @@ import type { AggregatedReport, CriterionType, Report } from '@src/types.ts';
 import {
   updateAggregatedReport,
   updateReport,
-  deleteReport,
 } from '@src/services/reportServices';
 import {
   Tabs,
   TextField,
+  Textarea,
   Chips,
   Heading,
   Link,
   Button,
+  Checkbox,
 } from '@navikt/ds-react';
-import _ from 'lodash';
+import _, { set } from 'lodash';
 import styles from './CreateReport.module.css';
 import { formatDate } from '@src/utils/client/date';
 import { ArrowRightIcon } from '@navikt/aksel-icons';
@@ -27,9 +28,12 @@ interface CreateReportProps {
 }
 
 const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
-  const [criteriaData, setCriteriaData] = useState<CriterionType[]>([]);
+  const [criteriaData, setCriteriaData] = useState<CriterionType[]>(
+    report.successCriteria,
+  );
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [isPartOfNavNo, setIsPartOfNavNo] = useState(report.isPartOfNavNo);
 
   const filterOptions: Record<string, string> = {
     COMPLIANT: 'Tilfredsstilt',
@@ -45,7 +49,6 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
       reportType === 'SINGLE'
         ? await updateReport(report.reportId, updates)
         : await updateAggregatedReport(report.reportId, updates);
-      console.log('Report updated');
     } catch (error) {
       console.error(error);
     }
@@ -86,13 +89,14 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
     500,
   );
 
-  useEffect(() => {
-    if (report) {
-      setCriteriaData(report.successCriteria);
-    }
-  }, [report]);
+  const handleCheckboxChange = () => {
+    setIsPartOfNavNo(!isPartOfNavNo);
+  };
 
-  console.log('report', report);
+  useEffect(() => {
+    updateReportData({ isPartOfNavNo: isPartOfNavNo });
+  }, [isPartOfNavNo]);
+
   return (
     <div className={styles.reportContent}>
       <Heading level="1" size="xlarge">
@@ -139,14 +143,6 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
               </Button>
             )}
           </span>
-          <section className={styles.metadata}>
-            {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
-            <p>Opprettet av: {report?.author.email}</p>
-            {report?.lastChanged && (
-              <p>Sist endret: {formatDate(report?.lastChanged)}</p>
-            )}
-            <p>Sist endret av: {report?.lastUpdatedBy}</p>
-          </section>
           <ul className={styles.criteriaList}>
             {selectedFilters.length === 0
               ? criteriaData.map((criterion) => (
@@ -176,6 +172,14 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
           </ul>
         </Tabs.Panel>
         <Tabs.Panel value="metadata" className={styles.tabContent}>
+          <section className={styles.metadata}>
+            {report?.created && <p>Opprettet: {formatDate(report?.created)}</p>}
+            <p>Opprettet av: {report?.author.email}</p>
+            {report?.lastChanged && (
+              <p>Sist endret: {formatDate(report?.lastChanged)}</p>
+            )}
+            <p>Sist endret av: {report?.lastUpdatedBy}</p>
+          </section>
           <TextField
             label="Rapportnavn"
             id="report-name"
@@ -194,6 +198,24 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
             readOnly={!report?.hasWriteAccess}
             onChange={(e) => handleMetadataChange('url', e.target.value)}
           />
+          <Textarea
+            label="Notater"
+            id="notes"
+            name="notes"
+            defaultValue={report?.notes}
+            readOnly={!report?.hasWriteAccess}
+            onChange={(e) => handleMetadataChange('notes', e.target.value)}
+          />
+          {reportType === 'SINGLE' && (
+            <Checkbox
+              description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
+              name="isPartOfNavNo"
+              defaultChecked={!isPartOfNavNo}
+              onChange={handleCheckboxChange}
+            >
+              Ikke en del av NAV.no
+            </Checkbox>
+          )}
         </Tabs.Panel>
       </Tabs>
     </div>

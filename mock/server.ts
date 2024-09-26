@@ -112,6 +112,31 @@ api.get('api/users/details', (c) => {
   });
 });
 
+api.get('api/user', (c) => {
+  return c.json({
+    email: 'my.user@nav.no',
+    name: 'Hakaurlander, JasMaNi',
+    teams: teams,
+    isAdmin: true,
+    reports: [
+      {
+        title: 'Ayyyy',
+        id: '12erh34',
+        teamId: 'team-ultratull',
+        teamName: 'Team Ultratull',
+        date: '2024-07-15',
+      },
+      {
+        title: 'Heihei',
+        id: '12erh42',
+        teamId: 'team-tull',
+        teamName: 'Team Tull',
+        date: '2024-08-19',
+      },
+    ],
+  });
+});
+
 api.get('api/teams/team-nav/details', (c) => {
   return c.json({
     id: 'team-nav',
@@ -658,7 +683,9 @@ api.get('/api/reports/123456789', (c) => {
     ],
     created: '2023-10-04T15:24:18.000Z',
     lastChanged: '2023-10-04T15:24:18.000Z',
+    notes: 'Dette er en testrapport',
     hasWriteAccess: true,
+    isPartOfNavNo: false,
   };
 
   return c.json(initializedReport); // Send the custom object as the response

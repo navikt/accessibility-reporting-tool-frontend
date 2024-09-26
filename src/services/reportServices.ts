@@ -42,7 +42,7 @@ export const getReport = async (url: string): Promise<Report> => {
 };
 
 export const updateReport = async (id: string, updates: Partial<Report>) => {
-  const response = await fetch(`${apiProxyUrl}/reports/${id}/update`, {
+  const response = await fetch(`${apiProxyUrl}/reports/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(updates),
     credentials: 'include',

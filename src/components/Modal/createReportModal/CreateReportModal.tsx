@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Button, Modal, Select, TextField } from '@navikt/ds-react';
+import { useRef, useState, useEffect } from 'react';
+import { Button, Modal, Select, TextField, Checkbox } from '@navikt/ds-react';
 import { createReport } from '@src/services/reportServices';
 import { FilePlusIcon } from '@navikt/aksel-icons';
 import { fetcher } from '@src/utils/client/api.ts';
@@ -14,6 +14,7 @@ const CreateReportModal = () => {
     name: '',
     urlTilSiden: '',
     teamId: '',
+    isPartOfNavNo: true,
   });
   const handleSubmit = () => {
     const reportId = createReport(reportDetails);
@@ -35,9 +36,15 @@ const CreateReportModal = () => {
     });
   };
 
+  const handleCheckboxChange = () => {
+    setReportDetails({
+      ...reportDetails,
+      isPartOfNavNo: !reportDetails.isPartOfNavNo,
+    });
+  };
+
   const isValid =
     reportDetails.name && reportDetails.urlTilSiden && reportDetails.teamId;
-
   return (
     <div>
       <Button
@@ -62,7 +69,6 @@ const CreateReportModal = () => {
             id="title"
             name="name"
             onChange={handleChange}
-            required
           />
           <TextField
             label="URL"
@@ -70,13 +76,19 @@ const CreateReportModal = () => {
             id="url"
             name="urlTilSiden"
             onChange={handleChange}
-            required
           />
+          <Checkbox
+            description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
+            name="isPartOfNavNo"
+            onChange={handleCheckboxChange}
+            value={!reportDetails.isPartOfNavNo}
+          >
+            Ikke en del av NAV.no
+          </Checkbox>
           <Select
             label="Hvilket team er ansvarlig for løsningen?"
             name="teamId"
             onChange={handleChange}
-            required
           >
             <option value="">Velg team</option>
             {userDetails?.teams.map((team: Team) => (
