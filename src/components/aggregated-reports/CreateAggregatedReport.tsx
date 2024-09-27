@@ -20,11 +20,7 @@ interface ReportListProps {
 }
 
 const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
-  const [selectedReports, setSelectedReports] = useState<string[]>(
-    aggregatedReport?.fromReports.map((report) => {
-      return report.reportId;
-    }) || [],
-  );
+  const [selectedReports, setSelectedReports] = useState<string[]>([]);
   const [initialData, setInitialData] = useState<InitializeAggregatedReport>({
     descriptiveName: aggregatedReport?.descriptiveName || '',
     url: aggregatedReport?.url || '',
@@ -56,12 +52,13 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
       setInitialData({ ...initialData, reports: [] });
     }
     if (!selectNavNo && aggregatedReport) {
-      setSelectedReports(
-        aggregatedReport.fromReports.map((report) => report.reportId),
+      const currentlySelectedReports = aggregatedReport.fromReports.map(
+        (report) => reports.filter((r) => r.id === report.reportId)[0].id,
       );
+      setSelectedReports(currentlySelectedReports);
       setInitialData({
         ...initialData,
-        reports: aggregatedReport.fromReports.map((report) => report.reportId),
+        reports: currentlySelectedReports,
       });
     }
   }, [selectNavNo]);
