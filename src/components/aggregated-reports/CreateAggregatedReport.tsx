@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Checkbox,
@@ -20,19 +20,41 @@ interface ReportListProps {
 }
 
 const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
+  const [selectedReports, setSelectedReports] = useState<string[]>(
+    aggregatedReport?.fromReports.map((report) => {
+      return report.reportId;
+    }) || [],
+  );
   const [initialData, setInitialData] = useState<InitializeAggregatedReport>({
     descriptiveName: aggregatedReport?.descriptiveName || '',
     url: aggregatedReport?.url || '',
     notes: aggregatedReport?.notes || '',
-    reports:
-      aggregatedReport?.fromReports.map((report) => {
-        return report.reportId;
-      }) || [],
+    reports: selectedReports,
   });
+
+  const [selectNavNo, setSelectNavNo] = useState<boolean>(false);
 
   const handleChenge = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInitialData({ ...initialData, [e.target.name]: e.target.value });
   };
+
+  const handleSelectNavNo = () => {
+    setSelectNavNo(!selectNavNo);
+  };
+
+  useEffect(() => {
+    if (selectNavNo) {
+      const currentlySelectedReports = reports
+        .filter((report) => report.isPartOfNavNo)
+        .map((report) => report.id);
+
+      setSelectedReports(currentlySelectedReports);
+      setInitialData({ ...initialData, reports: currentlySelectedReports });
+    } else {
+      setSelectedReports([]);
+      setInitialData({ ...initialData, reports: [] });
+    }
+  }, [selectNavNo]);
 
   return (
     <div className={styles.createReportContainer}>
@@ -56,14 +78,18 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
           setInitialData({ ...initialData, notes: e.target.value });
         }}
       />
+      <Checkbox onChange={handleSelectNavNo}>
+        Huk av alle "nav.no"-rapporter
+      </Checkbox>
       <CheckboxGroup
         legend="Velg rapporter du ønsker å slå sammen"
         size="small"
-        defaultValue={initialData.reports}
+        value={selectedReports}
         onChange={(e) => {
+          setSelectedReports(e);
           setInitialData({
             ...initialData,
-            reports: e.map((id) => id),
+            reports: e,
           });
         }}
       >
