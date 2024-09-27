@@ -52,9 +52,13 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
       setInitialData({ ...initialData, reports: [] });
     }
     if (!selectNavNo && aggregatedReport) {
-      const currentlySelectedReports = aggregatedReport.fromReports.map(
-        (report) => reports.filter((r) => r.id === report.reportId)[0].id,
-      );
+      const currentlySelectedReports = reports
+        .filter((report) =>
+          aggregatedReport.fromReports
+            .map((r) => r.reportId)
+            .includes(report.id),
+        )
+        .map((report) => report.id);
       setSelectedReports(currentlySelectedReports);
       setInitialData({
         ...initialData,
