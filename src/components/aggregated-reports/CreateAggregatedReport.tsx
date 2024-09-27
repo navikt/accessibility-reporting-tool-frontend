@@ -50,7 +50,8 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
 
       setSelectedReports(currentlySelectedReports);
       setInitialData({ ...initialData, reports: currentlySelectedReports });
-    } else {
+    }
+    if (!selectNavNo && !aggregatedReport) {
       setSelectedReports([]);
       setInitialData({ ...initialData, reports: [] });
     }
