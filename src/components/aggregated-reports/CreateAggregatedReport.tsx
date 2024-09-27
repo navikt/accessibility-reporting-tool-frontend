@@ -55,6 +55,15 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
       setSelectedReports([]);
       setInitialData({ ...initialData, reports: [] });
     }
+    if (!selectNavNo && aggregatedReport) {
+      setSelectedReports(
+        aggregatedReport.fromReports.map((report) => report.reportId),
+      );
+      setInitialData({
+        ...initialData,
+        reports: aggregatedReport.fromReports.map((report) => report.reportId),
+      });
+    }
   }, [selectNavNo]);
 
   return (
