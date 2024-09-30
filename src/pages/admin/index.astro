@@ -25,7 +25,14 @@ const data = await response.json();
 <Layout>
   <div class={styles.headingAndButton}>
     <h1 class={styles.h1}>Admin</h1>
-    <a href="/admin/create-report">Opprett rapport</a>
+    <Button
+      as={Link}
+      variant="primary"
+      href="/admin/create-report"
+      className={styles.buttonAsLink}
+    >
+      Opprett en samslått rapport
+    </Button>
   </div>
   <div class={styles.content}>
     <ReportList client:only reports={data} />

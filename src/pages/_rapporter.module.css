@@ -35,3 +35,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.buttonAsLink {
+  color: var(
+    --ac-button-primary-text,
+    var(--__ac-button-primary-text, var(--a-text-on-action))
+  );
+  text-decoration: none;
+}
