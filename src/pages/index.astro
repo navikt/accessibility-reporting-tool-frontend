@@ -26,9 +26,9 @@ const user = await userResponse.json();
 <Layout>
   {
     user.teams.length !== 0 ? (
-      <MyTeam client:only />
+      <MyTeam client:only user={user} />
     ) : (
-      <main>
+      <div>
         <section class={styles.section1}>
           <section class={styles.innerSection1}>
             <Heading level="1" size="xlarge">
@@ -69,7 +69,7 @@ const user = await userResponse.json();
             </Heading>
           </article>
         </section>
-      </main>
+      </div>
     )
   }
 </Layout>
