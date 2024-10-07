@@ -2,13 +2,34 @@
 import Layout from '../../layouts/Layout.astro';
 import TeamDashboard from '@components/teamDashboard/TeamDashboard';
 import styles from './_[teamId].module.css';
+import { getOboToken } from '@src/utils/server/getOboToken';
+import { apiUrl } from '@src/utils/server/urls';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const userResponse = await fetch(`${apiUrl}/api/user`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const user = await userResponse.json();
+
+const isMyTeam = user.teams.some(
+  (team: any) => team.id === Astro.params.teamId,
+);
 ---
 
 <Layout>
   <main class={styles.content}>
     <TeamDashboard
       teamId={Astro.params.teamId as string}
-      isMyTeam={false}
+      isMyTeam={isMyTeam}
       client:only="react"
     />
   </main>
