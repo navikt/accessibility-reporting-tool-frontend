@@ -1,25 +1,28 @@
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
-import { BodyLong, Heading, Radio, RadioGroup } from '@navikt/ds-react';
+import { BodyLong, Heading, Radio, RadioGroup, Select } from '@navikt/ds-react';
 import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/client/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
 import EditTeamModal from '@components/Modal/TeamModals/EditTeamModal';
+import CreateReportModal from '@components/Modal/createReportModal/CreateReportModal';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
 import type { ReportSummary } from '@src/types.ts';
 
 interface TeamDashboardProps {
-  teamId: String;
+  teamId: string;
   isMyTeam: Boolean;
 }
 
 function TeamDashboard(props: TeamDashboardProps) {
+  const [currentReportId, setCurrentReportId] = useState<string>('');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
     fetcher,
   );
-  const [currentReportId, setCurrentReportId] = useState<string>('');
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
     { url: `${apiProxyUrl}/teams/${props.teamId}/details` },
@@ -70,125 +73,152 @@ function TeamDashboard(props: TeamDashboardProps) {
     }
   }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <section className={styles.gridWrapper}>
-      <article className={styles.accessibilityStatusContainer}>
+    <div className={styles.teamDashboard}>
+      <div className={styles.teamHeader}>
         <Heading level="2" size="large">
-          Tilgjengelighetsstatus for {teamData?.name}
+          {teamData?.name}
         </Heading>
+        {props.isMyTeam && (
+          <div className={styles.buttons}>
+            <CreateReportModal />
+          </div>
+        )}
+      </div>
+      <div className={styles.chartAndInfo}>
         {hasReport ? (
-          <section className={styles.accessibilityStatusInner}>
-            <aside className={styles.selectReportContainer}>
-              <Heading level="3" size="medium">
-                Rapporter
-                <RadioGroup
-                  legend="Velg rapport"
-                  onChange={setCurrentReportId}
-                  value={currentReportId}
+          <section className={styles.pieChart}>
+            {isMobile ? (
+              <>
+                <Select
+                  label="Velg rapport"
+                  defaultValue={currentReportId}
+                  onChange={(e) => setCurrentReportId(e.target.value)}
                 >
-                  {reportListData.map((reportSummary: ReportSummary) => {
-                    return (
-                      <Radio key={reportSummary.id} value={reportSummary.id}>
-                        {reportSummary.title}
-                      </Radio>
-                    );
-                  })}
+                  {reportListData.map((report: ReportSummary) => (
+                    <option key={report.id} value={report.id}>
+                      {report.title}
+                    </option>
+                  ))}
+                </Select>
+                <p>Oppfylt: {COMPLIANT}</p>
+                <p>Ikke oppfylt: {NOT_COMPLIANT}</p>
+                <p>Ikke aktuelle: {NOT_APPLICABLE}</p>
+                <p>Ikke testet: {NOT_TESTED}</p>
+              </>
+            ) : (
+              <>
+                <RadioGroup
+                  name="report"
+                  legend="Velg rapport"
+                  value={currentReportId}
+                  onChange={setCurrentReportId}
+                >
+                  {reportListData.map((report: ReportSummary) => (
+                    <Radio key={report.id} value={report.id}>
+                      {report.title}
+                    </Radio>
+                  ))}
                 </RadioGroup>
-              </Heading>
-            </aside>
-            <section className={styles.chartContainer}>
-              <PieChart
-                colors={['red', 'gray', 'green', 'yellow']}
-                series={[
-                  {
-                    data: [
-                      {
-                        value: COMPLIANT,
-                        color: 'green',
-                        label: `Krav oppfylt: ${COMPLIANT}`,
+                <PieChart
+                  colors={['red', 'gray', 'green', 'yellow']}
+                  series={[
+                    {
+                      data: [
+                        {
+                          value: COMPLIANT,
+                          color: 'green',
+                          label: `Krav oppfylt: ${COMPLIANT}`,
+                        },
+                        {
+                          value: NOT_COMPLIANT,
+                          color: 'red',
+                          label: `Krav ikke oppfylt: ${NOT_COMPLIANT}`,
+                        },
+                        {
+                          value: NOT_APPLICABLE,
+                          color: 'gray',
+                          label: `Krav ikke aktuelle: ${NOT_APPLICABLE}`,
+                        },
+                        {
+                          value: NOT_TESTED,
+                          color: '#FFB703',
+                          label: `Krav ikke testet: ${NOT_TESTED}`,
+                        },
+                      ],
+                      valueFormatter: () => {
+                        return ''; // Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
                       },
-                      {
-                        value: NOT_COMPLIANT,
-                        color: 'red',
-                        label: `Krav ikke oppfylt: ${NOT_COMPLIANT}`,
-                      },
-                      {
-                        value: NOT_APPLICABLE,
-                        color: 'gray',
-                        label: `Krav ikke aktuelle: ${NOT_APPLICABLE}`,
-                      },
-                      {
-                        value: NOT_TESTED,
-                        color: '#FFB703',
-                        label: `Krav ikke testet: ${NOT_TESTED}`,
-                      },
-                    ],
-                    valueFormatter: () => {
-                      return ''; //Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
+                      innerRadius: 30,
+                      outerRadius: 150,
+                      paddingAngle: 1,
+                      cornerRadius: 5,
+                      startAngle: 0,
+                      endAngle: 360,
+                      cx: 150,
                     },
-                    innerRadius: 30,
-                    outerRadius: 150,
-                    paddingAngle: 1,
-                    cornerRadius: 5,
-                    startAngle: 0,
-                    endAngle: 360,
-                    cx: 150,
-                  },
-                ]}
-                slotProps={{
-                  legend: {
-                    labelStyle: {
-                      fontSize: 20,
-                      fontFamily: 'Source Sans Pro',
+                  ]}
+                  slotProps={{
+                    legend: {
+                      labelStyle: {
+                        fontSize: 20,
+                        fontFamily: 'Source Sans Pro',
+                      },
                     },
-                  },
-                }}
-                width={540}
-                height={300}
-              />
-            </section>
+                  }}
+                  width={540}
+                  height={300}
+                />
+              </>
+            )}
           </section>
         ) : (
-          <>
-            <BodyLong>
-              Her var det tomt, da teamet du har valgt ikke har noen rapporter!
-            </BodyLong>
-          </>
+          <section className={styles.pieChart}>
+            <BodyLong>Ingen rapporter tilgjengelig</BodyLong>
+          </section>
         )}
-      </article>
-      <article className={styles.membersContainer}>
-        <div className={styles.editTeamBtn}>
-          {props.isMyTeam && !isLoadingTeamData ? (
-            <EditTeamModal teamId={teamData?.id} />
-          ) : (
-            <></>
-          )}
-        </div>
-        <Heading level="3" size="medium">
-          Admin
-        </Heading>
-        <p className={styles.adminMail}>{teamData?.email}</p>
-        <Heading level="3" size="medium">
-          Medlemmer
-        </Heading>
-        <ul className={styles.membersList}>
-          {teamData?.members.map((members: string) => {
-            return (
-              <li key={members} value={members}>
-                {members}
-              </li>
-            );
-          })}
-        </ul>
-      </article>
-      <section className={styles.reportsContainer}>
-        <Heading level="2" size="large" spacing>
+        <section className={styles.teamInfo}>
+          <div className={styles.teamInfoHeader}>
+            <Heading level="3" size="medium">
+              Team detaljer
+            </Heading>
+            {props.isMyTeam && <EditTeamModal teamId={props.teamId} />}
+          </div>
+          <span className={styles.divider} />
+          <Heading level="3" size="small">
+            Team ansvarlig
+          </Heading>
+          <BodyLong>{teamData?.email}</BodyLong>
+          <span className={styles.divider} />
+          <Heading level="3" size="small">
+            Teammedlemmer
+          </Heading>
+          <ul className={styles.memberList}>
+            {teamData?.members.map((member: string) => (
+              <li key={member}>{member}</li>
+            ))}
+          </ul>
+        </section>
+      </div>
+      <section className={styles.reportList}>
+        <Heading level="3" size="small">
           Rapporter
         </Heading>
-
         <ReportList reports={reportListData} />
       </section>
-    </section>
+    </div>
   );
 }
 

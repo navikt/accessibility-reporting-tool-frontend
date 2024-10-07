@@ -1,79 +1,88 @@
-.adminMail{
-    padding-left: 5px;
-    font-family: var(--a-font-family);
-    font-size: 22px;
+.teamDashboard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 1280px;
 }
 
-.membersList{
-    list-style: none;
-    text-align: left;
-    padding-left: 5px;
-    font-family: var(--a-font-family);
-    font-size: 22px;
+.pieChart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: var(--a-shadow-small);
+  padding: 16px;
+  width: 70%;
+  margin-right: 20px;
 }
 
-.gridWrapper{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    min-height: 800px;
-    display: grid;
-    gap: 16px;
-    grid-template-areas: 
-    'mid mid mid mid mid2'
-    'bot bot bot bot bot'
-    ;
+.teamHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.gridWrapper > section, article{
-    background-color: white;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: var(--a-shadow-small);
+.teamInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: var(--a-shadow-small);
+  padding: 16px;
+  width: 30%;
 }
 
-.accessibilityStatusContainer{
-    min-height: 400px;
-    grid-area: mid;
+.divider {
+  margin-top: 20px;
 }
 
-.accessibilityStatusInner{
-    min-height: 80%;
-    min-width: 700px;
-    display: flex;
-    flex-direction: row;
-    text-align: left;
+.memberList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.chartContainer{
-    margin: auto;
-    min-width: 600px;
+.teamInfoHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.selectReportContainer{
-    min-height: 100%;
-    display: flex;
+.chartAndInfo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.reportList {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: var(--a-shadow-small);
+  padding: 16px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .chartAndInfo {
     flex-direction: column;
-    padding: 15px 10px 15px 10px;
-    box-shadow: var(--a-shadow-xsmall);
-    border-radius: 10px;
-    min-width: 30%;
-    margin-top: 20px;
-}
+  }
 
-.membersContainer{
-    min-height: 400px;
-    grid-area: mid2;
-    display: flex;
+  .pieChart {
     flex-direction: column;
-}
+    margin-top: 20px;
+    overflow: hidden;
+    width: 100%;
+  }
 
-.editTeamBtn{
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-}
-
-.reportsContainer{
-    min-height: 120px;
-    grid-area: bot;
+  .teamInfo {
+    margin-top: 20px;
+    width: 100%;
+  }
 }

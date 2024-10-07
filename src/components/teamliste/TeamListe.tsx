@@ -52,7 +52,7 @@ const TeamListe = () => {
         {data.map((team: Team) => {
           return (
             <li key={team.id} className={styles.listItem}>
-              <Link href={`/team/${team.id}`} variant="neutral">
+              <Link href={`/teams/${team.id}`} variant="neutral">
                 {team.name}
               </Link>
             </li>

@@ -14,6 +14,7 @@ function MyTeam({ user }: MyTeamProps) {
   const [tabState, setTabState] = useState('teamView');
   const [currentTeamId, setCurrentTeamId] = useState(user.teams[0].id); //Hvilken team som sees
   const userName = user.name.split(',');
+  const isMyTeam = user.teams.map((team) => team.id).includes(currentTeamId);
 
   return (
     <div className={styles.teamContent}>
@@ -42,10 +43,9 @@ function MyTeam({ user }: MyTeamProps) {
                 );
               })}
             </Select>
-            <CreateReportModal />
           </div>
 
-          <TeamDashboard teamId={currentTeamId} isMyTeam />
+          <TeamDashboard teamId={currentTeamId} isMyTeam={isMyTeam} />
         </Tabs.Panel>
         <Tabs.Panel value="myReports" className="h-24 w-full bg-gray-50 p-4">
           <header className={styles.myReportsHeader}>
