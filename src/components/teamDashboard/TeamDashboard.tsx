@@ -7,13 +7,7 @@ import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
 import EditTeamModal from '@components/Modal/TeamModals/EditTeamModal';
 import { apiProxyUrl } from '@src/utils/client/urls.ts';
-
-interface TeamReport {
-  title: string;
-  id: string;
-  teamId: string;
-  date: string;
-}
+import type { ReportSummary } from '@src/types.ts';
 
 interface TeamDashboardProps {
   teamId: String;
@@ -21,9 +15,6 @@ interface TeamDashboardProps {
 }
 
 function TeamDashboard(props: TeamDashboardProps) {
-  //Kode for team-dashboard. Brukes for å vise oversikt over medlemmene og rapportene til et team (som korresponderer med teamId i props),
-  //samt tilgjengelighetsstatusen deres.
-
   const { data: reportListData, isLoading: isLoadingList } = useSWR(
     { url: `${apiProxyUrl}/teams/${props.teamId}/reports` },
     fetcher,
@@ -41,27 +32,36 @@ function TeamDashboard(props: TeamDashboardProps) {
   );
 
   const hasReport = reportListData && reportListData.length > 0;
+  const { NOT_COMPLIANT, COMPLIANT, NOT_APPLICABLE, NOT_TESTED } =
+    reportData?.successCriteria.reduce(
+      (
+        acc: {
+          NOT_COMPLIANT: number;
+          COMPLIANT: number;
+          NOT_APPLICABLE: number;
+          NOT_TESTED: number;
+        },
+        criterion: { status: string },
+      ) => {
+        switch (criterion.status) {
+          case 'NOT_TESTED':
+            acc.NOT_TESTED++;
+            break;
+          case 'COMPLIANT':
+            acc.COMPLIANT++;
+            break;
+          case 'NOT_APPLICABLE':
+            acc.NOT_APPLICABLE++;
+            break;
+          default:
+            acc.NOT_COMPLIANT++;
+            break;
+        }
+        return acc;
+      },
+      { NOT_COMPLIANT: 0, COMPLIANT: 0, NOT_APPLICABLE: 0, NOT_TESTED: 0 },
+    ) || { NOT_COMPLIANT: 0, COMPLIANT: 0, NOT_APPLICABLE: 0, NOT_TESTED: 0 };
 
-  let successCriteriaCount = 0;
-  successCriteriaCount = reportData?.successCriteria.length - 1;
-
-  let NOT_COMPLIANT = 0;
-  let COMPLIANT = 0;
-  let NOT_APPLICABLE = 0;
-  let NOT_TESTED = 0;
-
-  for (let i = 0; i <= successCriteriaCount; i++) {
-    if (reportData?.successCriteria[i].status == 'NOT_TESTED') {
-      NOT_TESTED++;
-    } else if (reportData?.successCriteria[i].status == 'COMPLIANT') {
-      COMPLIANT++;
-    } else if (reportData?.successCriteria[i].status == 'NOT_APPLICABLE') {
-      NOT_APPLICABLE++;
-    } else {
-      //if status == 'NOT_COMPLIANT'
-      NOT_COMPLIANT++;
-    }
-  }
   useEffect(() => {
     if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
       console.log(currentReportId);
@@ -86,10 +86,10 @@ function TeamDashboard(props: TeamDashboardProps) {
                   onChange={setCurrentReportId}
                   value={currentReportId}
                 >
-                  {reportListData.map((teamReport: TeamReport) => {
+                  {reportListData.map((reportSummary: ReportSummary) => {
                     return (
-                      <Radio key={teamReport.id} value={teamReport.id}>
-                        {teamReport.title}
+                      <Radio key={reportSummary.id} value={reportSummary.id}>
+                        {reportSummary.title}
                       </Radio>
                     );
                   })}
