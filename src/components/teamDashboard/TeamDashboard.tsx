@@ -67,9 +67,7 @@ function TeamDashboard(props: TeamDashboardProps) {
 
   useEffect(() => {
     if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
-      console.log(currentReportId);
       setCurrentReportId(reportListData[0]?.id);
-      console.log(currentReportId);
     }
   }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
 

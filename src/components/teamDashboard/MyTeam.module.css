@@ -23,11 +23,20 @@
 .myReportsContainer {
   background-color: white;
   padding: 16px;
-  border-radius: 10px;
-  box-shadow: var(--a-shadow-xsmall);
+  border-radius: 1rem;
+  box-shadow: var(--a-shadow-small);
 }
 
 .myReportsContainer > section {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .selector,
+  .selector2 {
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
