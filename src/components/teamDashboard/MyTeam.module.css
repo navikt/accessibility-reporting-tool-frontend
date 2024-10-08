@@ -4,6 +4,11 @@
   margin-right: auto;
 }
 
+.h1 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .selector,
 .selector2 {
   width: 20%;
