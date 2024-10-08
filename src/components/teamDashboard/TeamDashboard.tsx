@@ -66,10 +66,10 @@ function TeamDashboard(props: TeamDashboardProps) {
     ) || { NOT_COMPLIANT: 0, COMPLIANT: 0, NOT_APPLICABLE: 0, NOT_TESTED: 0 };
 
   useEffect(() => {
-    if (!isLoadingList && !isLoadingTeamData && hasReport && !isLoadingReport) {
-      setCurrentReportId(reportListData[0]?.id);
+    if (reportListData && reportListData.length > 0) {
+      setCurrentReportId(reportListData[0].id);
     }
-  }, [isLoadingList, props.teamId, isLoadingTeamData, reportListData]);
+  }, [reportListData]);
 
   useEffect(() => {
     const handleResize = () => {

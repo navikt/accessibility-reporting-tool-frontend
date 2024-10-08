@@ -20,9 +20,9 @@ const userResponse = await fetch(`${apiUrl}/api/user`, {
 
 const user = await userResponse.json();
 
-const isMyTeam = user.teams.some(
-  (team: any) => team.id === Astro.params.teamId,
-);
+const isMyTeam =
+  user.teams.some((team: any) => team.id === Astro.params.teamId) ||
+  user.isAdmin;
 ---
 
 <Layout>
