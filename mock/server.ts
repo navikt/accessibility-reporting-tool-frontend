@@ -114,26 +114,30 @@ api.get('api/users/details', (c) => {
 
 api.get('api/user', (c) => {
   return c.json({
-    email: 'my.user@nav.no',
-    name: 'Hakaurlander, JasMaNi',
-    teams: teams,
-    isAdmin: true,
     reports: [
       {
-        title: 'Ayyyy',
-        id: '12erh34',
-        teamId: 'team-ultratull',
-        teamName: 'Team Ultratull',
-        date: '2024-07-15',
+        id: 'c39c0dc4-ebde-4e6c-92b7-01a7ee47f45d',
+        title: 'hello',
+        url: 'nim.test.nav.no',
+        teamId: 'team-uu-sommer',
+        teamName: 'Team UU Sommer',
+        date: '2024-09-30T11:01:10.000Z',
+        isPartOfNavNo: true,
       },
       {
-        title: 'Heihei',
-        id: '12erh42',
-        teamId: 'team-tull',
-        teamName: 'Team Tull',
-        date: '2024-08-19',
+        id: 'ad2785de-8283-483b-b2a0-e8cc11b8b187',
+        title: 'This is an Aggregated Report',
+        url: 'test.aggregated.com',
+        teamId: '',
+        teamName: '',
+        date: '2024-09-30T08:16:12.000Z',
+        isPartOfNavNo: false,
       },
     ],
+    teams: teams,
+    name: 'Hakimi, Nima',
+    email: 'Nima.Hakimi@nav.no',
+    isAdmin: true,
   });
 });
 

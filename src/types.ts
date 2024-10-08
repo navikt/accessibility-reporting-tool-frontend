@@ -114,3 +114,11 @@ export type AggregatedReport = {
   notes: string;
   isPartOfNavNo: boolean;
 };
+
+export type User = {
+  email: string;
+  name: string;
+  teams: Team[];
+  reports: ReportSummary[];
+  isAdmin: boolean;
+};

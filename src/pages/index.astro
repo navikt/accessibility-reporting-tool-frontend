@@ -1,8 +1,75 @@
 ---
+import { apiUrl } from '@src/utils/server/urls';
 import Layout from '../layouts/Layout.astro';
-import Home from '@components/home/Home';
+import { getOboToken } from '@src/utils/server/getOboToken';
+import MyTeam from '@components/teamDashboard/MyTeam';
+import { Button, Heading, Link } from '@navikt/ds-react';
+import styles from './_index.module.css';
+import { ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
+
+const oboToken = await getOboToken(Astro.locals.token);
+
+const userResponse = await fetch(`${apiUrl}/api/user`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const user = await userResponse.json();
 ---
 
 <Layout>
-  <Home client:only="react" />
+  {
+    user.teams.length !== 0 ? (
+      <MyTeam client:only user={user} />
+    ) : (
+      <div>
+        <section class={styles.section1}>
+          <section class={styles.innerSection1}>
+            <Heading level="1" size="xlarge">
+              Velkommen til A11y Statement!
+            </Heading>
+            <p class={styles.text}>
+              Denne applikasjonen er NAVs interne rapporteringsverktøy for
+              tilgjengelighetserklæringer
+            </p>
+            <Button
+              as={Link}
+              href="/teams"
+              underline={false}
+              variant="secondary"
+            >
+              Finn eller lag ditt team
+            </Button>
+          </section>
+        </section>
+        <section class={styles.section2}>
+          <article class={styles.article}>
+            <ComponentIcon title="code icon" fontSize="3rem" />
+            <Heading level="3" size="medium">
+              Les mer på{' '}
+              <Link href="https://aksel.nav.no/god-praksis/universell-utforming">
+                Aksel.no
+              </Link>
+            </Heading>
+          </article>
+
+          <article class={styles.article}>
+            <FigureIcon title="accessibility figure icon" fontSize="3rem" />
+            <Heading level="3" size="medium">
+              Les mer på{' '}
+              <Link href="https://www.uutilsynet.no/veiledning/tilgjengelighetserklaering/1127">
+                uutilsynet.no
+              </Link>
+            </Heading>
+          </article>
+        </section>
+      </div>
+    )
+  }
 </Layout>
