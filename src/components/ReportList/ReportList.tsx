@@ -82,11 +82,15 @@ const ReportList = ({ reports }: ReportListProps) => {
                       href={`/reports/aggregated/${report.id}`}
                       variant="action"
                     >
-                      {report.title === '' ? 'Uten navn' : report.title}
+                      {report.title === '' ? '(Uten navn)' : report.title}
                     </Link>
                   )}
                 </Table.HeaderCell>
-                <Table.DataCell>{report.teamName}</Table.DataCell>
+                <Table.DataCell>
+                  <Link href={`/teams/${report.teamId}`}>
+                    {report.teamName}
+                  </Link>
+                </Table.DataCell>
                 <Table.DataCell>{formatDate(report.date)}</Table.DataCell>
               </Table.Row>
             );

@@ -106,7 +106,7 @@ const Reports = ({ reports, aggregatedReport }: ReportListProps) => {
       >
         {reports.map((report: ReportSummary) => (
           <Checkbox value={report.id} key={report.id}>
-            {report.title}
+            {report.title ? report.title : '(Uten navn)'}
           </Checkbox>
         ))}
       </CheckboxGroup>
