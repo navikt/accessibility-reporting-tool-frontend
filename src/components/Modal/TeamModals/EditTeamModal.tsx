@@ -57,7 +57,7 @@ function EditTeamModal(props: EditTeamModalProps) {
     setTeamEmail(teamData?.email);
     setCurrentMembers(teamData?.members);
     setTeamName(teamData?.name);
-  }, [props.teamId]);
+  }, [teamData]);
 
   const isValid = teamName && teamEmail;
 
