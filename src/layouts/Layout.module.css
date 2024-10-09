@@ -12,6 +12,11 @@ body {
 
 .page {
   width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
   min-height: 80vh;
 }
 
