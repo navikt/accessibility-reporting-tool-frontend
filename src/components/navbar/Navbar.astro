@@ -4,6 +4,7 @@ import styles from './Navbar.module.css';
 import { LeaveIcon } from '@navikt/aksel-icons';
 import { apiUrl } from '../../utils/server/urls';
 import { getOboToken } from '@src/utils/server/getOboToken';
+import MobileNavbar from './MobileNavbar';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
@@ -21,37 +22,44 @@ const response = await fetch(`${apiUrl}/api/users/details`, {
 const userDetails = await response.json();
 ---
 
-<header class={styles.navBarContainer}>
-  <ul class={styles.navBarP1}>
-    <li>
-      <Link underline={false} variant="neutral" href="/"> Forside </Link>
-    </li>
-    <li>
-      <Link underline={false} variant="neutral" href="/teams"> Teams </Link>
-    </li>
-    <li>
-      <Link underline={false} variant="neutral" href="/reports">
-        Alle rapporter
-      </Link>
-    </li>
-    {
-      userDetails?.isAdmin && (
+<span>
+  <header class={styles.mobileNavbar}>
+    <MobileNavbar user={userDetails} client:only />
+  </header>
+  <header class={styles.navBarContainer}>
+    <span class={styles.contentWrapper}>
+      <ul class={styles.links}>
         <li>
-          <Link underline={false} href="/admin">
-            Admin
+          <Link underline={false} variant="neutral" href="/"> Forside </Link>
+        </li>
+        <li>
+          <Link underline={false} variant="neutral" href="/teams"> Teams </Link>
+        </li>
+        <li>
+          <Link underline={false} variant="neutral" href="/reports">
+            Alle rapporter
           </Link>
         </li>
-      )
-    }
-  </ul>
-  <ul class={styles.navBarP2}>
-    <li>
-      <p>Inlogget som: <strong>{userDetails.email}</strong></p>
-    </li>
-    <li class={styles.utlogging}>
-      <Link underline={false} href="/oauth2/logout">
-        <LeaveIcon /> Logg Ut
-      </Link>
-    </li>
-  </ul>
-</header>
+        {
+          userDetails?.isAdmin && (
+            <li>
+              <Link underline={false} href="/admin">
+                Admin
+              </Link>
+            </li>
+          )
+        }
+      </ul>
+      <ul class={styles.links}>
+        <li>
+          <p>Inlogget som: <strong>{userDetails.email}</strong></p>
+        </li>
+        <li class={styles.utlogging}>
+          <Link underline={false} href="/oauth2/logout">
+            <LeaveIcon /> Logg Ut
+          </Link>
+        </li>
+      </ul>
+    </span>
+  </header>
+</span>

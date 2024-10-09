@@ -1,52 +1,41 @@
 .navBarContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  border: 1px solid lightgray;
-  padding-left: 20px;
-  padding-right: 20px;
-  grid-gap: 30vw;
+  align-items: center;
+  padding: 1rem 1rem;
+  width: 100%;
   background-color: white;
+  box-shadow: var(--a-shadow-xsmall);
 }
 
-.navBarContainer ul {
+.contentWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.links {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  box-sizing: border-box;
-  justify-content: space-between;
-  top: 0;
+  list-style: none;
+  padding: 0;
   margin: 0;
+  gap: 1rem;
+  align-items: center;
 }
 
-.navBarContainer li {
-  list-style-type: none;
-  align-self: center;
+.mobileNavbar {
+  margin: 16px;
+  display: none;
 }
 
-@media only screen and (min-width: 2000px) {
-  .navBarContainer li {
-    font-size: 25px;
+@media (max-width: 768px) {
+  .navBarContainer {
+    display: none;
   }
-}
 
-@media only screen and (max-width: 2000px) {
-  .navBarContainer li {
-    font-size: 18px;
+  .mobileNavbar {
+    display: block;
   }
-}
-
-@media only screen and (max-width: 1450px) {
-  .navBarContainer li {
-    font-size: 15px;
-  }
-}
-
-.utlogging {
-  cursor: pointer;
-}
-
-Button {
-  cursor: pointer;
 }
