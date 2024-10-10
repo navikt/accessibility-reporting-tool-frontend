@@ -24,7 +24,7 @@ const data = await response.json();
 
 <Layout>
   <div class={styles.headingAndButton}>
-    <h1 class={styles.h1}>Admin</h1>
+    <h1>Admin</h1>
     <Button
       as={Link}
       variant="primary"
@@ -32,6 +32,14 @@ const data = await response.json();
       className={styles.buttonAsLink}
     >
       Opprett en samslått rapport
+    </Button>
+    <Button
+      as={Link}
+      variant="primary"
+      href="https://myaccount.microsoft.com/groups/07bca51b-e5dc-484a-ac09-685e61244b6b"
+      className={styles.buttonAsLink}
+    >
+      Legg til admin i Azure
     </Button>
   </div>
   <div class={styles.content}>

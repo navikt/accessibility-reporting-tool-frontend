@@ -1,27 +1,15 @@
 .content {
   text-align: center;
-  width: 80%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  padding: 15px 20px 15px 20px;
   border-radius: 10px;
   background-color: white;
   box-shadow: var(--a-shadow-small);
-  max-width: 1280px;
-}
-
-.h1 {
-  color: var(--a-blue-800);
 }
 
 .btn {
   margin: auto;
-}
-.search {
-  max-width: 30%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .headingAndButton {
@@ -29,9 +17,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 3rem;
-  width: 66%;
-  max-width: 1280px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -42,4 +29,15 @@
     var(--__ac-button-primary-text, var(--a-text-on-action))
   );
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .headingAndButton {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .content {
+    padding: 16px;
+  }
 }

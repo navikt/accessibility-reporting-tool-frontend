@@ -27,7 +27,7 @@ const reports = await response.json();
     <h1 class={styles.h1}>Alle rapporter</h1>
     <CreateReportModal client:only />
   </div>
-  <section class={styles.content}>
+  <div class={styles.content}>
     <ReportList client:only="react" reports={reports} />
-  </section>
+  </div>
 </Layout>
