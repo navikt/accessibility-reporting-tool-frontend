@@ -33,6 +33,14 @@ const data = await response.json();
     >
       Opprett en samslått rapport
     </Button>
+    <Button
+      as={Link}
+      variant="primary"
+      href="https://myaccount.microsoft.com/groups/07bca51b-e5dc-484a-ac09-685e61244b6b"
+      className={styles.buttonAsLink}
+    >
+      Legg til admin i Azure
+    </Button>
   </div>
   <div class={styles.content}>
     <ReportList client:only reports={data} />
