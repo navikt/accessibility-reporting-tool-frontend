@@ -1,0 +1,10 @@
+.forbidden {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  height: 80vh;
+  color: red;
+}

@@ -8,7 +8,7 @@ import MobileNavbar from './MobileNavbar';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
-const response = await fetch(`${apiUrl}/api/users/details`, {
+const response = await fetch(`${apiUrl}/api/user`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
