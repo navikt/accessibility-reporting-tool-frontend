@@ -37,6 +37,9 @@ function Footer() {
           <a href="https://aksel.nav.no/god-praksis/universell-utforming">
             Universell utforming i NAV
           </a>
+          <a href="https://chatgpt.com/g/g-KNxDmPfob-web-accessibility-expert">
+            Web Accessibility Expert (GPT av Morten Tollefsen)
+          </a>
         </div>
       </div>
     </footer>
