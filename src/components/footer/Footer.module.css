@@ -26,10 +26,17 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  min-width: 30%;
+  gap: 20px;
 }
 
 .contentGroup a {
   color: white;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {
