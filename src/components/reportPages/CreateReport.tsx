@@ -208,12 +208,12 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
           />
           {reportType === 'SINGLE' && (
             <Checkbox
-              description="Hvis rapporten er for en applikasjon som er en del av NAV.no, huk av her."
+              description="Hvis rapporten er for en applikasjon som er en del av NAV.no rettet mot eksterne brukere, huk av her."
               name="isPartOfNavNo"
-              defaultChecked={!isPartOfNavNo}
+              defaultChecked={isPartOfNavNo}
               onChange={handleCheckboxChange}
             >
-              Ikke en del av NAV.no
+              Tjenesten er under NAV.no
             </Checkbox>
           )}
         </Tabs.Panel>

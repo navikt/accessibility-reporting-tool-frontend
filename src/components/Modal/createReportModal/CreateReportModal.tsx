@@ -82,8 +82,9 @@ const CreateReportModal = () => {
             name="isPartOfNavNo"
             onChange={handleCheckboxChange}
             value={!reportDetails.isPartOfNavNo}
+            defaultChecked={reportDetails.isPartOfNavNo}
           >
-            Ikke en del av NAV.no
+            Tjenesten er under NAV.no
           </Checkbox>
           <Select
             label="Hvilket team er ansvarlig for løsningen?"
