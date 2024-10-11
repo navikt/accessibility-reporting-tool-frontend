@@ -34,12 +34,14 @@ function Footer() {
           <Heading level="3" size="medium">
             Nyttige resurser
           </Heading>
-          <a href="https://aksel.nav.no/god-praksis/universell-utforming">
-            Universell utforming i NAV
-          </a>
-          <a href="https://chatgpt.com/g/g-KNxDmPfob-web-accessibility-expert">
-            Web Accessibility Expert (GPT av Morten Tollefsen)
-          </a>
+          <span className={styles.footerLinks}>
+            <a href="https://aksel.nav.no/god-praksis/universell-utforming">
+              Universell utforming i NAV
+            </a>
+            <a href="https://chatgpt.com/g/g-KNxDmPfob-web-accessibility-expert">
+              Web Accessibility Expert (GPT av Morten Tollefsen)
+            </a>
+          </span>
         </div>
       </div>
     </footer>
