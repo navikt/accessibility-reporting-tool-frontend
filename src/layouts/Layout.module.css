@@ -19,8 +19,11 @@ body {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
+  word-break: break-all;
 }
 
 @media (max-width: 768px) {
