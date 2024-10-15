@@ -1,8 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import TeamListe from '../components/teamliste/TeamListe';
+import TeamList from '../components/teamliste/TeamList';
 import styles from './_rapporter.module.css';
 import NewTeamModal from '@components/Modal/TeamModals/NewTeamModal';
+import { apiUrl } from '@src/utils/server/urls';
+import { getOboToken } from '@src/utils/server/getOboToken';
+import type { Team, User } from '@src/types';
+
+const oboToken = await getOboToken(Astro.locals.token);
+const userResponse = await fetch(`${apiUrl}/api/user`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const teamsResponse = await fetch(`${apiUrl}/api/teams`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    Authorization: `Bearer ${oboToken}`,
+  },
+  // @ts-expect-error - This is a valid option
+  duplex: 'half',
+});
+
+const user: User = await userResponse.json();
+const teams: Team[] = await teamsResponse.json();
 ---
 
 <Layout>
@@ -10,5 +39,5 @@ import NewTeamModal from '@components/Modal/TeamModals/NewTeamModal';
     <h1>Alle teams</h1>
     <NewTeamModal client:only />
   </header>
-  <TeamListe client:only="react" />
+  <TeamList teams={teams} isAdmin={user.isAdmin} client:only />
 </Layout>

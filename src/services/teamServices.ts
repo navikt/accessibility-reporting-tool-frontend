@@ -36,3 +36,17 @@ export const createNewTeam = async (newTeam: NewTeam) => {
     throw new Error('Failed to create team');
   }
 };
+
+export const deleteTeam = async (teamId: string) => {
+  const response = await fetch(`${apiProxyUrl}/admin/teams/${teamId}/delete`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (response.ok) {
+    console.log('Team deleted', response.status);
+    window.location.reload();
+  } else {
+    console.log('Failed to delete team-', response.status);
+    throw new Error('Failed to delete team');
+  }
+};
