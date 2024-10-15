@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import TeamDashboard from '@components/teamDashboard/TeamDashboard';
-import styles from './_[teamId].module.css';
 import { getOboToken } from '@src/utils/server/getOboToken';
 import { apiUrl } from '@src/utils/server/urls';
 
@@ -26,11 +25,9 @@ const isMyTeam =
 ---
 
 <Layout>
-  <main class={styles.content}>
-    <TeamDashboard
-      teamId={Astro.params.teamId as string}
-      isMyTeam={isMyTeam}
-      client:only="react"
-    />
-  </main>
+  <TeamDashboard
+    teamId={Astro.params.teamId as string}
+    isMyTeam={isMyTeam}
+    client:only="react"
+  />
 </Layout>
