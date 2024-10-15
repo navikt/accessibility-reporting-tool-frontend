@@ -1,8 +1,8 @@
 import { Link, Table, Button } from '@navikt/ds-react';
-import styles from './TeamListe.module.css';
+import styles from './TeamList.module.css';
 import type { Team } from '@src/types';
 import EditTeamModal from '@components/Modal/TeamModals/EditTeamModal';
-import { deleteTeam } from '@src/services/teamServices';
+import DeleteTeamModal from '@components/Modal/deleteTeam/DeleteTeamModal';
 
 interface TeamListProps {
   teams: Team[];
@@ -34,12 +34,7 @@ const TeamList = ({ teams, isAdmin }: TeamListProps) => {
                     <EditTeamModal teamId={team.id} />
                   </Table.DataCell>
                   <Table.DataCell>
-                    <Button
-                      variant="danger"
-                      onClick={() => deleteTeam(team.id)}
-                    >
-                      Slett
-                    </Button>
+                    <DeleteTeamModal teamId={team.id} />
                   </Table.DataCell>
                 </Table.Row>
               );
