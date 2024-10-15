@@ -38,7 +38,7 @@ export const createNewTeam = async (newTeam: NewTeam) => {
 };
 
 export const deleteTeam = async (teamId: string) => {
-  const response = await fetch(`${apiProxyUrl}/admin/teams/${teamId}/delete`, {
+  const response = await fetch(`${apiProxyUrl}/admin/teams/${teamId}`, {
     method: 'DELETE',
     credentials: 'include',
   });
