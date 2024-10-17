@@ -137,7 +137,7 @@ api.get('api/user', (c) => {
     teams: teams,
     name: 'Hakimi, Nima',
     email: 'Nima.Hakimi@nav.no',
-    isAdmin: true,
+    isAdmin: false,
   });
 });
 
