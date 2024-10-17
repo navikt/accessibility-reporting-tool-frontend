@@ -41,6 +41,7 @@ function EditTeamModal(props: EditTeamModalProps) {
 
     try {
       updateTeam(props.teamId as string, editedTeam);
+      ref.current?.close();
       console.log('her her her');
       mutate();
       setCurrentMembers(editedTeam.members);
@@ -78,7 +79,7 @@ function EditTeamModal(props: EditTeamModalProps) {
       >
         <Modal.Body>
           <form
-            id="teamForm"
+            id="editTeamForm"
             onSubmit={updateTeamData}
             className={styles.modalFields}
           >
@@ -145,19 +146,10 @@ function EditTeamModal(props: EditTeamModalProps) {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            type="submit"
-            form="teamForm"
-            disabled={!isValid}
-            onClick={() => {
-              updateTeamData();
-              ref.current?.close();
-            }}
-          >
+          <Button type="submit" form="editTeamForm" disabled={!isValid}>
             Lagre
           </Button>
           <Button
-            type="button"
             variant="secondary"
             onClick={() => {
               setNewMembers([]);
