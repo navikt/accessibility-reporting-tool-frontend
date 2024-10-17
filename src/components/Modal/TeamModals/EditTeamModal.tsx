@@ -27,11 +27,9 @@ function EditTeamModal(props: EditTeamModalProps) {
     data: teamData,
     isLoading: isLoadingTeamData,
     mutate,
-  } = useSWR({ url: `${apiProxyUrl}/teams/${props.teamId}/details` }, fetcher);
+  } = useSWR({ url: `${apiProxyUrl}/teams/${props.teamId}` }, fetcher);
 
-  const updateTeamData = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const updateTeamData = async () => {
     const editedTeam: Team = {
       id: teamData.id,
       name: teamName,
@@ -42,7 +40,8 @@ function EditTeamModal(props: EditTeamModalProps) {
     console.log(editedTeam);
 
     try {
-      await updateTeam(props.teamId as string, editedTeam);
+      updateTeam(props.teamId as string, editedTeam);
+      console.log('her her her');
       mutate();
       setCurrentMembers(editedTeam.members);
       setNewMembers([]);
@@ -151,7 +150,7 @@ function EditTeamModal(props: EditTeamModalProps) {
             form="teamForm"
             disabled={!isValid}
             onClick={() => {
-              updateTeamData;
+              updateTeamData();
               ref.current?.close();
             }}
           >
