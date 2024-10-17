@@ -40,7 +40,7 @@ function EditTeamModal(props: EditTeamModalProps) {
     console.log(editedTeam);
 
     try {
-      updateTeam(props.teamId as string, editedTeam);
+      await updateTeam(props.teamId as string, editedTeam);
       ref.current?.close();
       console.log('her her her');
       mutate();
