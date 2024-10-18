@@ -78,11 +78,7 @@ function EditTeamModal(props: EditTeamModalProps) {
         closeOnBackdropClick={true}
       >
         <Modal.Body>
-          <form
-            id="editTeamForm"
-            onSubmit={updateTeamData}
-            className={styles.modalFields}
-          >
+          <span className={styles.modalFields}>
             <TextField
               label="Sett navn for team"
               defaultValue={teamName}
@@ -143,10 +139,10 @@ function EditTeamModal(props: EditTeamModalProps) {
             >
               Legg til medlem
             </a>
-          </form>
+          </span>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" form="editTeamForm" disabled={!isValid}>
+          <Button onClick={updateTeamData} disabled={!isValid}>
             Lagre
           </Button>
           <Button
