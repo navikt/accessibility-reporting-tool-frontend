@@ -8,6 +8,7 @@
   box-shadow: var(--a-shadow-small);
   background-color: var(--a-white);
   border-radius: 1rem;
+  padding: 20px;
 }
 .reportFilters {
   display: flex;
