@@ -25,7 +25,7 @@ function TeamDashboard(props: TeamDashboardProps) {
   );
 
   const { data: teamData, isLoading: isLoadingTeamData } = useSWR(
-    { url: `${apiProxyUrl}/teams/${props.teamId}/details` },
+    { url: `${apiProxyUrl}/teams/${props.teamId}` },
     fetcher,
   );
 

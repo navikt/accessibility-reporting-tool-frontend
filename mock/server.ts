@@ -19,69 +19,69 @@ const teams = [
     id: 'team-nav',
     name: 'Team Nav.no',
     email: 'teamnavno@example.com',
-    members: ['medlem1', 'medlem2', 'medlem3'],
   },
   {
     id: 'team-min-side',
     name: 'Min side',
     email: 'minside@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-test',
     name: 'Team test',
     email: 'teamtest@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-imaginary',
     name: 'Team Imaginary',
     email: 'teamimaginary@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-super',
     name: 'Team Super',
     email: 'teamsuper@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-loftet',
     name: 'Team Loftet',
     email: 'teamloftet@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-masse-venner',
     name: 'Team Ensom',
     email: 'teamensom@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-messi',
     name: 'Team Messi',
     email: 'teammessi@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-ronaldo-better',
     name: 'Team Ronaldo',
     email: 'teamronaldo@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-tull',
     name: 'Team tull',
     email: 'teamtull@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
   {
     id: 'team-ultratull',
     name: 'Team tull, men med lenger navn...',
     email: 'teamtulllenger@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
   },
 ];
+
+teams.forEach((team) => {
+  api.get(`api/teams/${team.id}`, (c) => {
+    return c.json({
+      id: team.id,
+      name: team.name,
+      email: team.email,
+      members: ['mem1', 'mem2', 'mem3'], // Mock members for each team
+    });
+  });
+});
 
 api.get('api/teams', (c) => {
   return c.json(teams);
@@ -137,34 +137,7 @@ api.get('api/user', (c) => {
     teams: teams,
     name: 'Hakimi, Nima',
     email: 'Nima.Hakimi@nav.no',
-    isAdmin: false,
-  });
-});
-
-api.get('api/teams/team-nav/details', (c) => {
-  return c.json({
-    id: 'team-nav',
-    name: 'Team Nav',
-    email: 'team.nav@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
-  });
-});
-
-api.get('api/teams/team-messi/details', (c) => {
-  return c.json({
-    id: 'team-messi',
-    name: 'Team Messi',
-    email: 'teammessi@example.com',
-    members: ['mem1', 'mem2', 'mem3'],
-  });
-});
-
-api.get('api/teams/team-test/details', (c) => {
-  return c.json({
-    id: 'team-test',
-    name: 'Team Test',
-    email: 'team.test@nav.no',
-    members: ['Finnes ikke', 'Ikke en ekte dude', 'Skybert'],
+    isAdmin: true,
   });
 });
 

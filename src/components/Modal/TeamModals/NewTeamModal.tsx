@@ -75,7 +75,7 @@ function NewTeamModal() {
       >
         <Modal.Body className={styles.modalBody}>
           <form
-            id="teamForm"
+            id="createTeamForm"
             onSubmit={handleSubmit}
             className={styles.modalFields}
           >
@@ -119,18 +119,10 @@ function NewTeamModal() {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            type="submit"
-            form="teamForm"
-            disabled={!isValid}
-            onClick={() => {
-              ref.current?.close();
-            }}
-          >
+          <Button type="submit" form="createTeamForm" disabled={!isValid}>
             Send
           </Button>
           <Button
-            type="button"
             variant="secondary"
             onClick={() => {
               setTeamName('');

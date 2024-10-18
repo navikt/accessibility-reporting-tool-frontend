@@ -27,11 +27,9 @@ function EditTeamModal(props: EditTeamModalProps) {
     data: teamData,
     isLoading: isLoadingTeamData,
     mutate,
-  } = useSWR({ url: `${apiProxyUrl}/teams/${props.teamId}/details` }, fetcher);
+  } = useSWR({ url: `${apiProxyUrl}/teams/${props.teamId}` }, fetcher);
 
-  const updateTeamData = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const updateTeamData = async () => {
     const editedTeam: Team = {
       id: teamData.id,
       name: teamName,
@@ -43,6 +41,8 @@ function EditTeamModal(props: EditTeamModalProps) {
 
     try {
       await updateTeam(props.teamId as string, editedTeam);
+      ref.current?.close();
+      console.log('her her her');
       mutate();
       setCurrentMembers(editedTeam.members);
       setNewMembers([]);
@@ -78,11 +78,7 @@ function EditTeamModal(props: EditTeamModalProps) {
         closeOnBackdropClick={true}
       >
         <Modal.Body>
-          <form
-            id="teamForm"
-            onSubmit={updateTeamData}
-            className={styles.modalFields}
-          >
+          <span className={styles.modalFields}>
             <TextField
               label="Sett navn for team"
               defaultValue={teamName}
@@ -143,22 +139,13 @@ function EditTeamModal(props: EditTeamModalProps) {
             >
               Legg til medlem
             </a>
-          </form>
+          </span>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            type="submit"
-            form="teamForm"
-            disabled={!isValid}
-            onClick={() => {
-              updateTeamData;
-              ref.current?.close();
-            }}
-          >
+          <Button onClick={updateTeamData} disabled={!isValid}>
             Lagre
           </Button>
           <Button
-            type="button"
             variant="secondary"
             onClick={() => {
               setNewMembers([]);

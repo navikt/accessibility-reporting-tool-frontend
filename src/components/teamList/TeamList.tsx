@@ -10,6 +10,7 @@ interface TeamListProps {
 }
 
 const TeamList = ({ teams, isAdmin }: TeamListProps) => {
+  console.log(teams);
   return (
     <section className={styles.wrapper}>
       {isAdmin ? (
