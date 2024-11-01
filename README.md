@@ -1,17 +1,14 @@
 # a11y rapporteringsverktøy frontend
 
-Dette repository'et er for frontend-applikasjonen, bygget av sommerstudenter.
+[a11y-statement](https://a11y-statement-ny.ansatt.dev.nav.no/) dekker behovet for intern rapportering av tilgjengelighetsstatusen av Navs produkter og tjenester.
 
 ## Kjøre applikasjonen lokalt
 
-I terminal, kjør <code>npm run mock</code>
+1. Installer dependencies:<code>npm i<code>
+2. Få opp mock-server: <code>npm run mock</code>
+3. Få opp astro-appen: <code>npm run dev<code>
 
-I ny terminal, kjør
-<code>npm run dev</code>
-
-## Deployed versjon
-
-Pushes til main deployes til [denne URL](https://a11y-statement-ny.ansatt.dev.nav.no/)
+steg 2 og 3 må kjøre samtidig.
 
 ## Endpoints
 
