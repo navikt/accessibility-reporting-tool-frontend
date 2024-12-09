@@ -212,6 +212,7 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
               name="isPartOfNavNo"
               defaultChecked={isPartOfNavNo}
               onChange={handleCheckboxChange}
+              readOnly={!report?.hasWriteAccess}
             >
               Tjenesten er under NAV.no
             </Checkbox>
