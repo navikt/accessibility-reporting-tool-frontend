@@ -1,4 +1,4 @@
-import { Textarea, Radio, RadioGroup, Link } from '@navikt/ds-react';
+import { Textarea, Radio, RadioGroup, Link, Heading } from '@navikt/ds-react';
 import type { CriterionType } from '@src/types.ts';
 import styles from './Criterion.module.css';
 import { Divider } from '@mui/material';
@@ -21,10 +21,13 @@ const Criterion = ({
   return (
     <div className={styles.criterionWrapper}>
       <div className={styles.criterion}>
-        <h2 className="sr-only">{`${criterion.number} ${criterion.name}`}</h2>
         <RadioGroup
           className={styles.radioGroup}
-          legend={`${criterion.number} ${criterion.name}`}
+          legend={
+            <Heading level="2" size="medium">
+              {`${criterion.number} ${criterion.name}`}
+            </Heading>
+          }
           readOnly={!hasWriteAccess}
           onChange={(e) => {
             handleChange(criterion.number, 'status', e as string);
