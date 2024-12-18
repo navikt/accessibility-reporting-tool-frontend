@@ -43,6 +43,7 @@ const ReportList = ({ reports }: ReportListProps) => {
     ?.slice()
     .sort((a: ReportSummary, b: ReportSummary) => {
       if (sort) {
+        console.log(a, 'hei', b);
         return sort.direction === 'ascending'
           ? comparator(b, a, sort.orderBy as keyof ReportSummary)
           : comparator(a, b, sort.orderBy as keyof ReportSummary);
@@ -71,7 +72,7 @@ const ReportList = ({ reports }: ReportListProps) => {
         <Table.Body>
           {sortedData?.map((report: ReportSummary) => {
             return (
-              <Table.Row key={report.title}>
+              <Table.Row key={report.id}>
                 <Table.HeaderCell>
                   {report.teamId !== '' ? (
                     <Link href={`/reports/${report.id}`} variant="action">
