@@ -33,7 +33,9 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   );
   const [activeTab, setActiveTab] = useState('criteria');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [isPartOfNavNo, setIsPartOfNavNo] = useState(report.isPartOfNavNo);
+  const [isPartOfNavNo, setIsPartOfNavNo] = useState<boolean>(
+    report.isPartOfNavNo,
+  );
 
   const filterOptions: Record<string, string> = {
     COMPLIANT: 'Tilfredsstilt',
@@ -90,12 +92,12 @@ const CreateReport = ({ report, reportType, isAdmin }: CreateReportProps) => {
   );
 
   const handleCheckboxChange = () => {
-    setIsPartOfNavNo(!isPartOfNavNo);
+    setIsPartOfNavNo((prev) => {
+      const newValue = !prev;
+      updateReportData({ isPartOfNavNo: newValue });
+      return newValue;
+    });
   };
-
-  useEffect(() => {
-    updateReportData({ isPartOfNavNo: isPartOfNavNo });
-  }, [isPartOfNavNo]);
 
   return (
     <div className={styles.reportContent}>
