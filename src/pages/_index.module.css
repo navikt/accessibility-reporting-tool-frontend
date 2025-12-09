@@ -11,9 +11,11 @@
 }
 
 .innerSection1 {
-  width: 20vw;
+  width: 100%;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1rem;
 }
 
 .text {

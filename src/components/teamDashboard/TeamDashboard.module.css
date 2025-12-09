@@ -6,13 +6,22 @@
 .pieChart {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
   background-color: white;
   border-radius: 1rem;
   box-shadow: var(--a-shadow-small);
   padding: 16px;
-  width: 70%;
+  flex: 1;
+  min-width: 0;
   margin-right: 20px;
+  overflow-x: auto;
+}
+
+.pieChart>fieldset {
+  flex-shrink: 0;
+  min-width: 150px;
 }
 
 .teamHeader {
@@ -30,7 +39,8 @@
   border-radius: 1rem;
   box-shadow: var(--a-shadow-small);
   padding: 16px;
-  width: 30%;
+  width: 320px;
+  flex-shrink: 0;
 }
 
 .divider {
@@ -48,6 +58,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
 
 .chartAndInfo {

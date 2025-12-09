@@ -50,6 +50,7 @@ const user = await userResponse.json();
 <Layout>
   <CreateReport
     client:only="react"
+    transition:persist
     report={report}
     reportType="SINGLE"
     isAdmin={user.isAdmin}

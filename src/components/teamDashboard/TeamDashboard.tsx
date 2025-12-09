@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './TeamDashboard.module.css';
 import { BodyLong, Heading, Radio, RadioGroup, Select } from '@navikt/ds-react';
-import { PieChart } from '@mui/x-charts';
 import { fetcher } from '@src/utils/client/api.ts';
 import ReportList from '@components/ReportList/ReportList';
 import useSWR from 'swr';
@@ -14,6 +13,8 @@ interface TeamDashboardProps {
   teamId: string;
   isMyTeam: Boolean;
 }
+
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function TeamDashboard(props: TeamDashboardProps) {
   const [currentReportId, setCurrentReportId] = useState<string>('');
@@ -83,6 +84,15 @@ function TeamDashboard(props: TeamDashboardProps) {
     };
   }, []);
 
+  const total = COMPLIANT + NOT_COMPLIANT + NOT_APPLICABLE + NOT_TESTED;
+
+  const chartData = [
+    { name: 'Oppfylt', value: COMPLIANT, color: '#00703C' },
+    { name: 'Ikke oppfylt', value: NOT_COMPLIANT, color: '#C32F27' },
+    { name: 'Ikke aktuelle', value: NOT_APPLICABLE, color: '#595959' },
+    { name: 'Ikke testet', value: NOT_TESTED, color: '#FF9100' },
+  ];
+
   return (
     <div className={styles.teamDashboard}>
       <div className={styles.teamHeader}>
@@ -130,53 +140,52 @@ function TeamDashboard(props: TeamDashboardProps) {
                     </Radio>
                   ))}
                 </RadioGroup>
-                <PieChart
-                  colors={['red', 'gray', 'green', 'yellow']}
-                  series={[
-                    {
-                      data: [
-                        {
-                          value: COMPLIANT,
-                          color: 'green',
-                          label: `Krav oppfylt: ${COMPLIANT}`,
-                        },
-                        {
-                          value: NOT_COMPLIANT,
-                          color: 'red',
-                          label: `Krav ikke oppfylt: ${NOT_COMPLIANT}`,
-                        },
-                        {
-                          value: NOT_APPLICABLE,
-                          color: 'gray',
-                          label: `Krav ikke aktuelle: ${NOT_APPLICABLE}`,
-                        },
-                        {
-                          value: NOT_TESTED,
-                          color: '#FFB703',
-                          label: `Krav ikke testet: ${NOT_TESTED}`,
-                        },
-                      ],
-                      valueFormatter: () => {
-                        return ''; // Dette her gjør at verdien ikke dukker opp to ganger når man hovrer over en del av pie charten
-                      },
-                      innerRadius: 30,
-                      outerRadius: 150,
-                      paddingAngle: 1,
-                      cornerRadius: 5,
-                      startAngle: 0,
-                      endAngle: 360,
-                      cx: 150,
-                    },
-                  ]}
-                  sx={{
-                    '& .MuiChartsLegend-label': {
-                      fontSize: 20,
-                      fontFamily: 'Source Sans Pro',
-                    },
-                  }}
-                  width={540}
-                  height={300}
-                />
+                <div style={{ width: 450, height: 230 }}>
+                  <ResponsiveContainer>
+                    <PieChart>
+                      <Pie
+                        data={chartData}
+                        cx={140}
+                        cy={110}
+                        innerRadius={60}
+                        outerRadius={90}
+                        paddingAngle={2}
+                        dataKey="value"
+                        isAnimationActive={false}
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        formatter={(value: number) => {
+                          const percentage = ((value / total) * 100).toFixed(1);
+                          return [`${value} (${percentage}%)`];
+                        }}
+                      />
+                      <Legend
+                        layout="vertical"
+                        verticalAlign="middle"
+                        align="right"
+                        content={(props) => {
+                          const { payload } = props;
+                          return (
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                              {payload?.map((entry: any, index: number) => (
+                                <li key={`item-${index}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                  <div style={{ width: 16, height: 16, backgroundColor: entry.color, borderRadius: '2px', flexShrink: 0 }} />
+                                  <span style={{ fontSize: '16px', fontFamily: 'Source Sans Pro', color: '#23262a' }}>
+                                    {entry.value}: {entry.payload.value}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
               </>
             )}
           </section>
