@@ -13,7 +13,7 @@ export const getEnvironment = () => {
 };
 
 const API_URL = {
-  local: 'http://localhost:8787',
+  local: 'http://127.0.0.1:8787',
   development: 'http://a11y-statement',
   production: 'http://a11y-statement',
 };

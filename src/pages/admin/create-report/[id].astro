@@ -5,7 +5,7 @@ import Layout from '@src/layouts/Layout.astro';
 import Reports from '@components/aggregated-reports/CreateAggregatedReport';
 import Forbidden from '@components/forbidden/Forbidden.astro';
 const { id } = Astro.params;
-import styles from './create-report.module.css';
+import styles from './_create-report.module.css';
 
 const oboToken = await getOboToken(Astro.locals.token);
 

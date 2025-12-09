@@ -168,12 +168,10 @@ function TeamDashboard(props: TeamDashboardProps) {
                       cx: 150,
                     },
                   ]}
-                  slotProps={{
-                    legend: {
-                      labelStyle: {
-                        fontSize: 20,
-                        fontFamily: 'Source Sans Pro',
-                      },
+                  sx={{
+                    '& .MuiChartsLegend-label': {
+                      fontSize: 20,
+                      fontFamily: 'Source Sans Pro',
                     },
                   }}
                   width={540}

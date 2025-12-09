@@ -775,6 +775,77 @@ api.get('/api/reports/123456789', (c) => {
   return c.json(initializedReport); // Send the custom object as the response
 });
 
+// Generic route for any report ID (catches all remaining report IDs)
+api.get('/api/reports/:id', (c) => {
+  const id = c.req.param('id');
+
+  // Return a mock report with the requested ID
+  const mockReport = {
+    reportId: id,
+    descriptiveName: 'Mock rapport',
+    url: 'https://www.nav.no/',
+    team: {
+      id: 'team-mock',
+      name: 'Mock Team',
+      email: 'mock@nav.no',
+      members: [],
+    },
+    author: {
+      email: 'mock@nav.no',
+      oid: '01d97f04-270a-4aa6-bb98-cc093b855dab',
+    },
+    successCriteria: [
+      {
+        name: 'Ikke-tekstlig innhold',
+        description:
+          'Gi brukeren et tekstalternativ for innhold som ikke er tekst.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.1 Tekstalternativer',
+        tools: 'ARC Toolkit',
+        number: '1.1.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Ikoner, bilder, grafer',
+        status: 'NOT_TESTED',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html',
+        helpUrl: 'aksel.no',
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.1.1',
+      },
+      {
+        name: 'Bare lyd og bare video (forhåndsinnspilt)',
+        description:
+          'Gi brukeren et alternativ når innholdet presenteres kun som video eller lyd.',
+        principle: '1. Mulig å oppfatte',
+        guideline: '1.2 Tidsbaserte medier',
+        tools: 'Skjønn',
+        number: '1.2.1',
+        breakingTheLaw: '',
+        lawDoesNotApply: '',
+        tooHardToComply: '',
+        contentGroup: 'Lyd, video, animasjoner',
+        status: 'COMPLIANT',
+        wcagUrl:
+          'https://www.w3.org/WAI/WCAG21/Understanding/audio-only-and-video-only-prerecorded.html',
+        helpUrl: null,
+        wcagVersion: '2.1',
+        wcagLevel: 'A',
+        successCriterionNumber: '1.2.1',
+      },
+    ],
+    created: '2023-10-04T15:24:18.000Z',
+    lastChanged: '2023-10-04T15:24:18.000Z',
+    notes: 'Dette er en mock-rapport',
+    hasWriteAccess: true,
+    isPartOfNavNo: false,
+  };
+
+  return c.json(mockReport);
+});
+
 serve({
   fetch: api.fetch,
   port: 8787,

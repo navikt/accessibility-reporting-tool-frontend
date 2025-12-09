@@ -30,6 +30,19 @@ const userResponse = await fetch(`${apiUrl}/api/user`, {
   duplex: 'half',
 });
 
+// Debug: Check response status and content type
+if (!reportResponse.ok) {
+  const reportText = await reportResponse.text();
+  console.error(`Report API error (${reportResponse.status}):`, reportText);
+  throw new Error(`Failed to fetch report: ${reportResponse.status}`);
+}
+
+if (!userResponse.ok) {
+  const userText = await userResponse.text();
+  console.error(`User API error (${userResponse.status}):`, userText);
+  throw new Error(`Failed to fetch user: ${userResponse.status}`);
+}
+
 const report = await reportResponse.json();
 const user = await userResponse.json();
 ---

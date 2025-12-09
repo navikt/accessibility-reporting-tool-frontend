@@ -3,7 +3,7 @@ import { getOboToken } from '@src/utils/server/getOboToken';
 import { apiUrl } from '@src/utils/server/urls';
 import Layout from '../../../layouts/Layout.astro';
 import Reports from '@components/aggregated-reports/CreateAggregatedReport';
-import styles from './create-report.module.css';
+import styles from './_create-report.module.css';
 
 const oboToken = await getOboToken(Astro.locals.token);
 
