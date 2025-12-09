@@ -14,7 +14,14 @@ interface TeamDashboardProps {
   isMyTeam: Boolean;
 }
 
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 function TeamDashboard(props: TeamDashboardProps) {
   const [currentReportId, setCurrentReportId] = useState<string>('');
@@ -170,11 +177,41 @@ function TeamDashboard(props: TeamDashboardProps) {
                         content={(props) => {
                           const { payload } = props;
                           return (
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <ul
+                              style={{
+                                listStyle: 'none',
+                                padding: 0,
+                                margin: 0,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '12px',
+                              }}
+                            >
                               {payload?.map((entry: any, index: number) => (
-                                <li key={`item-${index}`} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                  <div style={{ width: 16, height: 16, backgroundColor: entry.color, borderRadius: '2px', flexShrink: 0 }} />
-                                  <span style={{ fontSize: '16px', fontFamily: 'Source Sans Pro', color: '#23262a' }}>
+                                <li
+                                  key={`item-${index}`}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      width: 16,
+                                      height: 16,
+                                      backgroundColor: entry.color,
+                                      borderRadius: '2px',
+                                      flexShrink: 0,
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      fontSize: '16px',
+                                      fontFamily: 'Source Sans Pro',
+                                      color: '#23262a',
+                                    }}
+                                  >
                                     {entry.value}: {entry.payload.value}
                                   </span>
                                 </li>
