@@ -10,6 +10,5 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
-  // Allow REDIRECT_URL (and any REDIRECT_* vars) to be accessed via import.meta.env
-  envPrefix: ['REDIRECT_'],
+
 });

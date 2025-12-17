@@ -6,13 +6,6 @@ import MyTeam from '@components/teamDashboard/MyTeam';
 import { Button, Heading, Link } from '@navikt/ds-react';
 import styles from './_index.module.css';
 import { ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
-import { maybeRedirect } from '@src/utils/server/redirect';
-
-// If REDIRECT_URL is configured, immediately redirect to that URL.
-const redirectResponse = maybeRedirect(Astro);
-if (redirectResponse) {
-  return redirectResponse;
-}
 
 const oboToken = await getOboToken(Astro.locals.token);
 
