@@ -40,6 +40,3 @@ spec:
     requests:
       cpu: '20m'
       memory: 128Mi
-  env:
-    - name: REDIRECT_URL
-      value: "https://uurapport.ansatt.nav.no/"
