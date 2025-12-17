@@ -36,4 +36,3 @@ export function maybeRedirect(Astro: AstroGlobal) {
 
   return undefined;
 }
-
