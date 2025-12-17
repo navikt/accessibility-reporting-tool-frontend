@@ -1,75 +1,29 @@
 ---
-import { apiUrl } from '@src/utils/server/urls';
-import Layout from '../layouts/Layout.astro';
-import { getOboToken } from '@src/utils/server/getOboToken';
-import MyTeam from '@components/teamDashboard/MyTeam';
-import { Button, Heading, Link } from '@navikt/ds-react';
-import styles from './_index.module.css';
-import { ComponentIcon, FigureIcon } from '@navikt/aksel-icons';
-
-const oboToken = await getOboToken(Astro.locals.token);
-
-const userResponse = await fetch(`${apiUrl}/api/user`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    Authorization: `Bearer ${oboToken}`,
-  },
-  // @ts-expect-error - This is a valid option
-  duplex: 'half',
-});
-
-const user = await userResponse.json();
+const redirectUrl = process.env.REDIRECT_URL ?? '';
+const displayUrl = redirectUrl || 'REDIRECT_URL ikke satt';
 ---
 
-<Layout>
-  {
-    user.teams.length !== 0 ? (
-      <MyTeam client:only user={user} />
-    ) : (
-      <div>
-        <section class={styles.section1}>
-          <section class={styles.innerSection1}>
-            <Heading level="1" size="xlarge">
-              Velkommen til A11y Statement!
-            </Heading>
-            <p class={styles.text}>
-              Denne applikasjonen er NAVs interne rapporteringsverktøy for
-              tilgjengelighetserklæringer
-            </p>
-            <Button
-              as={Link}
-              href="/teams"
-              underline={false}
-              variant="secondary"
-            >
-              Finn eller lag ditt team
-            </Button>
-          </section>
-        </section>
-        <section class={styles.section2}>
-          <article class={styles.article}>
-            <ComponentIcon title="code icon" fontSize="3rem" />
-            <Heading level="3" size="medium">
-              Les mer på{' '}
-              <Link href="https://aksel.nav.no/god-praksis/universell-utforming">
-                Aksel.no
-              </Link>
-            </Heading>
-          </article>
-
-          <article class={styles.article}>
-            <FigureIcon title="accessibility figure icon" fontSize="3rem" />
-            <Heading level="3" size="medium">
-              Les mer på{' '}
-              <Link href="https://www.uutilsynet.no/veiledning/tilgjengelighetserklaering/1127">
-                uutilsynet.no
-              </Link>
-            </Heading>
-          </article>
-        </section>
-      </div>
-    )
-  }
-</Layout>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rapportering flyttet</title>
+    <meta
+      name="description"
+      content="A11y-rapportering er flyttet til et nytt verktøy"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body
+    style="min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center;background:#f3f4f6;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-align:center;"
+  >
+    <p style="font-size:1.25rem;color:#0b1d3a;">
+      siden er flyttet til
+      <a
+        href={redirectUrl || '#'}
+        style="color:#0f6fba;font-weight:600;"
+      >
+        {displayUrl}
+      </a>
+    </p>
+  </body>
+</html>
