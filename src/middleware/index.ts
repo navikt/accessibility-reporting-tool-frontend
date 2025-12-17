@@ -10,7 +10,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   const pathname = url.pathname;
 
-  const isHealthCheck = pathname.startsWith('/api/internal/isAlive') || pathname.startsWith('/api/internal/isReady');
+  const isHealthCheck =
+    pathname.startsWith('/api/internal/isAlive') ||
+    pathname.startsWith('/api/internal/isReady');
   const isApiRoute = pathname.startsWith('/api/');
 
   if (!isHealthCheck && !isApiRoute && redirectUrl) {
